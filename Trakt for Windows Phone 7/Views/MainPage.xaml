@@ -3,6 +3,8 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
@@ -21,11 +23,29 @@
                 <ColumnDefinition Width="160" />
             </Grid.ColumnDefinitions>
             <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
-                <TextBlock Height="50" Name="trendingMovieLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+                <TextBlock Height="50" Name="trendingMovieLabel" Text="Trending Movies" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
             </Grid>
-            <Image Name="traktTrendingMovie0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0" Grid.Row="1" />
-            <Image Name="traktTrendingMovie1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[1].Images.Poster}" Grid.Column="1" Grid.Row="1" />
-            <Image Name="traktTrendingMovie2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[2].Images.Poster}" Grid.Column="2" Grid.Row="1" />
+            <Image Name="traktTrendingMovie0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Movie0" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Image Name="traktTrendingMovie1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Movie1" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Image Name="traktTrendingMovie2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Movie2" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
         </Grid>
 
         <Grid Height="300" Margin="5,456,-5,12">
@@ -41,9 +61,27 @@
             <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
                 <TextBlock Height="50" Name="trendingShowLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
             </Grid>
-            <Image Name="traktTrendingShow0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0" Grid.Row="1" />
-            <Image Name="traktTrendingShow1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1" Grid.Row="1" />
-            <Image Name="traktTrendingShow2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2" Grid.Row="1" />
+            <Image Name="traktTrendingShow0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Show0" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Image Name="traktTrendingShow1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[1].Images.Poster}" Grid.Column="1" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Show1" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Image Name="traktTrendingShow2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[2].Images.Poster}" Grid.Column="2" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="Show2" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
         </Grid>
         <TextBox HorizontalAlignment="Left" Margin="0,90,0,612" Name="searchBox" Text="Search" Width="208" />
     </Grid>

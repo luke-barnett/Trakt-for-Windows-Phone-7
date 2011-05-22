@@ -44,5 +44,23 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "watchers")]
         public int Watchers { get; set; }
+
+        [DataMember(Name = "top_watchers")]
+        public TraktWatcher[] TopWatchers { get; set; }
+
+        [DataMember(Name = "ratings")]
+        public TraktRatings Ratings { get; set; }
+
+        [DataMember(Name = "stats")]
+        public TraktStats Stats { get; set; }
+
+        [DataMember(Name = "watched")]
+        public bool Watched { get; set; }
+
+        [DataMember(Name = "plays")]
+        public long Plays { get; set; }
+
+        [DataMember(Name = "rating")]
+        public string Rating { get; set; }
     }
 }

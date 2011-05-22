@@ -16,6 +16,13 @@ namespace TraktAPI
             shows
         }
 
+        public enum TraktDetailsTypes
+        {
+            summary,
+            watchingnow,
+            shouts
+        }
+
         #endregion
 
         #region APICalls
@@ -35,6 +42,11 @@ namespace TraktAPI
             return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Trending, TraktLibraryTypes.shows)), parseTrendingShows);
         }
 
+        public static IObservable<TraktMovie> getMovie(string movieTitle)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.MovieDetails, TraktDetailsTypes.summary, movieTitle)), parseMovie, GetUserAuthentication());
+        }
+
         #endregion
 
         #region Parsers
@@ -51,6 +63,11 @@ namespace TraktAPI
         private static TraktResponse parseTraktResponse(string json)
         {
             return JsonConvert.DeserializeObject<TraktResponse>(json);
+        }
+
+        private static TraktMovie parseMovie(string json)
+        {
+            return JsonConvert.DeserializeObject<TraktMovie>(json);
         }
         #endregion
 
