@@ -45,6 +45,6 @@
             <Image Name="traktTrendingShow1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1" Grid.Row="1" />
             <Image Name="traktTrendingShow2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2" Grid.Row="1" />
         </Grid>
-        
+        <TextBox HorizontalAlignment="Left" Margin="0,90,0,612" Name="searchBox" Text="Search" Width="208" />
     </Grid>
 </phone:PhoneApplicationPage>
