@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trakt for Windows Phone 7", "Trakt for Windows Phone 7\Trakt for Windows Phone 7.csproj", "{A1702B33-9D41-4020-90FD-B4CFB2152270}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraktAPI", "TraktAPI\TraktAPI.csproj", "{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A1702B33-9D41-4020-90FD-B4CFB2152270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1702B33-9D41-4020-90FD-B4CFB2152270}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1702B33-9D41-4020-90FD-B4CFB2152270}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

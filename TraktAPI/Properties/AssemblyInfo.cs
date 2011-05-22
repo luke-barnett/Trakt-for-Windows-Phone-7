@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Trakt 7")]
+[assembly: AssemblyTitle("TraktAPI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft IT")]
-[assembly: AssemblyProduct("Trakt 7")]
-[assembly: AssemblyCopyright("Copyright © Microsoft IT 2009")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("TraktAPI")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3b73eba5-a55f-4a99-88f0-231e13c4221d")]
+[assembly: Guid("a5fe6c80-3322-4eb0-ac5c-9e310049a665")]
 
 // Version information for an assembly consists of the following four values:
 //
