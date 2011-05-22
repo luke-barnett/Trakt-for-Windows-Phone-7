@@ -8,32 +8,43 @@
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 	<Grid Background="Transparent">
         <Image Height="105" HorizontalAlignment="Left" Name="traktLogo" Stretch="UniformToFill" VerticalAlignment="Top" Width="107" Source="/Trakt%20for%20Windows%20Phone%207;component/Artwork/traktLogoInverted.png" />
-        <TextBlock Height="60" HorizontalAlignment="Left" Margin="113,30,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="257" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
-        <Grid Height="60" Margin="0,111,0,597" Background="{StaticResource PhoneAccentBrush}">
-            <TextBlock Height="50" Name="trendingMoviesLabel" Text="Trending Movies" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
-        </Grid>
-        <Grid>
+        <TextBlock Height="60" HorizontalAlignment="Left" Margin="113,27,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="257" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+        <TextBlock Height="40" HorizontalAlignment="Left" Margin="374,104,0,0" Name="login" Text="Login" VerticalAlignment="Top" Width="94" Foreground="White" FontSize="32" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" TextAlignment="Right" />
+        <Grid Height="300" Margin="5,150,-5,318">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="240" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="160" />
             </Grid.ColumnDefinitions>
-            <Image Name="traktTrendingMovie0" Stretch="UniformToFill" Width="150" Source="{Binding Movies[0].Images.Poster}" Margin="0,177,0,345" Grid.Column="0" />
-            <Image Name="traktTrendingMovie1" Stretch="UniformToFill" Width="150" Source="{Binding Movies[1].Images.Poster}" Margin="0,177,0,345" Grid.Column="1" />
-            <Image Name="traktTrendingMovie2" Stretch="UniformToFill" Width="150" Source="{Binding Movies[2].Images.Poster}" Margin="0,177,0,345" Grid.Column="2" />
+            <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
+                <TextBlock Height="50" Name="trendingMovieLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+            </Grid>
+            <Image Name="traktTrendingMovie0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0" Grid.Row="1" />
+            <Image Name="traktTrendingMovie1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[1].Images.Poster}" Grid.Column="1" Grid.Row="1" />
+            <Image Name="traktTrendingMovie2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[2].Images.Poster}" Grid.Column="2" Grid.Row="1" />
         </Grid>
-        <Grid Height="60" Margin="0,429,0,279" Background="{StaticResource PhoneAccentBrush}">
-            <TextBlock Height="50" Name="trendingShowLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
-        </Grid>
-        <Grid>
+
+        <Grid Height="300" Margin="5,456,-5,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="240" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="160" />
             </Grid.ColumnDefinitions>
-            <Image Name="traktTrendingShow0" Stretch="UniformToFill" Width="150" Source="{Binding Shows[0].Images.Poster}" Margin="0,494,0,28" />
-            <Image Name="traktTrendingShow1" Stretch="UniformToFill" Width="150" Source="{Binding Shows[1].Images.Poster}" Margin="0,494,0,28" Grid.Column="1" />
-            <Image Name="traktTrendingShow2" Stretch="UniformToFill" Width="150" Source="{Binding Shows[2].Images.Poster}" Margin="0,494,0,28" Grid.Column="2" />
+            <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
+                <TextBlock Height="50" Name="trendingShowLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+            </Grid>
+            <Image Name="traktTrendingShow0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0" Grid.Row="1" />
+            <Image Name="traktTrendingShow1" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1" Grid.Row="1" />
+            <Image Name="traktTrendingShow2" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2" Grid.Row="1" />
         </Grid>
+        
     </Grid>
 </phone:PhoneApplicationPage>
