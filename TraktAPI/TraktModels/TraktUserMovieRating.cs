@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace TraktAPI.TraktModels
 {
     [DataContract]
-    public class TraktUserRating
+    public class TraktUserMovieRating
     {
         [DataMember(Name = "username")]
         public string Username { get; set; }

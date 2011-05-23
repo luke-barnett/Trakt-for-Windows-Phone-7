@@ -62,5 +62,11 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "rating")]
         public string Rating { get; set; }
+
+        [DataMember(Name = "on_watchlist")]
+        public bool OnWatchList { get; set; }
+
+        [DataMember(Name = "in_collection")]
+        public bool InCollection { get; set; }
     }
 }

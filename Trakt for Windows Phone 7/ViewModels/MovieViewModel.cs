@@ -141,7 +141,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null || Movie.Ratings == null)
+                if (Movie == null || Movie.Ratings == null || Movie.Ratings.Percentage == 0)
                     return "";
                 if (Movie.Ratings.Percentage >= 50)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/iconLove.png";
@@ -177,7 +177,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             {
                 if (Movie == null)
                     return "";
-                return false ? "Remove from watchlist" : "Add to watchlist";
+                return Movie.OnWatchList ? "Remove from watchlist" : "Add to watchlist";
             }
         }
 
@@ -252,6 +252,39 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("RatingImage");
             NotifyOfPropertyChange("RatingPercentage");
             NotifyOfPropertyChange("RatingCount");
+        }
+
+        public void ToggleWatched()
+        {
+            if (Movie.Watched)
+            {
+                TraktAPI.TraktAPI.unwatchMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+                Movie.Watched = false;
+            }
+            else
+            {
+                TraktAPI.TraktAPI.watchMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+                Movie.Watched = true;
+                Movie.OnWatchList = false;
+                NotifyOfPropertyChange("WatchList");
+            }
+            NotifyOfPropertyChange("WatchedThis");
+            NotifyOfPropertyChange("showWatchList");
+        }
+
+        public void ToggleWatchList()
+        {
+            if (Movie.OnWatchList)
+            {
+                TraktAPI.TraktAPI.unwatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+                Movie.OnWatchList = false;
+            }
+            else
+            {
+                TraktAPI.TraktAPI.watchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+                Movie.OnWatchList = true;
+            }
+            NotifyOfPropertyChange("WatchList");
         }
     }
 }

@@ -35,6 +35,14 @@ namespace TraktAPI
         movie
     }
 
+    public enum TraktSyncModes
+    {
+        seen,
+        unseen,
+        watchlist,
+        unwatchlist
+    }
+
     #endregion
 
     public static class TraktAPI
@@ -64,6 +72,31 @@ namespace TraktAPI
         public static IObservable<TraktRateResponse> rateMovie(string IMDBID, string Title, int Year, string Rating)
         {
             return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.movie)), parseRatingResponse, CreateRatingPayload(IMDBID, Title, Year, Rating));
+        }
+
+        public static IObservable<TraktResponse> syncMovie(string IMDID, string Title, int Year, string TraktSyncMode)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.SyncMovieLibrary, TraktSyncMode)), parseTraktResponse, CreateMovieSyncPayload(IMDID, Title, Year));
+        }
+
+        public static IObservable<TraktResponse> watchMovie(string IMDID, string Title, int Year)
+        {
+            return syncMovie(IMDID, Title, Year, TraktSyncModes.seen.ToString());
+        }
+
+        public static IObservable<TraktResponse> unwatchMovie(string IMDID, string Title, int Year)
+        {
+            return syncMovie(IMDID, Title, Year, TraktSyncModes.unseen.ToString());
+        }
+
+        public static IObservable<TraktResponse> watchListMovie(string IMDID, string Title, int Year)
+        {
+            return syncMovie(IMDID, Title, Year, TraktSyncModes.watchlist.ToString());
+        }
+
+        public static IObservable<TraktResponse> unwatchListMovie(string IMDID, string Title, int Year)
+        {
+            return syncMovie(IMDID, Title, Year, TraktSyncModes.unwatchlist.ToString());
         }
 
         #endregion
@@ -104,8 +137,14 @@ namespace TraktAPI
 
         private static string CreateRatingPayload(string IMDBID, string Title, int Year, string Rating)
         {
-            return JsonConvert.SerializeObject(new TraktUserRating() { Username = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = IMDBID, Title = Title, Year = Year, Rating = Rating });
+            return JsonConvert.SerializeObject(new TraktUserMovieRating() { Username = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = IMDBID, Title = Title, Year = Year, Rating = Rating });
         }
+
+        private static string CreateMovieSyncPayload(string IMDBID, string Title, int Year)
+        {
+            return JsonConvert.SerializeObject(new TraktMovieSync() { UserName = TraktSettings.Username, Password = TraktSettings.Password, MovieList = new List<TraktMovieSync.Movie>(){ new TraktMovieSync.Movie(){ IMDBID = IMDBID, Title = Title, Year = Year }}});
+        }
+
         #endregion
     }
 }
