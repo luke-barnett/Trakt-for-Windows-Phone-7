@@ -55,11 +55,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
         }
 
-        public string ShowRating
+        public string LoggedIn
         {
             get
             {
-                if (TraktSettings.LoggedIn)
+                if (Movie != null || TraktSettings.LoggedIn)
                     return "Visible";
                 else
                     return "Collapsed";
@@ -161,13 +161,43 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         }
 
+        public string WatchedThis 
+        { 
+            get 
+            {
+                if (Movie == null)
+                    return "";
+                return Movie.Watched ? "You've watched This!" : "I've watched this"; 
+            } 
+        }
+
+        public string WatchList
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                return false ? "Remove from watchlist" : "Add to watchlist";
+            }
+        }
+
+        public string showWatchList
+        {
+            get
+            {
+                if (Movie == null || Movie.Watched)
+                    return "Collapsed";
+                return "Visible";
+            }
+        }
+
         private TraktRatings ratings { set { Movie.Ratings = value; newRatings(); } }
 
         public void Love()
         {
             if (Movie.Rating.CompareTo("love") == 0)
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString());//.Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
                 Movie.Rating = "";
             }
             else
@@ -184,7 +214,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (Movie.Rating.CompareTo("hate") == 0)
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.hate.ToString());//.Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
                 Movie.Rating = "";
             }
             else
@@ -199,6 +229,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         private void updateDisplay()
         {
+            NotifyOfPropertyChange("LoggedIn");
             NotifyOfPropertyChange("Movie");
             NotifyOfPropertyChange("Year");
             NotifyOfPropertyChange("RunTime");
@@ -211,6 +242,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("RatingImage");
             NotifyOfPropertyChange("RatingCount");
             NotifyOfPropertyChange("TagLine");
+            NotifyOfPropertyChange("WatchedThis");
+            NotifyOfPropertyChange("WatchList");
+            NotifyOfPropertyChange("showWatchList");
         }
 
         private void newRatings()

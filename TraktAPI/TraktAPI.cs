@@ -6,25 +6,39 @@ using Newtonsoft.Json;
 
 namespace TraktAPI
 {
+    #region Enumerables
+
+    public enum TraktLibraryTypes
+    {
+        movies,
+        shows
+    }
+
+    public enum TraktDetailsTypes
+    {
+        summary,
+        watchingnow,
+        shouts
+    }
+
+    public enum TraktRateTypes
+    {
+        love,
+        hate,
+        unrate
+    }
+
+    public enum TraktRatingTypes
+    {
+        episode,
+        show,
+        movie
+    }
+
+    #endregion
+
     public static class TraktAPI
     {
-        #region Enumerables
-
-        public enum TraktLibraryTypes
-        {
-            movies,
-            shows
-        }
-
-        public enum TraktDetailsTypes
-        {
-            summary,
-            watchingnow,
-            shouts
-        }
-
-        #endregion
-
         #region APICalls
 
         public static IObservable<TraktMovie[]> getTrendingMovies()
@@ -45,6 +59,11 @@ namespace TraktAPI
         public static IObservable<TraktMovie> getMovie(string movieTitle)
         {
             return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.MovieDetails, TraktDetailsTypes.summary, movieTitle)), parseMovie, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktRateResponse> rateMovie(string IMDBID, string Title, int Year, string Rating)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.movie)), parseRatingResponse, CreateRatingPayload(IMDBID, Title, Year, Rating));
         }
 
         #endregion
@@ -69,12 +88,23 @@ namespace TraktAPI
         {
             return JsonConvert.DeserializeObject<TraktMovie>(json);
         }
+
+        private static TraktRateResponse parseRatingResponse(string json)
+        {
+            System.Diagnostics.Debug.WriteLine(json);
+            return JsonConvert.DeserializeObject<TraktRateResponse>(json);
+        }
         #endregion
 
         #region Creators
         private static string GetUserAuthentication()
         {
             return JsonConvert.SerializeObject(new TraktAuthentication() { Username = TraktSettings.Username, Password = TraktSettings.Password });
+        }
+
+        private static string CreateRatingPayload(string IMDBID, string Title, int Year, string Rating)
+        {
+            return JsonConvert.SerializeObject(new TraktUserRating() { Username = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = IMDBID, Title = Title, Year = Year, Rating = Rating });
         }
         #endregion
     }

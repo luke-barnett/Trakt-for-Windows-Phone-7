@@ -62,10 +62,12 @@
     <Compile Include="TraktModels\TraktAuthentication.cs" />
     <Compile Include="TraktModels\TraktImages.cs" />
     <Compile Include="TraktModels\TraktMovie.cs" />
+    <Compile Include="TraktModels\TraktRateResponse.cs" />
     <Compile Include="TraktModels\TraktRatings.cs" />
     <Compile Include="TraktModels\TraktResponse.cs" />
     <Compile Include="TraktModels\TraktShow.cs" />
     <Compile Include="TraktModels\TraktStats.cs" />
+    <Compile Include="TraktModels\TraktUserRating.cs" />
     <Compile Include="TraktModels\TraktWatcher.cs" />
     <Compile Include="TraktSettings.cs" />
     <Compile Include="TraktURIs.cs" />
