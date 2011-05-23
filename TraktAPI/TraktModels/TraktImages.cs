@@ -10,5 +10,8 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "fanart")]
         public string Fanart { get; set; }
+
+        [DataMember(Name = "screen")]
+        public string Screen { get; set; }
     }
 }

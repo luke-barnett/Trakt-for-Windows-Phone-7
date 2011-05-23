@@ -7,10 +7,12 @@
                             xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
+                            FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
+    
 	<Grid Background="Transparent">
-        <Image Height="105" HorizontalAlignment="Left" Name="traktLogo" Stretch="UniformToFill" VerticalAlignment="Top" Width="107" Source="/Trakt%20for%20Windows%20Phone%207;component/Artwork/traktLogoInverted.png" />
-        <TextBlock Height="60" HorizontalAlignment="Left" Margin="113,27,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="257" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+        <Image Height="144" HorizontalAlignment="Left" Name="traktLogo" Stretch="UniformToFill" VerticalAlignment="Top" Width="160" Source="/Trakt%20for%20Windows%20Phone%207;component/Artwork/traktLogoInverted.png" />
+        <TextBlock Height="60" HorizontalAlignment="Left" Margin="167,72,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="201" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
         <TextBlock Height="40" HorizontalAlignment="Left" Margin="374,104,0,0" Name="login" Text="Login" VerticalAlignment="Top" Width="94" Foreground="White" FontSize="32" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" TextAlignment="Right" />
         <Grid Height="300" Margin="5,150,-5,318">
             <Grid.RowDefinitions>
@@ -23,7 +25,7 @@
                 <ColumnDefinition Width="160" />
             </Grid.ColumnDefinitions>
             <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
-                <TextBlock Height="50" Name="trendingMovieLabel" Text="Trending Movies" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+                <TextBlock Height="50" Name="trendingMovieLabel" Text="Trending Movies" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" />
             </Grid>
             <Image Name="traktTrendingMovie0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0" Grid.Row="1">
                 <i:Interaction.Triggers>
@@ -59,7 +61,7 @@
                 <ColumnDefinition Width="160" />
             </Grid.ColumnDefinitions>
             <Grid Height="60" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
-                <TextBlock Height="50" Name="trendingShowLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+                <TextBlock Height="50" Name="trendingShowLabel" Text="Trending Shows" Foreground="White" FontSize="36" FontStretch="Normal" TextAlignment="Center" />
             </Grid>
             <Image Name="traktTrendingShow0" Stretch="Uniform" Width="150" Height="240" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0" Grid.Row="1">
                 <i:Interaction.Triggers>
@@ -83,6 +85,6 @@
                 </i:Interaction.Triggers>
             </Image>
         </Grid>
-        <TextBox HorizontalAlignment="Left" Margin="0,90,0,612" Name="searchBox" Text="Search" Width="208" />
+        <TextBox HorizontalAlignment="Left" Margin="272,0,0,702" Name="searchBox" Text="Search" Width="208" Height="70" />
     </Grid>
 </phone:PhoneApplicationPage>

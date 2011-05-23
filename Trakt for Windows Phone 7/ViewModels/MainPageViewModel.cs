@@ -50,16 +50,20 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void Show0()
         {
+            if (_shows != null && _shows[0] != null)
+                navigationService.Navigate(new Uri("/Views/Show.xaml?TVDBID=" + _shows[0].TVDBID, UriKind.Relative));
         }
 
         public void Show1()
         {
-            
+            if (_shows != null && _shows[1] != null)
+                navigationService.Navigate(new Uri("/Views/Show.xaml?TVDBID=" + _shows[1].TVDBID, UriKind.Relative));
         }
 
         public void Show2()
         {
-            
+            if (_shows != null && _shows[2] != null)
+                navigationService.Navigate(new Uri("/Views/Show.xaml?TVDBID=" + _shows[2].TVDBID, UriKind.Relative));
         }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="Framework\Trakt_for_Windows_Phone_7Bootstrapper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MovieViewModel.cs" />
+    <Compile Include="ViewModels\ShowViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -81,6 +82,9 @@
     <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Views\Movie.xaml.cs">
       <DependentUpon>Movie.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Show.xaml.cs">
+      <DependentUpon>Show.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Movie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Show.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

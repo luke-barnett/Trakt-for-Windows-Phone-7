@@ -112,7 +112,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 if (Movie.Rating.CompareTo("love") == 0)
                     return "Love it!";
                 if (Movie.Rating.CompareTo("hate") == 0)
-                    return "Lame :(";
+                    return "Lame";
                 return "";
             }
         }
