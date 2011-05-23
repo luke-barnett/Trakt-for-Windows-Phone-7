@@ -131,6 +131,8 @@
     <Resource Include="Artwork\hate_f.png" />
     <Resource Include="Artwork\love.png" />
     <Resource Include="Artwork\love_f.png" />
+    <Resource Include="Artwork\iconHate.png" />
+    <Resource Include="Artwork\iconLove.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

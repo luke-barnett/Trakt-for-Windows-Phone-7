@@ -31,13 +31,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="130" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="110" />
                     <RowDefinition Height="70" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding RunTime}" Grid.Row="1" />
-                <TextBlock Text="{Binding Certification}" Grid.Row="2" />
-                <Grid Grid.Row="3">
+                <TextBlock Text="{Binding RunTime}" Grid.Row="0" Margin="0,5,0,0" />
+                <TextBlock Text="{Binding Certification}" Grid.Row="1" />
+                <ScrollViewer Grid.Row="2">
+                    <TextBlock Text="{Binding TagLine}" FontStyle="Italic" TextWrapping="Wrap" FontSize="18" />
+                </ScrollViewer>
+                <Grid Grid.Row="3" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="100" />
@@ -45,7 +48,7 @@
                     <Image Grid.Column="0" Source="{Binding RatingImage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="45"/>
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="{Binding RatingPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" />
