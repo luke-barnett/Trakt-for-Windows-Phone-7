@@ -3,27 +3,72 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
             <RowDefinition Height="300" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="360" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" VerticalAlignment="Stretch">
+        <Grid Background="{StaticResource PhoneAccentBrush}">
+            <ScrollViewer VerticalAlignment="Stretch">
+                <TextBlock Text="{Binding MovieTitleAndYear}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" />
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="280" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="{Binding Movie.Images.Poster}" />
-            <Grid Grid.Column="1">
+            <Image Grid.Column="0" Source="{Binding Movie.Images.Poster}" Width="200" HorizontalAlignment="Left" />
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="80" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="140" />
+                    <RowDefinition Height="70" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Movie.Title}" Grid.Row="1" />
+                <TextBlock Text="{Binding RunTime}" Grid.Row="1" />
+                <TextBlock Text="{Binding Certification}" Grid.Row="2" />
+                <Grid Grid.Row="4" Visibility="{Binding ShowRating}" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="90" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="{Binding LoveImage}" Grid.Column="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <ca:ActionMessage MethodName="Love" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <Image Source="{Binding HateImage}" Grid.Column="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <ca:ActionMessage MethodName="Hate" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <TextBlock Text="{Binding RatingPercentage}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" />
+                </Grid>
             </Grid>
+        </Grid>
+        <Grid Grid.Row="2" VerticalAlignment="Stretch">
+            
+        </Grid>
+        <Grid Grid.Row="3" VerticalAlignment="Stretch">
+            <ScrollViewer VerticalAlignment="Stretch">
+                <TextBlock Text="{Binding Movie.Overview}" TextWrapping="Wrap"  />
+            </ScrollViewer>
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

@@ -18,9 +18,129 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private TraktMovie _movie;
-        public TraktMovie Movie { get { return _movie; } set { _movie = value; NotifyOfPropertyChange("Movie"); } }
+        public TraktMovie Movie { get { return _movie; } set { _movie = value; updateDisplay(); } }
 
         private string _movieTitle;
         public string MovieTitle { get { return _movieTitle; } set { _movieTitle = value; TraktAPI.TraktAPI.getMovie(MovieTitle).Subscribe(movie => Movie = movie); System.Diagnostics.Debug.WriteLine(MovieTitle); } }
+
+        public String Year
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                else
+                    return "Year : " + Movie.Year;
+            }
+        }
+
+        public String RunTime
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                else
+                    return Movie.RunTime + " min";
+            }
+        }
+
+        public String Certification
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                return Movie.Certification;
+            }
+        }
+
+        public string ShowRating
+        {
+            get
+            {
+                if (TraktSettings.LoggedIn)
+                    return "Visible";
+                else
+                    return "Collapsed";
+            }
+        }
+
+        public string LoveImage
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+
+                if (Movie.Rating.CompareTo("hate") == 0)
+                    return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/love_f.png";
+                else
+                    return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/love.png";
+            }
+        }
+
+        public string HateImage
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                if (Movie.Rating.CompareTo("love") == 0)
+                    return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/hate_f.png";
+                else
+                    return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/hate.png";
+            }
+        }
+
+        public string RatingPercentage
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                return Movie.Ratings.Percentage + "%";
+            }
+        }
+
+        public string MovieTitleAndYear
+        {
+            get
+            {
+                if (Movie == null)
+                    return "";
+                return String.Format("{0} ({1})",Movie.Title,Movie.Year);
+            }
+        }
+
+        public void Love()
+        {
+            //Send Rating Call
+            TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.love.ToString());
+            Movie.Rating = "love";
+            NotifyOfPropertyChange("LoveImage");
+            NotifyOfPropertyChange("HateImage");
+        }
+
+        public void Hate()
+        {
+            //Send Rating Call
+            TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.hate.ToString());
+            Movie.Rating = "hate";
+            NotifyOfPropertyChange("LoveImage");
+            NotifyOfPropertyChange("HateImage");
+        }
+
+        private void updateDisplay()
+        {
+            NotifyOfPropertyChange("Movie");
+            NotifyOfPropertyChange("Year");
+            NotifyOfPropertyChange("RunTime");
+            NotifyOfPropertyChange("LoveImage");
+            NotifyOfPropertyChange("HateImage");
+            NotifyOfPropertyChange("RatingPercentage");
+            NotifyOfPropertyChange("MovieTitleAndYear");
+            NotifyOfPropertyChange("Certification");
+        }
     }
 }

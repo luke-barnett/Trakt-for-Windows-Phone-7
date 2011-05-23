@@ -17,8 +17,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             this.navigationService = navigationService;
             TraktSettings.Username = "Onenottoforget";
             TraktSettings.Password = "14499cef17c09db01929ca1458dedb4f15b85ce1";
+            TraktSettings.LoggedIn = true;
             TraktAPI.TraktAPI.getTrendingMovies().Subscribe(res => Movies = res);
             TraktAPI.TraktAPI.getTrendingShows().Subscribe(res => Shows = res);
+
         }
 
         private TraktMovie[] _movies;

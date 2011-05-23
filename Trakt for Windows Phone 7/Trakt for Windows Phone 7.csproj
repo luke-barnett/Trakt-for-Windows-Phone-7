@@ -127,6 +127,10 @@
     </Content>
     <Resource Include="Artwork\traktLogo.png" />
     <Resource Include="Artwork\traktLogoInverted.png" />
+    <Resource Include="Artwork\hate.png" />
+    <Resource Include="Artwork\hate_f.png" />
+    <Resource Include="Artwork\love.png" />
+    <Resource Include="Artwork\love_f.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
