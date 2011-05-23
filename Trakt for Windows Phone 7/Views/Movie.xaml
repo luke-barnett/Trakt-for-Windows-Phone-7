@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="300" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="360" />
         </Grid.RowDefinitions>
         <Grid Background="{StaticResource PhoneAccentBrush}">
@@ -32,38 +32,53 @@
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="140" />
+                    <RowDefinition Height="130" />
                     <RowDefinition Height="70" />
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding RunTime}" Grid.Row="1" />
                 <TextBlock Text="{Binding Certification}" Grid.Row="2" />
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding RatingImage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{Binding RatingPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" />
+                        <TextBlock Grid.Row="1" Text="{Binding RatingCount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+                    </Grid>
+                </Grid>
                 <Grid Grid.Row="4" Visibility="{Binding ShowRating}" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
                         <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="5" />
                         <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="90" />
                     </Grid.ColumnDefinitions>
-                    <Image Source="{Binding LoveImage}" Grid.Column="0">
+                    <TextBlock Text="{Binding UserRatingText}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="32" Margin="0,0,10,0" />
+                    <Image Source="{Binding LoveImage}" Grid.Column="1">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <ca:ActionMessage MethodName="Love" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
-                    <Image Source="{Binding HateImage}" Grid.Column="2">
+                    <Image Source="{Binding HateImage}" Grid.Column="3">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <ca:ActionMessage MethodName="Hate" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
-                    <TextBlock Text="{Binding RatingPercentage}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" />
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2" VerticalAlignment="Stretch">
-            
+        <Grid Grid.Row="2" VerticalAlignment="Stretch" Background="{StaticResource PhoneAccentBrush}" Margin="0,5,0,0">
+            <TextBlock Text="Summary" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <Grid Grid.Row="3" VerticalAlignment="Stretch">
             <ScrollViewer VerticalAlignment="Stretch">
