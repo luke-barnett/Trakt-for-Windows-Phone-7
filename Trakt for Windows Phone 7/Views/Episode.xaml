@@ -11,7 +11,7 @@
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="300" />
             <RowDefinition Height="5" />
             <RowDefinition Height="40" />
@@ -22,9 +22,7 @@
             <ColumnDefinition Width="480" />
         </Grid.ColumnDefinitions>
         <Grid Background="{StaticResource PhoneAccentBrush}" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
-            <ScrollViewer HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding EpisodeTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ScrollViewer>
+            <TextBlock Text="{Binding EpisodeTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="60" />
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>

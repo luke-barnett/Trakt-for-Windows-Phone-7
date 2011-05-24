@@ -80,7 +80,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Show == null || Show.Ratings == null || Show.Ratings.Percentage == 0)
+                if (Show == null || Show.Ratings == null)
                     return "";
                 if (Show.Ratings.Percentage >= 50)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/iconLove.png";
@@ -199,7 +199,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private List<TraktSeasonInfo> _seasons;
-        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; } }
+        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; NotifyOfPropertyChange("Seasons"); } }
 
         public TraktSeasonInfo SelectedSeason { get; set; }
 

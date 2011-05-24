@@ -218,6 +218,7 @@ namespace TraktAPI
         #region Creators
         private static string GetUserAuthentication()
         {
+            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(new TraktAuthentication() { Username = TraktSettings.Username, Password = TraktSettings.Password }));
             return JsonConvert.SerializeObject(new TraktAuthentication() { Username = TraktSettings.Username, Password = TraktSettings.Password });
         }
 

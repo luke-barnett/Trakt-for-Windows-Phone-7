@@ -12,20 +12,18 @@
 
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="300" />
             <RowDefinition Height="10" />
             <RowDefinition Height="50" />
             <RowDefinition Height="60" />
-            <RowDefinition Height="280" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="480" />
         </Grid.ColumnDefinitions>
         <Grid Background="{StaticResource PhoneAccentBrush}" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
-            <ScrollViewer HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding ShowTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ScrollViewer>
+            <TextBlock Text="{Binding ShowTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="60" />
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
@@ -89,7 +87,7 @@
         <ListBox Grid.Column="0" Grid.Row="3" ItemsSource="{Binding Seasons}" SelectedItem="{Binding SelectedSeason, Mode=TwoWay}" Style="{StaticResource HorizontalListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding AsString}" FontSize="26" Margin="10,0,0,0" />
+                    <TextBlock Text="{Binding AsString}" FontSize="26" Margin="20,0,0,0" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <i:Interaction.Triggers>

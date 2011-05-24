@@ -7,16 +7,19 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Text;
 using System.Security.Cryptography;
+using System.IO.IsolatedStorage;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
     public class LogInViewModel : BaseViewModel
     {
         readonly INavigationService navigationService;
+        private IsolatedStorageSettings userSettings;
 
         public LogInViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            userSettings = IsolatedStorageSettings.ApplicationSettings;
             if (string.IsNullOrEmpty(TraktSettings.Username))
             {
                 Username = "Username";
@@ -100,13 +103,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void LogIntoTrakt()
         {
-            if (Username.CompareTo("Username") != 0)
-            {
-                _Wait = false;
-                NotifyOfPropertyChange("Wait");
-                string SHA1 = CalculateSHA1(Password, Encoding.UTF8);
-                TraktAPI.TraktAPI.testAccount(Username, SHA1).Subscribe(onNext: response => handleTraktResponse(response, SHA1), onError: error => failedToRegisterWithTrakt(error));
-            }
+            _Wait = false;
+            NotifyOfPropertyChange("Wait");
+            string SHA1 = CalculateSHA1(Password, Encoding.UTF8);
+            TraktAPI.TraktAPI.testAccount(Username, SHA1).Subscribe(onNext: response => handleTraktResponse(response, SHA1), onError: error => failedToRegisterWithTrakt(error));
         }
 
         private void failedToRegisterWithTrakt(Exception e)
@@ -125,6 +125,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             TraktSettings.Username = "";
             TraktSettings.Password = "";
             TraktSettings.LoggedIn = false;
+            userSettings.Clear();
             navigationService.GoBack();
         }
 
@@ -135,6 +136,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 TraktSettings.Username = Username;
                 TraktSettings.Password = SHA1;
                 TraktSettings.LoggedIn = true;
+                userSettings.Clear();
+                userSettings.Add("TraktUsername", TraktSettings.Username);
+                userSettings.Add("TraktPassword", TraktSettings.Password);
                 navigationService.GoBack();
             }
             else

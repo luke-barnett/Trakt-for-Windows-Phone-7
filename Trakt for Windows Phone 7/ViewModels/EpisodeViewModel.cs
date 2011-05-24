@@ -112,7 +112,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Episode == null || Episode.Episode.Ratings == null || Episode.Episode.Ratings.Percentage == 0)
+                if (Episode == null || Episode.Episode.Ratings == null)
                     return "";
                 if (Episode.Episode.Ratings.Percentage >= 50)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/iconLove.png";

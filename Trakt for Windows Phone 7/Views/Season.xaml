@@ -11,16 +11,14 @@
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="480" />
         </Grid.ColumnDefinitions>
-        <Grid Background="{StaticResource PhoneAccentBrush}" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
-            <ScrollViewer HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding ShowTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ScrollViewer>
+        <Grid Background="{StaticResource PhoneAccentBrush}" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0" MinHeight="60">
+            <TextBlock Text="{Binding ShowTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <ListBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Season}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
             <ListBox.ItemTemplate>

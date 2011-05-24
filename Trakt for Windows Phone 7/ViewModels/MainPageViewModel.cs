@@ -5,19 +5,48 @@ using TraktAPI.TraktModels;
 using Microsoft.Phone.Reactive;
 using System.Collections.Generic;
 using System.Windows;
+using System.IO.IsolatedStorage;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
         readonly INavigationService navigationService;
+        private IsolatedStorageSettings userSettings;
 
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            userSettings = IsolatedStorageSettings.ApplicationSettings;
+            if (userSettings.Contains("TraktUsername"))
+            {
+                //Try log in
+                TraktAPI.TraktAPI.testAccount((string)userSettings["TraktUsername"], (string)userSettings["TraktPassword"]).Subscribe(onNext: res => loginSuccess(), onError: error => getTrending(true));
+            }
+            else
+            {
+                getTrending(true);
+            }
+        }
+
+        private bool ready = false;
+
+        private void getTrending(bool clearIsolatedStorage)
+        {
+            if (clearIsolatedStorage)
+                userSettings.Clear();
             TraktAPI.TraktAPI.getTrendingMovies().Subscribe(onNext: res => Movies = res, onError: error => handleError(error));
             TraktAPI.TraktAPI.getTrendingShows().Subscribe(onNext: res => Shows = res, onError: error => handleError(error));
             NotifyOfPropertyChange("UserAccount");
+            ready = true;
+        }
+
+        private void loginSuccess()
+        {
+            TraktSettings.Username = (string) userSettings["TraktUsername"];
+            TraktSettings.Password = (string) userSettings["TraktPassword"];
+            TraktSettings.LoggedIn = true;
+            getTrending(false);
         }
 
         private TraktMovie[] _movies;
@@ -36,7 +65,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void Account()
         {
-            navigationService.Navigate(new Uri("/Views/LogIn.xaml", UriKind.Relative));
+            if(ready)
+                navigationService.Navigate(new Uri("/Views/LogIn.xaml", UriKind.Relative));
             
             NotifyOfPropertyChange("UserAccount");
         }

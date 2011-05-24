@@ -59,6 +59,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
+                System.Diagnostics.Debug.WriteLine(string.Format("Logged in ? {0}", TraktSettings.LoggedIn));
                 if (Movie != null && TraktSettings.LoggedIn)
                     return "Visible";
                 else
@@ -107,8 +108,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
+                System.Diagnostics.Debug.WriteLine(Movie);
                 if (Movie == null || Movie.Rating == null)
                     return "";
+                System.Diagnostics.Debug.WriteLine(Movie.Rating);
                 if (Movie.Rating.CompareTo("love") == 0)
                     return "Love it!";
                 if (Movie.Rating.CompareTo("hate") == 0)
@@ -121,7 +124,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null || Movie.Rating == null)
+                if (Movie == null || Movie.Ratings == null)
                     return "";
                 return Movie.Ratings.Percentage + "%";
             }
@@ -141,7 +144,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null || Movie.Ratings == null || Movie.Ratings.Percentage == 0)
+                if (Movie == null || Movie.Ratings == null)
                     return "";
                 if (Movie.Ratings.Percentage >= 50)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/iconLove.png";
