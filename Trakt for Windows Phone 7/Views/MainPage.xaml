@@ -91,6 +91,18 @@
                 </i:Interaction.Triggers>
             </Image>
         </Grid>
-        <TextBox HorizontalAlignment="Left" Margin="234,0,0,702" Name="searchBox" Text="Search" Width="246" Height="70" />
+        <TextBox HorizontalAlignment="Left" Margin="234,0,0,702" x:Name="searchBox" Text="{Binding Search, Mode=TwoWay }" Width="246" Height="70" InputScope="ApplicationEnd" KeyUp="searchBox_KeyUp">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <ca:ActionMessage MethodName="ClearSearch" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="KeyUp" >
+                    <ca:ActionMessage MethodName="DoSearch" >
+                        <ca:Parameter Value="$eventArgs" />
+                    </ca:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBox Visibility="Collapsed" Margin="167,12,243,715" Name="giveMeFocus" />
     </Grid>
 </phone:PhoneApplicationPage>

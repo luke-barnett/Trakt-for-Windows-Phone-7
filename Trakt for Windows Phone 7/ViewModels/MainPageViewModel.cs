@@ -6,6 +6,7 @@ using Microsoft.Phone.Reactive;
 using System.Collections.Generic;
 using System.Windows;
 using System.IO.IsolatedStorage;
+using System.Windows.Input;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -18,6 +19,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             this.navigationService = navigationService;
             userSettings = IsolatedStorageSettings.ApplicationSettings;
+            Search = "Search";
             if (userSettings.Contains("TraktUsername"))
             {
                 //Try log in
@@ -105,6 +107,22 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (_shows != null && _shows[2] != null)
                 navigationService.Navigate(new Uri("/Views/Show.xaml?TVDBID=" + _shows[2].TVDBID, UriKind.Relative));
+        }
+
+        private string _Search;
+        public string Search { get { return _Search; } set { _Search = value; NotifyOfPropertyChange("Search"); } }
+
+        public void ClearSearch()
+        {
+            Search = "";
+        }
+
+        public void DoSearch(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                navigationService.Navigate(new Uri("/Views/Search.xaml?SearchString=" + Search, UriKind.Relative));
+            }
         }
     }
 }

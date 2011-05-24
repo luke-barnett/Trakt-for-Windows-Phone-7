@@ -20,6 +20,7 @@
             container.RegisterPerRequest(typeof(ShowViewModel), "ShowViewModel", typeof(ShowViewModel));
             container.RegisterPerRequest(typeof(SeasonViewModel), "SeasonViewModel", typeof(SeasonViewModel));
             container.RegisterPerRequest(typeof(EpisodeViewModel), "EpisodeViewModel", typeof(EpisodeViewModel));
+            container.RegisterPerRequest(typeof(SearchViewModel), "SearchViewModel", typeof(SearchViewModel));
 
             container.RegisterInstance(typeof(INavigationService), null, new FrameAdapter(RootFrame));
             container.RegisterInstance(typeof(IPhoneService), null, new PhoneApplicationServiceAdapter(PhoneService));
