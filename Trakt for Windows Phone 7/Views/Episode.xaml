@@ -12,6 +12,7 @@
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
+            <RowDefinition Height="300" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,6 +22,65 @@
             <ScrollViewer HorizontalAlignment="Stretch">
                 <TextBlock Text="{Binding EpisodeTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Margin="0,5,0,0" Source="{Binding Episode.Episode.Images.Screen}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding AirTime}" Grid.Row="0" Margin="0,5,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding Country}" Grid.Row="1" />
+                <TextBlock Text="{Binding CombinedSeasonAndEpisodeText}" Grid.Row="2" />
+                <TextBlock Text="{Binding Certification}" Grid.Row="3" />
+                <Grid Grid.Row="4" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding RatingImage}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{Binding RatingPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" />
+                        <TextBlock Grid.Row="1" Text="{Binding RatingCount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="5" Visibility="{Binding LoggedIn}" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="70" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding UserRatingText}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="32" Margin="0,0,10,0" />
+                    <Image Source="{Binding LoveImage}" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <ca:ActionMessage MethodName="Love" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <Image Source="{Binding HateImage}" Grid.Column="3">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <ca:ActionMessage MethodName="Hate" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

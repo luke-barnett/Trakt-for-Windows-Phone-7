@@ -6,9 +6,6 @@ namespace TraktAPI.TraktModels
     [DataContract]
     public class TraktEpisode
     {
-        [DataMember(Name = "plays")]
-        public int Plays { get; set; }
-
         [DataMember(Name = "season")]
         public int Season { get; set; }
 
@@ -38,6 +35,10 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "rating")]
         public string Rating { get; set; }
+
+        [DataMember(Name = "plays")]
+        public int Plays { get; set; }
+
 
         public string CombinedSeasonAndEpisodeText
         {

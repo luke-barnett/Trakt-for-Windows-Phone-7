@@ -119,6 +119,16 @@ namespace TraktAPI
             return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Season, tvdbid, seasonNumber)), parseSeason, GetUserAuthentication());
         }
 
+        public static IObservable<TraktEpisodeSummary> getEpisodeSummary(string tvdbid, string seasonNumber, string episodeNumber)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.EpisodeDetails, TraktDetailsTypes.summary, tvdbid, seasonNumber, episodeNumber)), parseEpisodeSummary, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktRateResponse> rateEpisode(string TVDBID, string IMDBID, string Title, int Year, string SeasonNumber, string EpisodeNumber, string Rating)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.episode)), parseRatingResponse, CreateEpisodeRatingPayload(TVDBID, IMDBID, Title, Year, SeasonNumber, EpisodeNumber, Rating));
+        }
+
         #endregion
 
         #region Parsers
@@ -162,6 +172,11 @@ namespace TraktAPI
         {
             return JsonConvert.DeserializeObject<TraktEpisode[]>(json);
         }
+
+        private static TraktEpisodeSummary parseEpisodeSummary(string json)
+        {
+            return JsonConvert.DeserializeObject<TraktEpisodeSummary>(json);
+        }
         #endregion
 
         #region Creators
@@ -183,6 +198,11 @@ namespace TraktAPI
         private static string CreateShowRatingPayload(string TVDBID, string IMDBID, string Title, int Year, string Rating)
         {
             return JsonConvert.SerializeObject(new TraktUserShowRating() { Username = TraktSettings.Username, Password = TraktSettings.Password, TVDBID = TVDBID, IMDBID = IMDBID, Title = Title, Year = Year, Rating = Rating });
+        }
+
+        private static string CreateEpisodeRatingPayload(string TVDBID, string IMDBID, string Title, int Year, string SeasonNumber, string EpisodeNumber, string Rating)
+        {
+            return JsonConvert.SerializeObject(new TraktUserEpisodeRating() { Username = TraktSettings.Username, Password = TraktSettings.Password, TVDBID = TVDBID, IMDBID = IMDBID, Title = Title, Year = Year, EpisodeNumber = EpisodeNumber, SeasonNumber = SeasonNumber, Rating = Rating }); ;
         }
 
         #endregion
