@@ -4,5 +4,16 @@
              xmlns:local="clr-namespace:Trakt_for_Windows_Phone_7.Framework">
 	<Application.Resources>
         <local:Trakt_for_Windows_Phone_7Bootstrapper x:Key="bootstrapper" />
+        <Style TargetType="ListBox" x:Name="HorizontalListBox">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal" IsItemsHost="True" CanHorizontallyScroll="True" CanVerticallyScroll="False"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        </Style>
     </Application.Resources>
 </Application>

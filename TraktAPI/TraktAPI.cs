@@ -114,6 +114,10 @@ namespace TraktAPI
             return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.SeasonInfo, tvdbid)), parseSeasonInfo);
         }
 
+        public static IObservable<TraktEpisode[]> getSeason(string tvdbid, string seasonNumber)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Season, tvdbid, seasonNumber)), parseSeason, GetUserAuthentication());
+        }
 
         #endregion
 
@@ -152,6 +156,11 @@ namespace TraktAPI
         private static TraktSeasonInfo[] parseSeasonInfo(string json)
         {
             return JsonConvert.DeserializeObject<TraktSeasonInfo[]>(json);
+        }
+
+        private static TraktEpisode[] parseSeason(string json)
+        {
+            return JsonConvert.DeserializeObject<TraktEpisode[]>(json);
         }
         #endregion
 

@@ -12,11 +12,14 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "season")]
         public int Season { get; set; }
 
-        [DataMember(Name = "number")]
-        public int Number { get; set; }
+        [DataMember(Name = "episode")]
+        public int Episode { get; set; }
 
         [DataMember(Name = "title")]
         public string Title { get; set; }
+
+        [DataMember(Name = "overview")]
+        public string Overview { get; set; }
 
         [DataMember(Name = "url")]
         public string Url { get; set; }
@@ -35,5 +38,13 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "rating")]
         public string Rating { get; set; }
+
+        public string CombinedSeasonAndEpisodeText
+        {
+            get
+            {
+                return string.Format("Season {0} Episode {1}", Season, Episode);
+            }
+        }
     }
 }

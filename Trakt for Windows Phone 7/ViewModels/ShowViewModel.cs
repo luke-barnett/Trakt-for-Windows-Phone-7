@@ -199,14 +199,16 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private List<TraktSeasonInfo> _seasons;
-        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; NotifyOfPropertyChange("Seasons"); } }
+        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; } }
 
         public TraktSeasonInfo SelectedSeason { get; set; }
 
         public void ViewSeason()
         {
-            if(SelectedSeason != null)
-                MessageBox.Show(SelectedSeason.AsString);
+            if (SelectedSeason != null)
+            {
+                navigationService.Navigate(new Uri("/Views/Season.xaml?TVDBID=" + Show.TVDBID + "&SeasonNumber=" + SelectedSeason.Season + "&ShowTitle=" + Show.Title, UriKind.Relative));
+            }
         }
 
         public void updateDisplay()
@@ -224,6 +226,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("UserRatingText");
             NotifyOfPropertyChange("LoveImage");
             NotifyOfPropertyChange("HateImage");
+            NotifyOfPropertyChange("Seasons");
         }
 
         private void newRatings()

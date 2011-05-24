@@ -15,9 +15,9 @@
             <RowDefinition Height="60" />
             <RowDefinition Height="300" />
             <RowDefinition Height="10" />
-            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="60" />
-            <RowDefinition Height="170" />
+            <RowDefinition Height="280" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="480" />
@@ -86,10 +86,10 @@
                 </Grid>
             </Grid>
         </Grid>
-        <ListBox Grid.Column="0" Grid.Row="3" ItemsSource="{Binding Seasons}" SelectedItem="{Binding SelectedSeason, Mode=TwoWay}">
+        <ListBox Grid.Column="0" Grid.Row="3" ItemsSource="{Binding Seasons}" SelectedItem="{Binding SelectedSeason, Mode=TwoWay}" Style="{StaticResource HorizontalListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding AsString}" FontSize="26" />
+                    <TextBlock Text="{Binding AsString}" FontSize="26" Margin="10,0,0,0" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <i:Interaction.Triggers>

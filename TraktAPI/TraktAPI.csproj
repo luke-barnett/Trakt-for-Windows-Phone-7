@@ -67,7 +67,6 @@
     <Compile Include="TraktModels\TraktRateResponse.cs" />
     <Compile Include="TraktModels\TraktRatings.cs" />
     <Compile Include="TraktModels\TraktResponse.cs" />
-    <Compile Include="TraktModels\TraktSeason.cs" />
     <Compile Include="TraktModels\TraktSeasonInfo.cs" />
     <Compile Include="TraktModels\TraktShow.cs" />
     <Compile Include="TraktModels\TraktStats.cs" />
