@@ -21,7 +21,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public TraktMovie Movie { get { return _movie; } set { _movie = value; updateDisplay(); } }
 
         private string _movieTitle;
-        public string MovieTitle { get { return _movieTitle; } set { _movieTitle = value; TraktAPI.TraktAPI.getMovie(MovieTitle).Subscribe(movie => Movie = movie); System.Diagnostics.Debug.WriteLine(MovieTitle); } }
+        public string MovieTitle { get { return _movieTitle; } set { _movieTitle = value; TraktAPI.TraktAPI.getMovie(MovieTitle).Subscribe(onNext: movie => Movie = movie, onError: error => handleError(error)); System.Diagnostics.Debug.WriteLine(MovieTitle); } }
 
         public String Year
         {
@@ -59,7 +59,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie != null || TraktSettings.LoggedIn)
+                if (Movie != null && TraktSettings.LoggedIn)
                     return "Visible";
                 else
                     return "Collapsed";
@@ -80,7 +80,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null)
+                if (Movie == null || Movie.Rating == null)
                     return "";
 
                 if (Movie.Rating.CompareTo("hate") == 0)
@@ -94,7 +94,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null)
+                if (Movie == null || Movie.Rating == null)
                     return "";
                 if (Movie.Rating.CompareTo("love") == 0)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/hate_f.png";
@@ -107,7 +107,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null)
+                if (Movie == null || Movie.Rating == null)
                     return "";
                 if (Movie.Rating.CompareTo("love") == 0)
                     return "Love it!";
@@ -121,7 +121,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Movie == null)
+                if (Movie == null || Movie.Rating == null)
                     return "";
                 return Movie.Ratings.Percentage + "%";
             }
@@ -197,12 +197,12 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (Movie.Rating.CompareTo("love") == 0)
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Movie.Rating = "";
             }
             else
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.love.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.love.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Movie.Rating = "love";
             }
             NotifyOfPropertyChange("LoveImage");
@@ -214,12 +214,12 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (Movie.Rating.CompareTo("hate") == 0)
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.unrate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Movie.Rating = "";
             }
             else
             {
-                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.hate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateMovie(Movie.IMDBID, Movie.Title, Movie.Year, TraktRateTypes.hate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Movie.Rating = "hate";
             }
             NotifyOfPropertyChange("LoveImage");

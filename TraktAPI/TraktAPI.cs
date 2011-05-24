@@ -154,6 +154,16 @@ namespace TraktAPI
             return syncEpisode(TVDBID, IMDBID, Title, Year, SeasonNumber, EpisodeNumber, TraktSyncModes.unwatchlist.ToString());
         }
 
+        public static IObservable<TraktResponse> createAccount(string Username, string Password, string Email)
+        {
+            return WebRequestFactory.PostData(new Uri(TraktURIs.CreateAccount), parseTraktResponse, CreateNewAccountPayload(Username, Password, Email));
+        }
+
+        public static IObservable<TraktResponse> testAccount(string Username, string Password)
+        {
+            return WebRequestFactory.PostData(new Uri(TraktURIs.TestAccount), parseTraktResponse, CreateTestAccountPayload(Username, Password));
+        }
+
         #endregion
 
         #region Parsers
@@ -235,6 +245,16 @@ namespace TraktAPI
         {
             System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(new TraktEpisodeSync() { UserName = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = IMDBID, TVDBID = TVDBID, Title = Title, Year = Year, EpisodeList = new List<TraktEpisodeSync.Episode>() { new TraktEpisodeSync.Episode() { SeasonNumber = SeasonNumber, EpisodeNumber = EpisodeNumber } } }));
             return JsonConvert.SerializeObject(new TraktEpisodeSync() { UserName = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = IMDBID, TVDBID = TVDBID, Title = Title, Year = Year, EpisodeList = new List<TraktEpisodeSync.Episode>() { new TraktEpisodeSync.Episode() { SeasonNumber = SeasonNumber, EpisodeNumber = EpisodeNumber } } });
+        }
+
+        private static string CreateNewAccountPayload(string Username, string Password, string Email)
+        {
+            return JsonConvert.SerializeObject(new TraktAccount() { Username = Username, Password = Password, Email = Email });
+        }
+
+        private static string CreateTestAccountPayload(string Username, string Password)
+        {
+            return JsonConvert.SerializeObject(new TraktAccount() { Username = Username, Password = Password });
         }
 
         #endregion

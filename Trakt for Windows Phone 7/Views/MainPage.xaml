@@ -12,8 +12,8 @@
     
 	<Grid Background="Transparent">
         <Image Height="144" HorizontalAlignment="Left" Name="traktLogo" Stretch="UniformToFill" VerticalAlignment="Top" Width="160" Source="/Trakt%20for%20Windows%20Phone%207;component/Artwork/traktLogoInverted.png" />
-        <TextBlock Height="60" HorizontalAlignment="Left" Margin="167,72,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="201" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
-        <TextBlock Height="40" HorizontalAlignment="Left" Margin="374,104,0,0" Name="login" Text="{Binding UserAccount}" VerticalAlignment="Top" Width="94" Foreground="White" FontSize="32" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" TextAlignment="Right">
+        <TextBlock Height="60" HorizontalAlignment="Left" Margin="167,72,0,0" Name="title" Text="{Binding ApplicationName}" VerticalAlignment="Top" Width="167" Foreground="White" FontSize="48" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" />
+        <TextBlock Height="40" HorizontalAlignment="Left" Margin="338,104,0,0" Name="login" Text="{Binding UserAccount}" VerticalAlignment="Top" Width="136" Foreground="White" FontSize="32" FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans" TextAlignment="Right">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <ca:ActionMessage MethodName="Account" />

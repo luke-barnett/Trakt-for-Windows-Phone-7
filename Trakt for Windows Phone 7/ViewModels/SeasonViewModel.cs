@@ -19,10 +19,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         private string _TVDBID;
         private bool bothValues = false;
-        public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; if(bothValues) TraktAPI.TraktAPI.getSeason(TVDBID, SeasonNumber).Subscribe(response => Season = response); bothValues = true;} }
+        public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; if(bothValues) TraktAPI.TraktAPI.getSeason(TVDBID, SeasonNumber).Subscribe(onNext: result => Season = result, onError: error => handleError(error)); bothValues = true;} }
         
         private string _SeasonNumber;
-        public string SeasonNumber { get { return _SeasonNumber ; } set { _SeasonNumber = value; if(bothValues) TraktAPI.TraktAPI.getSeason(TVDBID, SeasonNumber).Subscribe(response => Season = response); bothValues = true;}}
+        public string SeasonNumber { get { return _SeasonNumber; } set { _SeasonNumber = value; if (bothValues) TraktAPI.TraktAPI.getSeason(TVDBID, SeasonNumber).Subscribe(onNext: result => Season = result, onError: error => handleError(error)); bothValues = true; } }
 
         private TraktEpisode[] _Season;
         public TraktEpisode[] Season { get { return _Season; } set { _Season = value; updateDisplay(); } }

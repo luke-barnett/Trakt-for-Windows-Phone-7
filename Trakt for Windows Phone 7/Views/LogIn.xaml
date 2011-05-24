@@ -1,0 +1,58 @@
+﻿<phone:PhoneApplicationPage x:Class="Trakt_for_Windows_Phone_7.Views.LogIn"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
+                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="1" Height="72" HorizontalAlignment="Left" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <ca:ActionMessage MethodName="ClearUsername" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <PasswordBox Grid.Row="2" Height="72" HorizontalAlignment="Left" Password="{Binding Password, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <ca:ActionMessage MethodName="ClearPassword" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
+        <TextBox Grid.Row="3" Height="72" HorizontalAlignment="Left" Text="{Binding Email, Mode=TwoWay}" VerticalAlignment="Top" Width="460" Visibility="{Binding Registration}" IsEnabled="True" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <ca:ActionMessage MethodName="ClearEmail" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Grid Grid.Row="4" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="NewAccount" Content="New Account" Visibility="{Binding LoggingIn}" IsEnabled="{Binding Wait}" />
+            <Button Grid.Column="1" Name="BackToLogIn" Content="Back" Visibility="{Binding Registration}"  IsEnabled="{Binding Wait}"/>
+            <Button Grid.Column="2" Name="Register" Content="Register" Visibility="{Binding Registration}"  IsEnabled="{Binding Wait}"/>
+            <Button Grid.Column="3" Name="LogIntoTrakt" Content="Log In" Visibility="{Binding LoggingIn}"  IsEnabled="{Binding Wait}"/>
+            <Button Grid.Column="4" Name="LogOutOfTrakt" Content="Log Out" Visibility="{Binding LoggedIn}" />
+        </Grid>
+    </Grid>
+ 
+</phone:PhoneApplicationPage>

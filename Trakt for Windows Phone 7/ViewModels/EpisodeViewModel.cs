@@ -24,7 +24,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public string SeasonNumber { get { return _SeasonNumber; } set { _SeasonNumber = value; System.Diagnostics.Debug.WriteLine(SeasonNumber); } }
 
         private string _EpisodeNumber;
-        public string EpisodeNumber { get { return _EpisodeNumber; } set { _EpisodeNumber = value; System.Diagnostics.Debug.WriteLine(EpisodeNumber); TraktAPI.TraktAPI.getEpisodeSummary(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(response => Episode = response); } }
+        public string EpisodeNumber { get { return _EpisodeNumber; } set { _EpisodeNumber = value; System.Diagnostics.Debug.WriteLine(EpisodeNumber); TraktAPI.TraktAPI.getEpisodeSummary(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: response => Episode = response, onError: error => handleError(error)); } }
 
         private TraktEpisodeSummary _Episode;
         public TraktEpisodeSummary Episode { get { return _Episode; } set { _Episode = value; updateDisplay(); } }
@@ -145,7 +145,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Episode != null || TraktSettings.LoggedIn)
+                if (Episode != null && TraktSettings.LoggedIn)
                     return "Visible";
                 else
                     return "Collapsed";
@@ -156,7 +156,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Episode == null)
+                if (Episode == null || Episode.Episode.Rating == null)
                     return "";
                 if (Episode.Episode.Rating.CompareTo("love") == 0)
                     return "Love it!";
@@ -170,7 +170,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Episode == null)
+                if (Episode == null || Episode.Episode.Rating == null)
                     return "";
 
                 if (Episode.Episode.Rating.CompareTo("hate") == 0)
@@ -184,7 +184,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (Episode == null)
+                if (Episode == null || Episode.Episode.Rating == null)
                     return "";
                 if (Episode.Episode.Rating.CompareTo("love") == 0)
                     return "/Trakt%20for%20Windows%20Phone%207;component/Artwork/hate_f.png";
@@ -227,12 +227,12 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (Episode.Episode.Rating.CompareTo("love") == 0)
             {
-                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.unrate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Episode.Episode.Rating = "";
             }
             else
             {
-                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.love.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.love.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Episode.Episode.Rating = "love";
             }
             NotifyOfPropertyChange("LoveImage");
@@ -244,12 +244,12 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (Episode.Episode.Rating.CompareTo("hate") == 0)
             {
-                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.unrate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.unrate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Episode.Episode.Rating = "";
             }
             else
             {
-                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.hate.ToString()).Subscribe(response => ratings = response.Ratings);
+                TraktAPI.TraktAPI.rateEpisode(TVDBID, Episode.Show.IMDBID, EpisodeTitle, Episode.Show.Year, SeasonNumber, EpisodeNumber, TraktRateTypes.hate.ToString()).Subscribe(onNext: response => ratings = response.Ratings, onError: error => handleError(error));
                 Episode.Episode.Rating = "hate";
             }
             NotifyOfPropertyChange("LoveImage");

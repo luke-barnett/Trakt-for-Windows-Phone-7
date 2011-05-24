@@ -15,6 +15,7 @@
             container = new PhoneContainer(this);
 
             container.RegisterSingleton(typeof(MainPageViewModel), "MainPageViewModel", typeof(MainPageViewModel));
+            container.RegisterPerRequest(typeof(LogInViewModel), "LogInViewModel", typeof(LogInViewModel));
             container.RegisterPerRequest(typeof(MovieViewModel), "MovieViewModel", typeof(MovieViewModel));
             container.RegisterPerRequest(typeof(ShowViewModel), "ShowViewModel", typeof(ShowViewModel));
             container.RegisterPerRequest(typeof(SeasonViewModel), "SeasonViewModel", typeof(SeasonViewModel));

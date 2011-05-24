@@ -4,10 +4,11 @@ using System.Linq;
 using System.IO;
 using Microsoft.Phone.Reactive;
 using System.Text;
+using System.ComponentModel;
 
 namespace TraktAPI
 {
-    public class WebRequestFactory
+    public static class WebRequestFactory
     {
         public static IObservable<T> GetData<T>(Uri uri, Func<string, T> generator)
         {
@@ -20,10 +21,10 @@ namespace TraktAPI
         public static IObservable<T> PostData<T>(Uri uri, Func<string, T> generator, String postData)
         {
             System.Diagnostics.Debug.WriteLine(uri);
-            WebClient wc = CreatePostWebClient(uri, postData);
-            return (from e in Observable.FromEvent<UploadStringCompletedEventArgs>(wc, "UploadStringCompleted")
-                    select generator(e.EventArgs.Result)).ObserveOnDispatcher();
-            
+            WebClient wc = CreatePostWebClient(uri);
+            var result = Observable.FromEvent<UploadStringCompletedEventHandler, UploadStringCompletedEventArgs>(ev => new UploadStringCompletedEventHandler(ev), ev => wc.UploadStringCompleted += ev, ev => wc.UploadStringCompleted -= ev).ThrowIfError().Select(o => generator(o.EventArgs.Result));
+            wc.UploadStringAsync(uri, postData);
+            return result;
         }
 
         private static WebRequest CreateWebRequest(Uri uri)
@@ -33,12 +34,26 @@ namespace TraktAPI
             return ret;
         }
 
-        public static WebClient CreatePostWebClient(Uri uri, string postData)
+        public static WebClient CreatePostWebClient(Uri uri)
         {
             var wc = new WebClient();
             wc.AllowReadStreamBuffering = false;
-            wc.UploadStringAsync(uri, postData);
             return wc;
+        }
+
+        public static IObservable<IEvent<T>> ThrowIfError<T>(this IObservable<IEvent<T>> observable)
+            where T : AsyncCompletedEventArgs
+        {
+            return observable.SelectMany(
+                o =>
+                {
+                    if (o.EventArgs.Error != null)
+                    {
+                        throw o.EventArgs.Error;
+                    }
+
+                    return Observable.Return(o);
+                });
         }
     }
 }

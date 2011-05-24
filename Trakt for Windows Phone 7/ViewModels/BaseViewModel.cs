@@ -10,5 +10,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
     public class BaseViewModel : PropertyChangedBase
     {
         public string ApplicationName { get { return "Trakt 7"; } }
+
+        public void handleError(Exception error)
+        {
+            System.Diagnostics.Debug.WriteLine(string.Format("CAUGHT ERROR {0}", error.Message));
+        }
     }
 }

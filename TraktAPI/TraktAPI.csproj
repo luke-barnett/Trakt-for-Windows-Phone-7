@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="TraktAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraktModels\TraktAccount.cs" />
     <Compile Include="TraktModels\TraktAuthentication.cs" />
     <Compile Include="TraktModels\TraktEpisode.cs" />
     <Compile Include="TraktModels\TraktEpisodeSummary.cs" />

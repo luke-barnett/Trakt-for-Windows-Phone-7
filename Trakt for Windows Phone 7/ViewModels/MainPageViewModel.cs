@@ -15,12 +15,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-            TraktSettings.Username = "Onenottoforget";
-            TraktSettings.Password = "14499cef17c09db01929ca1458dedb4f15b85ce1";
-            TraktSettings.LoggedIn = true;
-            TraktAPI.TraktAPI.getTrendingMovies().Subscribe(res => Movies = res);
-            TraktAPI.TraktAPI.getTrendingShows().Subscribe(res => Shows = res);
-
+            TraktAPI.TraktAPI.getTrendingMovies().Subscribe(onNext: res => Movies = res, onError: error => handleError(error));
+            TraktAPI.TraktAPI.getTrendingShows().Subscribe(onNext: res => Shows = res, onError: error => handleError(error));
+            NotifyOfPropertyChange("UserAccount");
         }
 
         private TraktMovie[] _movies;
@@ -33,11 +30,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             get
             {
-                if (TraktSettings.LoggedIn)
-                    return "My Account";
-                else
-                    return "Log in";
+                return "Account";
             }
+        }
+
+        public void Account()
+        {
+            navigationService.Navigate(new Uri("/Views/LogIn.xaml", UriKind.Relative));
+            
+            NotifyOfPropertyChange("UserAccount");
         }
 
         public void Movie0()
