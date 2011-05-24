@@ -103,6 +103,5 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <TextBox Visibility="Collapsed" Margin="167,12,243,715" Name="giveMeFocus" />
     </Grid>
 </phone:PhoneApplicationPage>
