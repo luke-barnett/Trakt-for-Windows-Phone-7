@@ -10,16 +10,15 @@
                             FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 
-    <Grid Background="Transparent">
+    <Grid Background="Transparent" Margin="10,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="480" />
+            <ColumnDefinition Width="470" />
         </Grid.ColumnDefinitions>
-        
-        <TextBlock Grid.Row="0" MinHeight="80" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+        <TextBlock Grid.Row="0" MinHeight="80" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32"/>
     </Grid>
 </phone:PhoneApplicationPage>

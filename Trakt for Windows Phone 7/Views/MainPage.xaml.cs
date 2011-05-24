@@ -10,10 +10,5 @@
         {
             InitializeComponent();
         }
-
-        private void searchBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            searchBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-        }
     }
 }

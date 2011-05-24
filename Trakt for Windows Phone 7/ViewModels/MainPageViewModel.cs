@@ -19,7 +19,6 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             this.navigationService = navigationService;
             userSettings = IsolatedStorageSettings.ApplicationSettings;
-            Search = "Search";
             if (userSettings.Contains("TraktUsername"))
             {
                 //Try log in
@@ -109,20 +108,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 navigationService.Navigate(new Uri("/Views/Show.xaml?TVDBID=" + _shows[2].TVDBID, UriKind.Relative));
         }
 
-        private string _Search;
-        public string Search { get { return _Search; } set { _Search = value; NotifyOfPropertyChange("Search"); } }
-
-        public void ClearSearch()
+        public void DoSearch()
         {
-            Search = "";
-        }
-
-        public void DoSearch(KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                navigationService.Navigate(new Uri("/Views/Search.xaml?SearchString=" + Search, UriKind.Relative));
-            }
+            navigationService.Navigate(new Uri("/Views/Search.xaml?", UriKind.Relative));
         }
     }
 }
