@@ -29,6 +29,16 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private TraktShow[] _shows;
         public TraktShow[] Shows { get { return _shows; } set { _shows = value; NotifyOfPropertyChange("Shows"); } }
 
+        public string UserAccount
+        {
+            get
+            {
+                if (TraktSettings.LoggedIn)
+                    return "My Account";
+                else
+                    return "Log in";
+            }
+        }
 
         public void Movie0()
         {

@@ -13,6 +13,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="300" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -81,6 +84,39 @@
                     </Image>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid Grid.Row="3" Visibility="{Binding LoggedIn}" Margin="0,0,0,5">
+            <Grid Margin="50,5,5,0" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Background="{StaticResource PhoneAccentBrush}" Width="185">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <ca:ActionMessage MethodName="ToggleWatched" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="{Binding WatchedThis}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
+                </Grid>
+                <Grid Grid.Column="2" Background="{StaticResource PhoneAccentBrush}" Width="190" Visibility="{Binding showWatchList}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <ca:ActionMessage MethodName="ToggleWatchList" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="{Binding WatchList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="4" Background="{StaticResource PhoneAccentBrush}">
+            <TextBlock Text="Summary" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <Grid Grid.Row="5" VerticalAlignment="Stretch">
+            <ScrollViewer VerticalAlignment="Stretch">
+                <TextBlock Text="{Binding Episode.Episode.Overview}" TextWrapping="Wrap"  />
+            </ScrollViewer>
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

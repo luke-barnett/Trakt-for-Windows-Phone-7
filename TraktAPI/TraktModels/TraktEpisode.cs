@@ -12,6 +12,9 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "episode")]
         public int Episode { get; set; }
 
+        [DataMember(Name = "number")]
+        public int Number { get { return Episode; } set { Episode = value; } }
+
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
@@ -38,6 +41,8 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "plays")]
         public int Plays { get; set; }
+
+        public bool OnWatchList { get; set; }
 
 
         public string CombinedSeasonAndEpisodeText

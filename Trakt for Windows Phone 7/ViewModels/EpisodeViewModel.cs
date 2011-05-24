@@ -46,6 +46,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("UserRatingText");
             NotifyOfPropertyChange("LoveImage");
             NotifyOfPropertyChange("HateImage");
+            NotifyOfPropertyChange("WatchedThis");
+            NotifyOfPropertyChange("WatchList");
+            NotifyOfPropertyChange("showWatchList");
         }
 
         private void newRatings()
@@ -190,6 +193,36 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
         }
 
+        public string WatchedThis
+        {
+            get
+            {
+                if (Episode == null)
+                    return "";
+                return Episode.Episode.Watched ? "You've watched This!" : "I've watched this";
+            }
+        }
+
+        public string WatchList
+        {
+            get
+            {
+                if (Episode == null)
+                    return "";
+                return Episode.Episode.OnWatchList ? "Remove from watchlist" : "Add to watchlist";
+            }
+        }
+
+        public string showWatchList
+        {
+            get
+            {
+                if (Episode == null || Episode.Episode.Watched)
+                    return "Collapsed";
+                return "Visible";
+            }
+        }
+
         public void Love()
         {
             if (Episode.Episode.Rating.CompareTo("love") == 0)
@@ -222,6 +255,40 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("LoveImage");
             NotifyOfPropertyChange("HateImage");
             NotifyOfPropertyChange("UserRatingText");
+        }
+
+        public void ToggleWatched()
+        {
+            if (Episode.Episode.Watched)
+            {
+                TraktAPI.TraktAPI.unwatchEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
+                Episode.Episode.Watched = false;
+            }
+            else
+            {
+                TraktAPI.TraktAPI.watchEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
+                Episode.Episode.Watched = true;
+                Episode.Episode.OnWatchList = false;
+                NotifyOfPropertyChange("WatchList");
+            }
+            NotifyOfPropertyChange("WatchedThis");
+            NotifyOfPropertyChange("showWatchList");
+
+        }
+
+        public void ToggleWatchList()
+        {
+            if (Episode.Episode.OnWatchList)
+            {
+                TraktAPI.TraktAPI.unwatchListEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
+                Episode.Episode.OnWatchList = false;
+            }
+            else
+            {
+                TraktAPI.TraktAPI.watchListEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
+                Episode.Episode.OnWatchList = true;
+            }
+            NotifyOfPropertyChange("WatchList");
         }
 
     }

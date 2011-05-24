@@ -62,6 +62,7 @@
     <Compile Include="TraktModels\TraktAuthentication.cs" />
     <Compile Include="TraktModels\TraktEpisode.cs" />
     <Compile Include="TraktModels\TraktEpisodeSummary.cs" />
+    <Compile Include="TraktModels\TraktEpisodeSync.cs" />
     <Compile Include="TraktModels\TraktImages.cs" />
     <Compile Include="TraktModels\TraktMovie.cs" />
     <Compile Include="TraktModels\TraktMovieSync.cs" />
