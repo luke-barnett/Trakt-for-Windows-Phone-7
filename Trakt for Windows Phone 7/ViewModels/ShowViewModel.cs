@@ -238,5 +238,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("RatingPercentage");
             NotifyOfPropertyChange("RatingCount");
         }
+
+        public void SendShout()
+        {
+            navigationService.Navigate(new Uri("/Views/Shout.xaml?ItemType=show&TVDBID=" + TVDBID, UriKind.Relative));
+        }
+
     }
 }

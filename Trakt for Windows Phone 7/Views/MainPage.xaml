@@ -120,7 +120,7 @@
             </Grid>
         </Grid>
     </Grid>
-        <phone:PhoneApplicationPage.ApplicationBar>
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True">
             <shell:ApplicationBar.MenuItems>
                 <ca:AppBarMenuItem Message="Account" Text="Manage Account"  />

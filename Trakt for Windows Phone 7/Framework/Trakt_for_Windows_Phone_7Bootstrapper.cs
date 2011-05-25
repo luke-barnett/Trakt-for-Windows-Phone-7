@@ -23,6 +23,7 @@
             container.RegisterPerRequest(typeof(SearchViewModel), "SearchViewModel", typeof(SearchViewModel));
             container.RegisterPerRequest(typeof(RecommendationsViewModel), "RecommendationsViewModel", typeof(RecommendationsViewModel));
             container.RegisterPerRequest(typeof(WatchListViewModel), "WatchListViewModel", typeof(WatchListViewModel));
+            container.RegisterPerRequest(typeof(ShoutViewModel), "ShoutViewModel", typeof(ShoutViewModel));
 
             container.RegisterInstance(typeof(INavigationService), null, new FrameAdapter(RootFrame));
             container.RegisterInstance(typeof(IPhoneService), null, new PhoneApplicationServiceAdapter(PhoneService));

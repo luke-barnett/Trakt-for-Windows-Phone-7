@@ -294,5 +294,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("WatchList");
         }
 
+        public void SendShout()
+        {
+            navigationService.Navigate(new Uri("/Views/Shout.xaml?ItemType=episode&TVDBID=" + TVDBID +"&Season=" + SeasonNumber + "&Episode=" + EpisodeNumber, UriKind.Relative));
+        }
     }
 }

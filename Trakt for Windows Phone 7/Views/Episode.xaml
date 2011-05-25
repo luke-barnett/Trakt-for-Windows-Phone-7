@@ -9,7 +9,7 @@
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
-                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
+                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="696" d:DesignWidth="480" HorizontalAlignment="Center">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -108,7 +108,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <controls:Pivot Grid.Row="4" Margin="-10,-30,-10,0">
+        <controls:Pivot Grid.Row="4" Margin="-12,-30,-12,0" >
             <controls:PivotItem >
                 <Grid>
                     <Grid.RowDefinitions>
@@ -120,7 +120,7 @@
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Stretch">
                         <ScrollViewer VerticalAlignment="Stretch">
-                            <TextBlock Text="{Binding Episode.Episode.Overview}" TextWrapping="Wrap"  />
+                            <TextBlock Margin="10,0" Text="{Binding Episode.Episode.Overview}" TextWrapping="Wrap"  />
                         </ScrollViewer>
                     </Grid>
                 </Grid>
@@ -132,13 +132,13 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Column="0" Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
-                        <TextBlock Text="Shouts" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Margin="5,0" Text="Shouts" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Stretch">
-                        <ListBox ItemsSource="{Binding Shouts}">
+                        <ListBox ItemsSource="{Binding Shouts}" Margin="10,0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0,5">
+                                    <Grid>
                                         <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
                                     </Grid>
                                 </DataTemplate>
@@ -149,4 +149,11 @@
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBar.Buttons>
+                <ca:AppBarButton IconUri="/Artwork/shout.png" Text="Shout" Message="SendShout" />
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
