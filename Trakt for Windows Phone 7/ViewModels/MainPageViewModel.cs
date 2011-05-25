@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.IO.IsolatedStorage;
 using System.Windows.Input;
+using Microsoft.Phone.Controls;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -29,6 +30,19 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 getTrending(true);
             }
 
+        }
+
+        public string TraktLogo
+        {
+            get
+            {
+                PhoneApplicationPage x = new PhoneApplicationPage();
+                var backColor = x.Resources["PhoneBackgroundColor"];
+                if (backColor.ToString() == "#FF000000")
+                    return "/Trakt for Windows Phone 7;component/Artwork/traktLogoInverted.png";
+                else
+                    return "/Trakt for Windows Phone 7;component/Artwork/traktLogo.png";
+            }
         }
 
         private bool ready = false;
