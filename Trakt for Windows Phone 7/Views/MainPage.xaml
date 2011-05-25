@@ -125,6 +125,8 @@
             <shell:ApplicationBar.MenuItems>
                 <ca:AppBarMenuItem Message="Account" Text="Manage Account"  />
                 <ca:AppBarMenuItem Message="DoSearch" Text="Search"  />
+                <ca:AppBarMenuItem Message="GetRecommendations" Text="Recommendations"  />
+                <ca:AppBarMenuItem Message="GetWatchList" Text="Your Watch List"  />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

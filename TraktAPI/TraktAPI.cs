@@ -180,6 +180,31 @@ namespace TraktAPI
             return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.episodes, SearchQuery)), parseEpisodeSummaryArray);
         }
 
+        public static IObservable<TraktMovie[]> getMovieRecommendations()
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Recommendations, TraktLibraryTypes.movies)), parseMovieArray, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktShow[]> getShowRecommendations()
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Recommendations, TraktLibraryTypes.shows)), parseShowArray, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktMovie[]> getMovieWatchList(string Username)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.WatchList, TraktLibraryTypes.movies, Username)), parseMovieArray, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktShow[]> getShowWatchList(string Username)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.WatchList, TraktLibraryTypes.shows, Username)), parseShowArray, GetUserAuthentication());
+        }
+
+        public static IObservable<TraktEpisode[]> getAndExtractEpisodeWatchList(string Username)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.WatchList, TraktLibraryTypes.episodes, Username)), parseAndExtractEpisodeWatchList, GetUserAuthentication());
+        }
+
         #endregion
 
         #region Parsers
@@ -233,6 +258,21 @@ namespace TraktAPI
         private static TraktEpisodeSummary[] parseEpisodeSummaryArray(string json)
         {
             return JsonConvert.DeserializeObject<TraktEpisodeSummary[]>(json);
+        }
+
+        private static TraktEpisode[] parseAndExtractEpisodeWatchList(string json)
+        {
+            TraktEpisodeWatchList[] asWatchListItems = JsonConvert.DeserializeObject<TraktEpisodeWatchList[]>(json);
+            List<TraktEpisode> asEpisodes = new List<TraktEpisode>();
+
+            foreach (TraktEpisodeWatchList watchList in asWatchListItems)
+                foreach (TraktEpisode episode in watchList.Episodes)
+                {
+                    episode.ShowTVDBID = watchList.TVDBID;
+                    asEpisodes.Add(episode);
+                }
+            
+            return asEpisodes.ToArray();
         }
         #endregion
 

@@ -20,6 +20,8 @@
         public const string Trending = @"http://api.trakt.tv/{0}/trending.json/" + ApiKey;
         //Shout
         public const string Shout = @"http://api.trakt.tv/shout/{0}/" + ApiKey;
+        //WatchList
+        public const string WatchList = @"http://api.trakt.tv/user/watchlist/{0}.json/" + ApiKey + @"/{1}";
         //Generic Show
         public const string ShowDetails = @"http://api.trakt.tv/show/{0}.json/" + ApiKey + @"/{1}";
         public const string ShowSummary = @"http://api.trakt.tv/show/{0}.json/" + ApiKey + @"/{1}/extended";

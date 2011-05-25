@@ -44,6 +44,7 @@ namespace TraktAPI.TraktModels
 
         public bool OnWatchList { get; set; }
 
+        public string ShowTVDBID { get; set; }
 
         public string CombinedSeasonAndEpisodeText
         {
@@ -52,5 +53,7 @@ namespace TraktAPI.TraktModels
                 return string.Format("Season {0} Episode {1}", Season, Episode);
             }
         }
+
+        public Uri Uri { get { return new Uri("/Views/Episode.xaml?TVDBID=" + ShowTVDBID + "&SeasonNumber=" + Season + "&EpisodeNumber=" + Episode, UriKind.Relative); } }
     }
 }

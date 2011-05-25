@@ -75,9 +75,11 @@
     <Compile Include="ViewModels\EpisodeViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\MovieViewModel.cs" />
+    <Compile Include="ViewModels\RecommendationsViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SeasonViewModel.cs" />
     <Compile Include="ViewModels\ShowViewModel.cs" />
+    <Compile Include="ViewModels\WatchListViewModel.cs" />
     <Compile Include="Views\Episode.xaml.cs">
       <DependentUpon>Episode.xaml</DependentUpon>
     </Compile>
@@ -94,6 +96,9 @@
     <Compile Include="Views\Movie.xaml.cs">
       <DependentUpon>Movie.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Recommendations.xaml.cs">
+      <DependentUpon>Recommendations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
@@ -102,6 +107,9 @@
     </Compile>
     <Compile Include="Views\Show.xaml.cs">
       <DependentUpon>Show.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WatchList.xaml.cs">
+      <DependentUpon>WatchList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Recommendations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -134,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Show.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WatchList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
