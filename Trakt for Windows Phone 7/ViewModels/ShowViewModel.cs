@@ -202,7 +202,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private List<TraktSeasonInfo> _seasons;
-        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; NotifyOfPropertyChange("Seasons"); } }
+        public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; if(Show != null) NotifyOfPropertyChange("Seasons"); } }
 
         public TraktSeasonInfo SelectedSeason { get; set; }
 

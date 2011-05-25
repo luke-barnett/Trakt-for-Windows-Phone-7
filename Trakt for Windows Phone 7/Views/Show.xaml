@@ -96,7 +96,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
-        <controls:Pivot Grid.Row="4" Margin="0,-30,0,0">
+        <controls:Pivot Grid.Row="4" Margin="-10,-30,-10,0">
             <controls:PivotItem  >
                 <Grid>
                     <Grid.RowDefinitions>

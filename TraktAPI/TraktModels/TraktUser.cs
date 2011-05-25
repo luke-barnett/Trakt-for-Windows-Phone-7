@@ -15,7 +15,7 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "gender")]
         public string Gender { get; set; }
         [DataMember(Name = "age")]
-        public int Age { get; set; }
+        public string Age { get; set; }
         [DataMember(Name = "location")]
         public string Location { get; set; }
         [DataMember(Name = "about")]

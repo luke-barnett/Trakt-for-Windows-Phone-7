@@ -16,7 +16,6 @@
             <RowDefinition Height="300" />
             <RowDefinition Height="5" />
             <RowDefinition Height="40" />
-            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -109,13 +108,45 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="4" Background="{StaticResource PhoneAccentBrush}">
-            <TextBlock Text="Summary" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </Grid>
-        <Grid Grid.Row="5" VerticalAlignment="Stretch">
-            <ScrollViewer VerticalAlignment="Stretch">
-                <TextBlock Text="{Binding Episode.Episode.Overview}" TextWrapping="Wrap"  />
-            </ScrollViewer>
-        </Grid>
+        <controls:Pivot Grid.Row="4" Margin="-10,-30,-10,0">
+            <controls:PivotItem >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
+                        <TextBlock Text="Summary" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Stretch">
+                        <ScrollViewer VerticalAlignment="Stretch">
+                            <TextBlock Text="{Binding Episode.Episode.Overview}" TextWrapping="Wrap"  />
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
+                        <TextBlock Text="Shouts" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Stretch">
+                        <ListBox ItemsSource="{Binding Shouts}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5">
+                                        <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 </phone:PhoneApplicationPage>

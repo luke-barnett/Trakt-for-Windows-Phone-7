@@ -24,12 +24,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public string SeasonNumber { get { return _SeasonNumber; } set { _SeasonNumber = value; System.Diagnostics.Debug.WriteLine(SeasonNumber); } }
 
         private string _EpisodeNumber;
-        public string EpisodeNumber { get { return _EpisodeNumber; } set { _EpisodeNumber = value; System.Diagnostics.Debug.WriteLine(EpisodeNumber); TraktAPI.TraktAPI.getEpisodeSummary(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: response => Episode = response, onError: error => handleError(error)); } }
+        public string EpisodeNumber { get { return _EpisodeNumber; } set { _EpisodeNumber = value; System.Diagnostics.Debug.WriteLine(EpisodeNumber); TraktAPI.TraktAPI.getEpisodeSummary(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: response => Episode = response, onError: error => handleError(error)); TraktAPI.TraktAPI.getEpisodeShouts(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: shouts => Shouts = shouts, onError: error => handleError(error)); } }
 
         private TraktEpisodeSummary _Episode;
         public TraktEpisodeSummary Episode { get { return _Episode; } set { _Episode = value; updateDisplay(); } }
 
         private TraktRatings ratings { set { Episode.Episode.Ratings = value; newRatings(); } }
+
+        private TraktShout[] _Shouts;
+        public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
         private void updateDisplay()
         {
