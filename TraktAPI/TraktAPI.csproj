@@ -72,8 +72,10 @@
     <Compile Include="TraktModels\TraktRatings.cs" />
     <Compile Include="TraktModels\TraktResponse.cs" />
     <Compile Include="TraktModels\TraktSeasonInfo.cs" />
+    <Compile Include="TraktModels\TraktShout.cs" />
     <Compile Include="TraktModels\TraktShow.cs" />
     <Compile Include="TraktModels\TraktStats.cs" />
+    <Compile Include="TraktModels\TraktUser.cs" />
     <Compile Include="TraktModels\TraktUserEpisodeRating.cs" />
     <Compile Include="TraktModels\TraktUserMovieRating.cs" />
     <Compile Include="TraktModels\TraktUserShowRating.cs" />

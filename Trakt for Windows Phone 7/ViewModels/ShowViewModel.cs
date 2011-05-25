@@ -18,10 +18,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private string _TVDBID;
-        public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; NotifyOfPropertyChange("TVDBID"); TraktAPI.TraktAPI.getShow(TVDBID).Subscribe(onNext: response => Show = response, onError: error => handleError(error)); TraktAPI.TraktAPI.getSeasonInfo(TVDBID).Subscribe(onNext: response => Seasons = new List<TraktSeasonInfo>(response), onError: error => handleError(error)); } }
+        public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; NotifyOfPropertyChange("TVDBID"); TraktAPI.TraktAPI.getShow(TVDBID).Subscribe(onNext: response => Show = response, onError: error => handleError(error)); TraktAPI.TraktAPI.getSeasonInfo(TVDBID).Subscribe(onNext: response => Seasons = new List<TraktSeasonInfo>(response), onError: error => handleError(error)); TraktAPI.TraktAPI.getShowShouts(TVDBID).Subscribe(onNext: shouts => Shouts = shouts, onError: error => handleError(error)); } }
 
         private TraktShow _show;
         public TraktShow Show { get { return _show; } set { _show = value; updateDisplay(); } }
+
+        private TraktShout[] _Shouts;
+        public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
         public string ShowTitle 
         { 

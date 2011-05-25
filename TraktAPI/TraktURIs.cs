@@ -28,6 +28,7 @@
         public const string EpisodeDetails = @"http://api.trakt.tv/show/episode/{0}.json/" + ApiKey + @"/{1}/{2}/{3}";
         public const string SeasonInfo = @"http://api.trakt.tv/show/seasons.json/" + ApiKey + @"/{0}";
         public const string Season = @"http://api.trakt.tv/show/season.json/" + ApiKey + @"/{0}/{1}";
+        public const string ShowShouts = @"http://api.trakt.tv/show/shouts.json/" + ApiKey + @"/{0}";
         //User Show
         public const string SyncEpisodeLibrary = @"http://api.trakt.tv/show/episode/{0}/" + ApiKey;
         public const string SynyShow = @"http://api.trakt.tv/show/{0}/" + ApiKey;

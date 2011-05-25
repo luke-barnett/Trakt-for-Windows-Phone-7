@@ -205,6 +205,11 @@ namespace TraktAPI
             return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.WatchList, TraktLibraryTypes.episodes, Username)), parseAndExtractEpisodeWatchList, GetUserAuthentication());
         }
 
+        public static IObservable<TraktShout[]> getShowShouts(string TVDBID)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.ShowShouts, TVDBID)), parseTraktShoutArray);
+        }
+
         #endregion
 
         #region Parsers
@@ -274,6 +279,12 @@ namespace TraktAPI
             
             return asEpisodes.ToArray();
         }
+
+        private static TraktShout[] parseTraktShoutArray(string json)
+        {
+            return JsonConvert.DeserializeObject<TraktShout[]>(json);
+        }
+
         #endregion
 
         #region Creators
