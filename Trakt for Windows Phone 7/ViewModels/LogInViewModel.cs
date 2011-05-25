@@ -143,9 +143,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
             else
             {
-                if (response.Message.EndsWith("is already a registered username"))
+                if (response.Error.EndsWith("is already a registered username"))
                 {
                     MessageBox.Show("Username is taken");
+                }
+                else if (response.Error.EndsWith("is already a registered e-mail"))
+                {
+                    MessageBox.Show("Email is taken");
                 }
                 else
                 {

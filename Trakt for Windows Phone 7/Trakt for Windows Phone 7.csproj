@@ -204,9 +204,7 @@
     <Content Include="Artwork\shout.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\TraktAPI\TraktAPI.csproj">
       <Project>{009CB68D-F1DD-4D4D-9769-3D2CF418E7CA}</Project>
