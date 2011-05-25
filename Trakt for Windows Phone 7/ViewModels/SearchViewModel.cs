@@ -109,17 +109,20 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void GoToMovie()
         {
-            navigationService.Navigate(SelectedMovie.Uri);
+            if(SelectedMovie != null)
+                navigationService.Navigate(SelectedMovie.Uri);
         }
 
         public void GoToShow()
         {
-            navigationService.Navigate(SelectedShow.Uri);
+            if(SelectedShow != null)
+               navigationService.Navigate(SelectedShow.Uri);
         }
 
         public void GoToEpisode()
         {
-            navigationService.Navigate(SelectedEpisode.Uri);
+            if(SelectedEpisode != null)
+                navigationService.Navigate(SelectedEpisode.Uri);
         }
     }
 }

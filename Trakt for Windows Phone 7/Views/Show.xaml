@@ -136,7 +136,6 @@
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
-        
     </Grid>
 
 </phone:PhoneApplicationPage>

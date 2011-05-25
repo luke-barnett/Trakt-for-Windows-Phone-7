@@ -30,7 +30,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <TextBlock Grid.Row="1" MinHeight="60" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32"/>
+        <TextBlock Grid.Row="1" MinHeight="60" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Margin="10,0,0,0" />
         <controls:Pivot Grid.Row="2">
             <controls:PivotItem Visibility="{Binding showMovieResults}" Header="Movies">
                 <ListBox ItemsSource="{Binding MovieResults}" SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">

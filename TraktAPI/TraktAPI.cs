@@ -207,7 +207,17 @@ namespace TraktAPI
 
         public static IObservable<TraktShout[]> getShowShouts(string TVDBID)
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.ShowShouts, TVDBID)), parseTraktShoutArray);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.ShowSummary, TraktDetailsTypes.shouts, TVDBID)), parseTraktShoutArray);
+        }
+
+        public static IObservable<TraktShout[]> getMovieShouts(string IMDBID)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.MovieDetails, TraktDetailsTypes.shouts, IMDBID)), parseTraktShoutArray);
+        }
+
+        public static IObservable<TraktShout[]> getEpisodeShouts(string tvdbid, string seasonNumber, string episodeNumber)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.EpisodeDetails, TraktDetailsTypes.shouts, tvdbid, seasonNumber, episodeNumber)), parseTraktShoutArray);
         }
 
         #endregion
