@@ -11,5 +11,7 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "episode")]
         public TraktEpisode Episode { get; set; }
+
+        public Uri Uri { get { return new Uri("/Views/Episode.xaml?TVDBID=" + Show.TVDBID + "&SeasonNumber=" + Episode.Season + "&EpisodeNumber=" + Episode.Episode, UriKind.Relative); } }
     }
 }

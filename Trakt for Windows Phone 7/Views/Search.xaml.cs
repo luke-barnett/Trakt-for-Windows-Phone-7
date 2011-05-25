@@ -19,5 +19,10 @@ namespace Trakt_for_Windows_Phone_7.Views
         {
             InitializeComponent();
         }
+
+        private void SearchBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            SearchBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+        }
     }
 }

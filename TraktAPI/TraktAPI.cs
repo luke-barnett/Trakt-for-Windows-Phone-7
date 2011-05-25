@@ -11,7 +11,8 @@ namespace TraktAPI
     public enum TraktLibraryTypes
     {
         movies,
-        shows
+        shows,
+        episodes
     }
 
     public enum TraktDetailsTypes
@@ -51,7 +52,7 @@ namespace TraktAPI
 
         public static IObservable<TraktMovie[]> getTrendingMovies()
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Trending, TraktLibraryTypes.movies)), parseTrendingMovies);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Trending, TraktLibraryTypes.movies)), parseMovieArray);
         }
 
         public static IObservable<TraktResponse> testAccount()
@@ -61,7 +62,7 @@ namespace TraktAPI
 
         public static IObservable<TraktShow[]> getTrendingShows()
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Trending, TraktLibraryTypes.shows)), parseTrendingShows);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Trending, TraktLibraryTypes.shows)), parseShowArray);
         }
 
         public static IObservable<TraktMovie> getMovie(string movieTitle)
@@ -164,15 +165,30 @@ namespace TraktAPI
             return WebRequestFactory.PostData(new Uri(TraktURIs.TestAccount), parseTraktResponse, CreateTestAccountPayload(Username, Password));
         }
 
+        public static IObservable<TraktMovie[]> searchMovies(string SearchQuery)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.movies, SearchQuery)), parseMovieArray);
+        }
+
+        public static IObservable<TraktShow[]> searchShows(string SearchQuery)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.shows, SearchQuery)), parseShowArray);
+        }
+
+        public static IObservable<TraktEpisodeSummary[]> searchEpisodes(string SearchQuery)
+        {
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.episodes, SearchQuery)), parseEpisodeSummaryArray);
+        }
+
         #endregion
 
         #region Parsers
-        private static TraktMovie[] parseTrendingMovies(string json)
+        private static TraktMovie[] parseMovieArray(string json)
         {
             return JsonConvert.DeserializeObject<TraktMovie[]>(json);
         }
 
-        private static TraktShow[] parseTrendingShows(string json)
+        private static TraktShow[] parseShowArray(string json)
         {
             return JsonConvert.DeserializeObject<TraktShow[]>(json);
         }
@@ -212,6 +228,11 @@ namespace TraktAPI
         private static TraktEpisodeSummary parseEpisodeSummary(string json)
         {
             return JsonConvert.DeserializeObject<TraktEpisodeSummary>(json);
+        }
+
+        private static TraktEpisodeSummary[] parseEpisodeSummaryArray(string json)
+        {
+            return JsonConvert.DeserializeObject<TraktEpisodeSummary[]>(json);
         }
         #endregion
 

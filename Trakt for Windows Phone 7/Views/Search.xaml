@@ -3,6 +3,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             SupportedOrientations="Portrait"
@@ -12,6 +13,7 @@
 
     <Grid Background="Transparent" Margin="10,0,0,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -19,6 +21,97 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="470" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" MinHeight="80" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32"/>
+        <TextBox Grid.Row="0" Name="SearchBox" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="SearchBox_KeyUp">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyUp">
+                    <ca:ActionMessage MethodName="KeyUpOccured">
+                        <ca:Parameter Value="$eventArgs" />
+                    </ca:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Row="1" MinHeight="60" Text="{Binding WhatWeAreSearchingFor}"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32"/>
+        <controls:Pivot Grid.Row="2">
+            <controls:PivotItem Visibility="{Binding showMovieResults}" Header="Movies">
+                <ListBox ItemsSource="{Binding MovieResults}" SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0, 10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding Images.Poster}" />
+                                <Grid Grid.Column="1" Margin="10, 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding TitleAndYear}" FontSize="28" TextWrapping="Wrap" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ca:ActionMessage MethodName="GoToMovie" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Visibility="{Binding showEpisodeResults}" Header="Shows">
+                <ListBox ItemsSource="{Binding ShowResults}" SelectedItem="{Binding SelectedShow, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding Images.Poster}" />
+                                <Grid Grid.Column="1" Margin="10, 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding TitleAndYear}" FontSize="28" TextWrapping="Wrap" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ca:ActionMessage MethodName="GoToShow" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Visibility="{Binding showShowResults}" Header="Episodes">
+                <ListBox ItemsSource="{Binding EpisodeResults}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding Episode.Images.Screen}" />
+                                <Grid Grid.Column="1" Margin="10, 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Episode.Title}" FontSize="28" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Episode.CombinedSeasonAndEpisodeText}" FontSize="18" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ca:ActionMessage MethodName="GoToEpisode" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 </phone:PhoneApplicationPage>

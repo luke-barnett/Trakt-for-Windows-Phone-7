@@ -68,5 +68,9 @@ namespace TraktAPI.TraktModels
 
         [DataMember(Name = "in_collection")]
         public bool InCollection { get; set; }
+
+        public string TitleAndYear { get { return string.Format("{0} ({1})", Title, Year); } }
+
+        public Uri Uri { get { return new Uri("/Views/Movie.xaml?IMDBID=" + IMDBID, UriKind.Relative); } }
     }
 }

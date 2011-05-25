@@ -20,8 +20,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private TraktMovie _movie;
         public TraktMovie Movie { get { return _movie; } set { _movie = value; updateDisplay(); } }
 
-        private string _movieTitle;
-        public string MovieTitle { get { return _movieTitle; } set { _movieTitle = value; TraktAPI.TraktAPI.getMovie(MovieTitle).Subscribe(onNext: movie => Movie = movie, onError: error => handleError(error)); System.Diagnostics.Debug.WriteLine(MovieTitle); } }
+        private string _IMDBID;
+        public string IMDBID { get { return _IMDBID; } set { _IMDBID = value; TraktAPI.TraktAPI.getMovie(IMDBID).Subscribe(onNext: movie => Movie = movie, onError: error => handleError(error)); System.Diagnostics.Debug.WriteLine(IMDBID); } }
 
         public String Year
         {
