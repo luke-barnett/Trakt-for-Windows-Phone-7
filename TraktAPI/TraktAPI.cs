@@ -29,7 +29,7 @@ namespace TraktAPI
         unrate
     }
 
-    public enum TraktRatingTypes
+    public enum TraktTypes
     {
         episode,
         show,
@@ -72,7 +72,7 @@ namespace TraktAPI
 
         public static IObservable<TraktRateResponse> rateMovie(string IMDBID, string Title, int Year, string Rating)
         {
-            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.movie)), parseRatingResponse, CreateMovieRatingPayload(IMDBID, Title, Year, Rating));
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktTypes.movie)), parseRatingResponse, CreateMovieRatingPayload(IMDBID, Title, Year, Rating));
         }
 
         public static IObservable<TraktResponse> syncMovie(string IMDBID, string Title, int Year, string TraktSyncMode)
@@ -107,7 +107,7 @@ namespace TraktAPI
 
         public static IObservable<TraktRateResponse> rateShow(string TVDBID, string IMDBID, string Title, int Year, string Rating)
         {
-            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.show)), parseRatingResponse, CreateShowRatingPayload(TVDBID, IMDBID, Title, Year, Rating));
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktTypes.show)), parseRatingResponse, CreateShowRatingPayload(TVDBID, IMDBID, Title, Year, Rating));
         }
 
         public static IObservable<TraktSeasonInfo[]> getSeasonInfo(string tvdbid)
@@ -127,7 +127,7 @@ namespace TraktAPI
 
         public static IObservable<TraktRateResponse> rateEpisode(string TVDBID, string IMDBID, string Title, int Year, string SeasonNumber, string EpisodeNumber, string Rating)
         {
-            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktRatingTypes.episode)), parseRatingResponse, CreateEpisodeRatingPayload(TVDBID, IMDBID, Title, Year, SeasonNumber, EpisodeNumber, Rating));
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.RateItem, TraktTypes.episode)), parseRatingResponse, CreateEpisodeRatingPayload(TVDBID, IMDBID, Title, Year, SeasonNumber, EpisodeNumber, Rating));
         }
 
         public static IObservable<TraktResponse> syncEpisode(string TVDBID, string IMDBID, string Title, int Year, string SeasonNumber, string EpisodeNumber, string TraktSyncMode)
@@ -218,6 +218,21 @@ namespace TraktAPI
         public static IObservable<TraktShout[]> getEpisodeShouts(string tvdbid, string seasonNumber, string episodeNumber)
         {
             return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.EpisodeDetails, TraktDetailsTypes.shouts, tvdbid, seasonNumber, episodeNumber)), parseTraktShoutArray);
+        }
+
+        public static IObservable<TraktResponse> movieShout(string imdbid, string shout)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Shout, TraktTypes.movie)), parseTraktResponse, CreateMovieShoutPayload(imdbid, shout));
+        }
+
+        public static IObservable<TraktResponse> showShout(string tvdbid, string shout)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Shout, TraktTypes.show)), parseTraktResponse, CreateShowShoutPayload(tvdbid, shout));
+        }
+
+        public static IObservable<TraktResponse> episodeShout(string tvdbid, int seasonnumber, int episodenumber, string shout)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.Shout, TraktTypes.episode)), parseTraktResponse, CreateEpisodeShoutPayload(tvdbid, seasonnumber, episodenumber, shout));
         }
 
         #endregion
@@ -338,6 +353,21 @@ namespace TraktAPI
         private static string CreateTestAccountPayload(string Username, string Password)
         {
             return JsonConvert.SerializeObject(new TraktAccount() { Username = Username, Password = Password });
+        }
+
+        private static string CreateMovieShoutPayload(string imdbid, string shout)
+        {
+            return JsonConvert.SerializeObject(new TraktMovieShout() { Username = TraktSettings.Username, Password = TraktSettings.Password, IMDBID = imdbid, Shout = shout });
+        }
+
+        private static string CreateShowShoutPayload(string tvdbid, string shout)
+        {
+            return JsonConvert.SerializeObject(new TraktShowShout() { Username = TraktSettings.Username, Password = TraktSettings.Password, TVDBID = tvdbid, Shout = shout });
+        }
+
+        private static string CreateEpisodeShoutPayload(string tvdbid, int seasonnumber, int episodenumber, string shout)
+        {
+            return JsonConvert.SerializeObject(new TraktEpisodeShout() { Username = TraktSettings.Username, Password = TraktSettings.Password, TVDBID = tvdbid, SeasonNumber = seasonnumber, EpisodeNumber = episodenumber, Shout = shout });
         }
 
         #endregion

@@ -14,6 +14,6 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "user")]
         public TraktUser User { get; set; }
 
-        public string QuoteSurrounded { get { return string.Format("\"{0}\"", Shout); } }
+        public string QuoteSurrounded { get { return string.Format("\"{0}\" by {1}", Shout, User.Username); } }
     }
 }

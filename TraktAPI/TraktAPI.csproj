@@ -62,11 +62,13 @@
     <Compile Include="TraktModels\TraktAccount.cs" />
     <Compile Include="TraktModels\TraktAuthentication.cs" />
     <Compile Include="TraktModels\TraktEpisode.cs" />
+    <Compile Include="TraktModels\TraktEpisodeShout.cs" />
     <Compile Include="TraktModels\TraktEpisodeSummary.cs" />
     <Compile Include="TraktModels\TraktEpisodeSync.cs" />
     <Compile Include="TraktModels\TraktEpisodeWatchList.cs" />
     <Compile Include="TraktModels\TraktImages.cs" />
     <Compile Include="TraktModels\TraktMovie.cs" />
+    <Compile Include="TraktModels\TraktMovieShout.cs" />
     <Compile Include="TraktModels\TraktMovieSync.cs" />
     <Compile Include="TraktModels\TraktRateResponse.cs" />
     <Compile Include="TraktModels\TraktRatings.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="TraktModels\TraktSeasonInfo.cs" />
     <Compile Include="TraktModels\TraktShout.cs" />
     <Compile Include="TraktModels\TraktShow.cs" />
+    <Compile Include="TraktModels\TraktShowShout.cs" />
     <Compile Include="TraktModels\TraktStats.cs" />
     <Compile Include="TraktModels\TraktUser.cs" />
     <Compile Include="TraktModels\TraktUserEpisodeRating.cs" />
