@@ -11,13 +11,13 @@
                             FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 
-    <Grid Background="Transparent" Margin="10,0,0,0">
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="470" />
+            <ColumnDefinition Width="480" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
             <TextBlock Text="Recommendations" VerticalAlignment="Center" TextAlignment="Center" FontSize="32" Foreground="White" />
