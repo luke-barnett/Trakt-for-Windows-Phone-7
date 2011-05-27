@@ -12,7 +12,7 @@
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 
     <Grid Background="Transparent">
-        <TextBox Height="252" HorizontalAlignment="Left" Margin="12,117,0,0" Name="shoutBox" Text="{Binding Shout, Mode=TwoWay, UpdateSourceTrigger=Explicit}" VerticalAlignment="Top" Width="460" KeyUp="shoutBox_KeyUp">
+        <TextBox Height="252" HorizontalAlignment="Left" Margin="12,117,0,0" Name="shoutBox" Text="{Binding Shout, Mode=TwoWay, UpdateSourceTrigger=Explicit}" InputScope="Text" VerticalAlignment="Top" Width="460" KeyUp="shoutBox_KeyUp">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="KeyUp">
                     <ca:ActionMessage MethodName="KeyUpOccurred">

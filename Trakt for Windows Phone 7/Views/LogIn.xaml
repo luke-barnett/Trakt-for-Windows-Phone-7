@@ -32,7 +32,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </PasswordBox>
-        <TextBox Grid.Row="3" Height="72" HorizontalAlignment="Left" Text="{Binding Email, Mode=TwoWay}" VerticalAlignment="Top" Width="460" Visibility="{Binding Registration}" IsEnabled="True" >
+        <TextBox Grid.Row="3" Height="72" HorizontalAlignment="Left" Text="{Binding Email, Mode=TwoWay}" VerticalAlignment="Top" Width="460" Visibility="{Binding Registration}" IsEnabled="True" InputScope="EmailUserName" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotFocus">
                     <ca:ActionMessage MethodName="ClearEmail" />

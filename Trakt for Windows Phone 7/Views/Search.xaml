@@ -21,7 +21,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="470" />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Name="SearchBox" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="SearchBox_KeyUp">
+        <TextBox Grid.Row="0" Name="SearchBox" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="SearchBox_KeyUp" InputScope="Text">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="KeyUp">
                     <ca:ActionMessage MethodName="KeyUpOccured">
