@@ -42,7 +42,8 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "plays")]
         public int Plays { get; set; }
 
-        public bool OnWatchList { get; set; }
+        [DataMember(Name = "in_watchlist")]
+        public bool InWatchList { get; set; }
 
         public string ShowTVDBID { get; set; }
 

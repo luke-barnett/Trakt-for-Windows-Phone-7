@@ -186,7 +186,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             {
                 if (Movie == null)
                     return "";
-                return Movie.OnWatchList ? "Remove from watchlist" : "Add to watchlist";
+                return Movie.InWatchList ? "Remove from watchlist" : "Add to watchlist";
             }
         }
 
@@ -275,7 +275,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             {
                 TraktAPI.TraktAPI.watchMovie(Movie.IMDBID, Movie.Title, Movie.Year);
                 Movie.Watched = true;
-                Movie.OnWatchList = false;
+                Movie.InWatchList = false;
                 NotifyOfPropertyChange("WatchList");
             }
             NotifyOfPropertyChange("WatchedThis");
@@ -284,15 +284,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void ToggleWatchList()
         {
-            if (Movie.OnWatchList)
+            if (Movie.InWatchList)
             {
                 TraktAPI.TraktAPI.unwatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
-                Movie.OnWatchList = false;
+                Movie.InWatchList = false;
             }
             else
             {
                 TraktAPI.TraktAPI.watchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
-                Movie.OnWatchList = true;
+                Movie.InWatchList = true;
             }
             NotifyOfPropertyChange("WatchList");
         }

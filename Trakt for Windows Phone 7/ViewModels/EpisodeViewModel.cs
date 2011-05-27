@@ -217,7 +217,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             {
                 if (Episode == null)
                     return "";
-                return Episode.Episode.OnWatchList ? "Remove from watchlist" : "Add to watchlist";
+                return Episode.Episode.InWatchList ? "Remove from watchlist" : "Add to watchlist";
             }
         }
 
@@ -276,7 +276,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             {
                 TraktAPI.TraktAPI.watchEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
                 Episode.Episode.Watched = true;
-                Episode.Episode.OnWatchList = false;
+                Episode.Episode.InWatchList = false;
                 NotifyOfPropertyChange("WatchList");
             }
             NotifyOfPropertyChange("WatchedThis");
@@ -286,15 +286,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void ToggleWatchList()
         {
-            if (Episode.Episode.OnWatchList)
+            if (Episode.Episode.InWatchList)
             {
                 TraktAPI.TraktAPI.unwatchListEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
-                Episode.Episode.OnWatchList = false;
+                Episode.Episode.InWatchList = false;
             }
             else
             {
                 TraktAPI.TraktAPI.watchListEpisode(Episode.Show.TVDBID, Episode.Show.IMDBID, Episode.Show.Title, Episode.Show.Year, Episode.Episode.Season.ToString(), Episode.Episode.Episode.ToString());
-                Episode.Episode.OnWatchList = true;
+                Episode.Episode.InWatchList = true;
             }
             NotifyOfPropertyChange("WatchList");
         }
