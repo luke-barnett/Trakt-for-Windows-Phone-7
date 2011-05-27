@@ -17,13 +17,18 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             this.navigationService = navigationService;
         }
 
+
         private string _TVDBID;
+        [SurviveTombstone]
         public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; NotifyOfPropertyChange("TVDBID"); TraktAPI.TraktAPI.getShow(TVDBID).Subscribe(onNext: response => Show = response, onError: error => handleError(error)); TraktAPI.TraktAPI.getSeasonInfo(TVDBID).Subscribe(onNext: response => Seasons = new List<TraktSeasonInfo>(response), onError: error => handleError(error)); TraktAPI.TraktAPI.getShowShouts(TVDBID).Subscribe(onNext: shouts => Shouts = shouts, onError: error => handleError(error)); } }
 
+        
         private TraktShow _show;
+        [SurviveTombstone]
         public TraktShow Show { get { return _show; } set { _show = value; updateDisplay(); } }
 
         private TraktShout[] _Shouts;
+        [SurviveTombstone]
         public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
         public string ShowTitle 
@@ -202,6 +207,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private List<TraktSeasonInfo> _seasons;
+        [SurviveTombstone]
         public List<TraktSeasonInfo> Seasons { get { return _seasons; } set { _seasons = value; if(Show != null) NotifyOfPropertyChange("Seasons"); } }
 
         public TraktSeasonInfo SelectedSeason { get; set; }

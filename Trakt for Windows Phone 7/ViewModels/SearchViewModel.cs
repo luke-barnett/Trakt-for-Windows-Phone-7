@@ -19,15 +19,19 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private string _SearchString;
+        [SurviveTombstone]
         public string SearchString { get { return _SearchString; } set { _SearchString = value;} }
 
         private TraktMovie[] _MovieResults;
+        [SurviveTombstone]
         public TraktMovie[] MovieResults { get { return _MovieResults; } set { _MovieResults = value; NotifyOfPropertyChange("MovieResults"); SearchResultsObtained(); } }
 
         private TraktShow[] _ShowResults;
+        [SurviveTombstone]
         public TraktShow[] ShowResults { get { return _ShowResults; } set { _ShowResults = value; NotifyOfPropertyChange("ShowResults"); SearchResultsObtained(); } }
 
         private TraktEpisodeSummary[] _EpisodeResults;
+        [SurviveTombstone]
         public TraktEpisodeSummary[] EpisodeResults { get { return _EpisodeResults; } set { _EpisodeResults = value; NotifyOfPropertyChange("EpisodeResults"); SearchResultsObtained(); } }
 
         public TraktMovie SelectedMovie { get; set; }

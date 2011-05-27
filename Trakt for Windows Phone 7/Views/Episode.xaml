@@ -83,31 +83,6 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="3" Visibility="{Binding LoggedIn}" Margin="0,0,0,5">
-            <Grid Margin="50,5,5,0" HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Background="{StaticResource PhoneAccentBrush}" Width="185">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <ca:ActionMessage MethodName="ToggleWatched" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="{Binding WatchedThis}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
-                </Grid>
-                <Grid Grid.Column="2" Background="{StaticResource PhoneAccentBrush}" Width="190" Visibility="{Binding showWatchList}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <ca:ActionMessage MethodName="ToggleWatchList" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="{Binding WatchList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
-                </Grid>
-            </Grid>
-        </Grid>
         <controls:Pivot Grid.Row="4" Margin="-12,-30,-12,0" >
             <controls:PivotItem >
                 <Grid>
@@ -148,6 +123,31 @@
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
+        <Grid Grid.Row="3" Visibility="{Binding LoggedIn}" Margin="0,0,0,5">
+            <Grid Margin="50,5,5,0" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Background="{StaticResource PhoneAccentBrush}" Width="185">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <ca:ActionMessage MethodName="ToggleWatched" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="{Binding WatchedThis}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
+                </Grid>
+                <Grid Grid.Column="2" Background="{StaticResource PhoneAccentBrush}" Width="190" Visibility="{Binding showWatchList}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <ca:ActionMessage MethodName="ToggleWatchList" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="{Binding WatchList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" />
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True">

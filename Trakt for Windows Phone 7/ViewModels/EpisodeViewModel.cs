@@ -18,20 +18,25 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private string _TVDBID;
+        [SurviveTombstone]
         public string TVDBID { get { return _TVDBID; } set { _TVDBID = value; System.Diagnostics.Debug.WriteLine(TVDBID); } }
 
         private string _SeasonNumber;
+        [SurviveTombstone]
         public string SeasonNumber { get { return _SeasonNumber; } set { _SeasonNumber = value; System.Diagnostics.Debug.WriteLine(SeasonNumber); } }
 
         private string _EpisodeNumber;
+        [SurviveTombstone]
         public string EpisodeNumber { get { return _EpisodeNumber; } set { _EpisodeNumber = value; System.Diagnostics.Debug.WriteLine(EpisodeNumber); TraktAPI.TraktAPI.getEpisodeSummary(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: response => Episode = response, onError: error => handleError(error)); TraktAPI.TraktAPI.getEpisodeShouts(TVDBID, SeasonNumber, EpisodeNumber).Subscribe(onNext: shouts => Shouts = shouts, onError: error => handleError(error)); } }
 
         private TraktEpisodeSummary _Episode;
+        [SurviveTombstone]
         public TraktEpisodeSummary Episode { get { return _Episode; } set { _Episode = value; updateDisplay(); } }
 
         private TraktRatings ratings { set { Episode.Episode.Ratings = value; newRatings(); } }
 
         private TraktShout[] _Shouts;
+        [SurviveTombstone]
         public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
         private void updateDisplay()

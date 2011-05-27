@@ -18,12 +18,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private TraktMovie _movie;
+        [SurviveTombstone]
         public TraktMovie Movie { get { return _movie; } set { _movie = value; updateDisplay(); } }
 
         private string _IMDBID;
+        [SurviveTombstone]
         public string IMDBID { get { return _IMDBID; } set { _IMDBID = value; TraktAPI.TraktAPI.getMovie(IMDBID).Subscribe(onNext: movie => Movie = movie, onError: error => handleError(error)); TraktAPI.TraktAPI.getMovieShouts(IMDBID).Subscribe(onNext: shouts => Shouts = shouts, onError: error => handleError(error)); System.Diagnostics.Debug.WriteLine(IMDBID); } }
 
         private TraktShout[] _Shouts;
+        [SurviveTombstone]
         public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
         public String Year
@@ -197,6 +200,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
         }
 
+        [SurviveTombstone]
         private TraktRatings ratings { set { Movie.Ratings = value; newRatings(); } }
 
         public void Love()

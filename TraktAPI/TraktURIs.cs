@@ -30,7 +30,7 @@
         public const string Season = @"http://api.trakt.tv/show/season.json/" + ApiKey + @"/{0}/{1}";
         //User Show
         public const string SyncEpisodeLibrary = @"http://api.trakt.tv/show/episode/{0}/" + ApiKey;
-        public const string SynyShow = @"http://api.trakt.tv/show/{0}/" + ApiKey;
+        public const string SyncShow = @"http://api.trakt.tv/show/{0}/" + ApiKey;
         //User
         public const string UserCalendarShows = @"http://api.trakt.tv/user/calendar/shows.json/" + ApiKey + @"/{0}/{1}/{2}";
         public const string UserFriends = @"http://api.trakt.tv/user/friends.json/" + ApiKey + @"/{0}";

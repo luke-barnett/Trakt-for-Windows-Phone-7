@@ -24,21 +24,23 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 navigationService.GoBack();
             }
         }
-
+        [SurviveTombstone]
         public string ItemType { get; set; }
-
+        [SurviveTombstone]
         public string TVDBID { get; set; }
-
+        [SurviveTombstone]
         public string IMDBID { get; set; }
-
+        [SurviveTombstone]
         public int Season { get; set; }
-
+        [SurviveTombstone]
         public int Episode { get; set; }
 
         public string _Shout;
+        [SurviveTombstone]
         public string Shout { get { return _Shout; } set { _Shout = value; NotifyOfPropertyChange("Shout"); } }
 
         private bool _sendingShout = false;
+        [SurviveTombstone]
         public bool sendingShout { get { return _sendingShout; } set { _sendingShout = value; } }
 
         public void KeyUpOccurred(KeyEventArgs e)

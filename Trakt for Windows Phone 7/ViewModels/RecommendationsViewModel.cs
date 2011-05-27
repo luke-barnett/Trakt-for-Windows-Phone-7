@@ -26,9 +26,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         private TraktMovie[] _MovieResults;
+        [SurviveTombstone]
         public TraktMovie[] MovieResults { get { return _MovieResults; } set { _MovieResults = value; NotifyOfPropertyChange("MovieResults"); ResultsObtained(); } }
 
         private TraktShow[] _ShowResults;
+        [SurviveTombstone]
         public TraktShow[] ShowResults { get { return _ShowResults; } set { _ShowResults = value; NotifyOfPropertyChange("ShowResults"); ResultsObtained(); } }
 
         public TraktMovie SelectedMovie { get; set; }
