@@ -30,7 +30,24 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="280" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="{Binding Show.Images.Poster}" Width="200" HorizontalAlignment="Left" />
+            <Image Grid.Column="0" Source="{Binding Show.Images.Poster}" Width="200" HorizontalAlignment="Left">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <ca:ActionMessage MethodName="TogglePosterOverlay" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Grid Grid.Column="0" Visibility="{Binding ShowPosterOverlay}">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="{StaticResource PhoneAccentBrush}" Width="200">
+                    <TextBlock Text="{Binding WatchList}" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,5">
+                        <i:Interaction.Triggers>
+                              <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <ca:ActionMessage MethodName="ToggleWatchList" />
+                              </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
+                </Grid>
+            </Grid>
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />

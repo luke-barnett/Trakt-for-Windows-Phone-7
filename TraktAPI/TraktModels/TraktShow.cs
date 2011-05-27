@@ -69,6 +69,9 @@ namespace TraktAPI.TraktModels
         [DataMember(Name = "rating")]
         public string Rating { get; set; }
 
+        [DataMember(Name = "in_watchlist")]
+        public bool InWatchList { get; set; }
+
         public string TitleAndYear { get { return string.Format("{0} ({1})", Title, Year); } }
 
         public Uri Uri { get { return new Uri("/Views/Show.xaml?TVDBID=" + TVDBID, UriKind.Relative); } }

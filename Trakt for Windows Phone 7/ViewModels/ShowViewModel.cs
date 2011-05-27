@@ -31,6 +31,56 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         [SurviveTombstone]
         public TraktShout[] Shouts { get { return _Shouts; } set { _Shouts = value; NotifyOfPropertyChange("Shouts"); } }
 
+        private bool PosterOverlyOn = false;
+
+        public string ShowPosterOverlay
+        {
+            get
+            {
+                if (PosterOverlyOn && TraktSettings.LoggedIn)
+                    return "Visible";
+                return "Collapsed";
+            }
+        }
+
+        public void TogglePosterOverlay()
+        {
+            PosterOverlyOn = !PosterOverlyOn;
+            NotifyOfPropertyChange("ShowPosterOverlay");
+        }
+
+        public string WatchList
+        {
+            get
+            {
+                if(TraktSettings.LoggedIn && Show != null)
+                    if (Show.InWatchList)
+                    {
+                        return "Remove from WatchList";
+                    }
+                    else
+                    {
+                        return "Add to WatchList";
+                    }
+                return "";
+            }
+        }
+
+        public void ToggleWatchList()
+        {
+            if (Show.InWatchList)
+            {
+                TraktAPI.TraktAPI.unwatchListShow(Show.TVDBID).Subscribe(response => System.Diagnostics.Debug.WriteLine(response.Message));
+            }
+            else
+            {
+                TraktAPI.TraktAPI.watchListShow(Show.TVDBID).Subscribe(response => System.Diagnostics.Debug.WriteLine(response.Message));
+            }
+            Show.InWatchList = !Show.InWatchList;
+            NotifyOfPropertyChange("WatchList");
+        }
+
+
         public string ShowTitle 
         { 
             get 
@@ -236,6 +286,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange("LoveImage");
             NotifyOfPropertyChange("HateImage");
             NotifyOfPropertyChange("Seasons");
+            NotifyOfPropertyChange("WatchList");
         }
 
         private void newRatings()
