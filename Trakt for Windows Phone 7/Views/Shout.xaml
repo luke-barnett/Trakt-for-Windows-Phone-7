@@ -21,6 +21,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <Button Content="Shout" Height="72" HorizontalAlignment="Left" Margin="308,363,0,0" Name="doShout" VerticalAlignment="Top" Width="160" IsEnabled="{Binding SendingShout}" />
+        <Button Content="Shout" Height="72" HorizontalAlignment="Left" Margin="308,363,0,0" Name="doShout" VerticalAlignment="Top" Width="160" IsEnabled="{Binding SendingShout}" Click="doShout_Click" />
+        <ProgressBar Height="4" HorizontalAlignment="Left" Margin="12,74,0,0" Name="shoutProgressBar" VerticalAlignment="Top" Width="460" />
     </Grid>
 </phone:PhoneApplicationPage>

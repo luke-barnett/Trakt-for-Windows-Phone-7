@@ -23,6 +23,13 @@ namespace Trakt_for_Windows_Phone_7.Views
         private void shoutBox_KeyUp(object sender, KeyEventArgs e)
         {
             shoutBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (e.Key == Key.Enter)
+                shoutProgressBar.IsIndeterminate = true;
+        }
+
+        private void doShout_Click(object sender, RoutedEventArgs e)
+        {
+            shoutProgressBar.IsIndeterminate = true;
         }
     }
 }

@@ -30,7 +30,8 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="280" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="{Binding Show.Images.Poster}" Width="200" HorizontalAlignment="Left">
+            <ProgressBar Height="4" HorizontalAlignment="Left" Margin="14,0,0,0" Name="showProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" Grid.ColumnSpan="2" />
+            <Image Grid.Column="0" Source="{Binding Show.Images.Poster}" Width="200" HorizontalAlignment="Left" ImageOpened="Image_ImageOpened">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <ca:ActionMessage MethodName="TogglePosterOverlay" />
