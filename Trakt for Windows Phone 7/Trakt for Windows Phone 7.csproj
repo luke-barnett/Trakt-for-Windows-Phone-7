@@ -198,6 +198,8 @@
     <Resource Include="Artwork\love_f.png" />
     <Resource Include="Artwork\iconHate.png" />
     <Resource Include="Artwork\iconLove.png" />
+    <Resource Include="Artwork\episode-screen.jpg" />
+    <Resource Include="Artwork\poster-small.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

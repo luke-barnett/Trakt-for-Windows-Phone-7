@@ -50,21 +50,22 @@
                     <ColumnDefinition Width="160" />
                     <ColumnDefinition Width="160" />
                 </Grid.ColumnDefinitions>
-                <Image Name="traktTrendingMovie0" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0">
+                <ProgressBar Height="28" HorizontalAlignment="Left" Margin="6,93,0,0" Name="moviesProgressBar" VerticalAlignment="Top" Width="469" Grid.ColumnSpan="3" IsIndeterminate="True" />
+                <Image Name="traktTrendingMovie0" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[0].Images.Poster}" Grid.Column="0" ImageOpened="movieImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Movie0" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Image Name="traktTrendingMovie1" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1">
+                <Image Name="traktTrendingMovie1" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[1].Images.Poster}" Grid.Column="1" ImageOpened="movieImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Movie1" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Image Name="traktTrendingMovie2" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2">
+                <Image Name="traktTrendingMovie2" Stretch="Uniform" Margin="5,0" Source="{Binding Movies[2].Images.Poster}" Grid.Column="2" ImageOpened="movieImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Movie2" />
@@ -96,21 +97,22 @@
                     <ColumnDefinition Width="160" />
                     <ColumnDefinition Width="160" />
                 </Grid.ColumnDefinitions>
-                <Image Name="traktTrendingShow0" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0">
+                <ProgressBar Height="28" HorizontalAlignment="Left" Margin="6,93,0,0" Name="showsProgressBar" VerticalAlignment="Top" Width="469" Grid.ColumnSpan="3" IsIndeterminate="True" />
+                <Image Name="traktTrendingShow0" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[0].Images.Poster}" Grid.Column="0" ImageOpened="showImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Show0" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Image Name="traktTrendingShow1" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[1].Images.Poster}" Grid.Column="1">
+                <Image Name="traktTrendingShow1" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[1].Images.Poster}" Grid.Column="1" ImageOpened="showImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Show1" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Image Name="traktTrendingShow2" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[2].Images.Poster}" Grid.Column="2">
+                <Image Name="traktTrendingShow2" Stretch="Uniform" Margin="5,0" Source="{Binding Shows[2].Images.Poster}" Grid.Column="2" ImageOpened="showImage_Opened">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <ca:ActionMessage MethodName="Show2" />
