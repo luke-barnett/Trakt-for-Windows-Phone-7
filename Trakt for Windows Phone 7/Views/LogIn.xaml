@@ -17,8 +17,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="80" />
+            <RowDefinition Height="272*" />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="1" Height="72" HorizontalAlignment="Left" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}">
+        <TextBox Grid.Row="1" Height="72" HorizontalAlignment="Left" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}" Name="Username" IsEnabledChanged="TextBox_IsEnabledChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotFocus">
                     <ca:ActionMessage MethodName="ClearUsername" />
@@ -53,6 +54,7 @@
             <Button Grid.Column="3" Name="LogIntoTrakt" Content="Log In" Visibility="{Binding LoggingIn}"  IsEnabled="{Binding Wait}"/>
             <Button Grid.Column="4" Name="LogOutOfTrakt" Content="Log Out" Visibility="{Binding LoggedIn}" />
         </Grid>
+        <ProgressBar Height="4" HorizontalAlignment="Left" Margin="12,148,0,0" Name="loginProgressBar" VerticalAlignment="Top" Width="460" />
     </Grid>
  
 </phone:PhoneApplicationPage>

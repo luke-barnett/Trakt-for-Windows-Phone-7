@@ -24,7 +24,7 @@
         </Grid>
         <controls:Pivot Grid.Row="2">
             <controls:PivotItem Visibility="{Binding showMovieResults}" Header="Movies">
-                <ListBox ItemsSource="{Binding MovieResults}" SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
+                <ListBox Name="MovieListBox" ItemsSource="{Binding MovieResults}" SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0, 10">
@@ -32,7 +32,7 @@
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding Images.Poster}" />
+                                <Image Grid.Column="0" Source="{Binding Images.Poster}" ImageOpened="Image_ImageOpened" />
                                 <Grid Grid.Column="1" Margin="10, 0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -50,7 +50,7 @@
                 </ListBox>
             </controls:PivotItem>
             <controls:PivotItem Visibility="{Binding showShowResults}" Header="Shows">
-                <ListBox ItemsSource="{Binding ShowResults}" SelectedItem="{Binding SelectedShow, Mode=TwoWay}">
+                <ListBox Name="ShowListBox" ItemsSource="{Binding ShowResults}" SelectedItem="{Binding SelectedShow, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,10">
@@ -58,7 +58,7 @@
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding Images.Poster}" />
+                                <Image Grid.Column="0" Source="{Binding Images.Poster}" ImageOpened="Image_ImageOpened" />
                                 <Grid Grid.Column="1" Margin="10, 0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -76,7 +76,7 @@
                 </ListBox>
             </controls:PivotItem>
             <controls:PivotItem Visibility="{Binding showEpisodeResults}" Header="Episodes">
-                <ListBox ItemsSource="{Binding EpisodeResults}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
+                <ListBox Name="EpisodeListBox" ItemsSource="{Binding EpisodeResults}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,10">
@@ -84,7 +84,7 @@
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding Images.Screen}" />
+                                <Image Grid.Column="0" Source="{Binding Images.Screen}" ImageOpened="Image_ImageOpened"/>
                                 <Grid Grid.Column="1" Margin="10, 0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -104,5 +104,6 @@
                 </ListBox>
             </controls:PivotItem>
         </controls:Pivot>
+        <ProgressBar Grid.Row="1" Height="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="watchListProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" />
     </Grid>
 </phone:PhoneApplicationPage>

@@ -19,5 +19,12 @@ namespace Trakt_for_Windows_Phone_7.Views
         {
             InitializeComponent();
         }
+        private int imageLoadedCount;
+        private void Image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            imageLoadedCount++;
+            if (imageLoadedCount >= SeasonListBox.Items.Count)
+                seasonProgressBar.IsIndeterminate = false;
+        }
     }
 }

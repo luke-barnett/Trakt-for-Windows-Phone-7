@@ -26,7 +26,8 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="280" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="{Binding Movie.Images.Poster}" Width="200" HorizontalAlignment="Left" />
+            <ProgressBar Height="4" HorizontalAlignment="Left" Margin="14,0,0,0" Name="movieProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" />
+            <Image Grid.Column="0" Source="{Binding Movie.Images.Poster}" Width="200" HorizontalAlignment="Left" ImageOpened="Image_ImageOpened" />
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />

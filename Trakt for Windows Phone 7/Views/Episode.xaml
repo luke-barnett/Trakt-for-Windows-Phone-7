@@ -29,7 +29,8 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="280" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Margin="0,5,0,0" Source="{Binding Episode.Episode.Images.Screen}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <ProgressBar Grid.ColumnSpan="2" Height="4" HorizontalAlignment="Left" Margin="14,0,0,0" Name="episodeProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" />
+            <Image Grid.Column="0" Margin="0,5,0,0" Source="{Binding Episode.Episode.Images.Screen}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" ImageOpened="Image_ImageOpened" />
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />

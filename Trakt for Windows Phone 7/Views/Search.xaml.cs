@@ -23,6 +23,19 @@ namespace Trakt_for_Windows_Phone_7.Views
         private void SearchBox_KeyUp(object sender, KeyEventArgs e)
         {
             SearchBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (e.Key == Key.Enter)
+                searchProgressBar.IsIndeterminate = true;
+        }
+
+        private int imageCount;
+        private void Image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            imageCount++;
+            if (MovieResultsListBox.ItemsSource != null && ShowResultsListBox.ItemsSource != null && EpisodeResultsListBox.ItemsSource != null)
+            {
+                if (imageCount >= (MovieResultsListBox.Items.Count + MovieResultsListBox.Items.Count + MovieResultsListBox.Items.Count))
+                    searchProgressBar.IsIndeterminate = false;
+            }
         }
     }
 }

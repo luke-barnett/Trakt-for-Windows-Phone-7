@@ -19,5 +19,10 @@ namespace Trakt_for_Windows_Phone_7.Views
         {
             InitializeComponent();
         }
+
+        private void Image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            movieProgressBar.IsIndeterminate = false;
+        }
     }
 }

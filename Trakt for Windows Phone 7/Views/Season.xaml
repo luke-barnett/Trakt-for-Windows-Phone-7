@@ -20,7 +20,8 @@
         <Grid Background="{StaticResource PhoneAccentBrush}" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0" MinHeight="60">
             <TextBlock Text="{Binding ShowTitle}" TextWrapping="Wrap" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
-        <ListBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Season}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
+        <ProgressBar Grid.Row="1" Height="4" HorizontalAlignment="Left" Margin="12,0,0,0" Name="seasonProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" />
+        <ListBox Name="SeasonListBox" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Season}" SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,10,0,0">
@@ -28,7 +29,7 @@
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Images.Screen}" Stretch="Uniform" />
+                        <Image Grid.Column="0" Source="{Binding Images.Screen}" Stretch="Uniform" ImageOpened="Image_ImageOpened" />
                         <Grid Grid.Column="1" Margin="10,0,0,0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="60" />

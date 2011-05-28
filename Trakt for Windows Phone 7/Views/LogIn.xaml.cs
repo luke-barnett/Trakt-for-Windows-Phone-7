@@ -19,5 +19,13 @@ namespace Trakt_for_Windows_Phone_7.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (LogOutOfTrakt.IsEnabled)
+                loginProgressBar.IsIndeterminate = false;
+            else
+                loginProgressBar.IsIndeterminate = !Username.IsEnabled;
+        }
     }
 }
