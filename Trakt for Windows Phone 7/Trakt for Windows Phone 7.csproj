@@ -200,6 +200,7 @@
     <Resource Include="Artwork\iconLove.png" />
     <Resource Include="Artwork\episode-screen.jpg" />
     <Resource Include="Artwork\poster-small.jpg" />
+    <Content Include="Artwork\refresh.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

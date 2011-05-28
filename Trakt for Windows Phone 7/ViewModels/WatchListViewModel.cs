@@ -40,7 +40,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public TraktEpisode SelectedEpisode { get; set; }
 
-        private void StartSearch()
+        public void StartSearch()
         {
             TraktAPI.TraktAPI.getMovieWatchList(TraktSettings.Username).Subscribe(onNext: movies => MovieResults = movies, onError: error => handleError(error));
             TraktAPI.TraktAPI.getShowWatchList(TraktSettings.Username).Subscribe(onNext: shows => ShowResults = shows, onError: error => handleError(error));
@@ -86,18 +86,20 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void GoToMovie()
         {
-            navigationService.Navigate(SelectedMovie.Uri);
+            if (SelectedMovie != null)
+                navigationService.Navigate(SelectedMovie.Uri);
         }
 
         public void GoToShow()
         {
-            navigationService.Navigate(SelectedShow.Uri);
+            if (SelectedShow != null)
+                navigationService.Navigate(SelectedShow.Uri);
         }
 
         public void GoToEpisode()
         {
-
-            navigationService.Navigate(SelectedEpisode.Uri);
+            if(SelectedEpisode != null)
+                navigationService.Navigate(SelectedEpisode.Uri);
         }
 
     }

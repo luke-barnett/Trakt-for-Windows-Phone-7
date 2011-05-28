@@ -9,7 +9,7 @@
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             FontFamily="/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"
-                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
+                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="696" d:DesignWidth="480" HorizontalAlignment="Center">
 
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
@@ -106,4 +106,11 @@
         </controls:Pivot>
         <ProgressBar Grid.Row="1" Height="4" HorizontalAlignment="Left" Margin="12,6,0,0" Name="watchListProgressBar" VerticalAlignment="Top" Width="460" IsIndeterminate="True" />
     </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBar.Buttons>
+                <ca:AppBarButton IconUri="/Artwork/refresh.png" Text="Refresh" Message="StartSearch" Click="AppBarButton_Click" />
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

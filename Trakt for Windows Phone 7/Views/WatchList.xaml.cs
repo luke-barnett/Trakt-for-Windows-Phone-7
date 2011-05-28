@@ -44,5 +44,10 @@ namespace Trakt_for_Windows_Phone_7.Views
             if (imageCount >= requirement)
                 watchListProgressBar.IsIndeterminate = false;
         }
+
+        private void AppBarButton_Click(object sender, EventArgs e)
+        {
+            watchListProgressBar.IsIndeterminate = true;
+        }
     }
 }

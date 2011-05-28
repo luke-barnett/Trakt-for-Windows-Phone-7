@@ -38,7 +38,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public TraktShow SelectedShow { get; set; }
 
 
-        private void StartSearch()
+        public void StartSearch()
         {
             TraktAPI.TraktAPI.getMovieRecommendations().Subscribe(onNext: movies => MovieResults = movies, onError: error => handleError(error));
             TraktAPI.TraktAPI.getShowRecommendations().Subscribe(onNext: shows => ShowResults = shows, onError: error => handleError(error));
@@ -72,12 +72,14 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public void GoToMovie()
         {
-            navigationService.Navigate(SelectedMovie.Uri);
+            if(SelectedMovie != null)
+                navigationService.Navigate(SelectedMovie.Uri);
         }
 
         public void GoToShow()
         {
-            navigationService.Navigate(SelectedShow.Uri);
+            if (SelectedShow != null)
+                navigationService.Navigate(SelectedShow.Uri);
         }
 
     }
