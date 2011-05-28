@@ -125,10 +125,10 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True">
             <shell:ApplicationBar.MenuItems>
-                <ca:AppBarMenuItem Message="Account" Text="Manage Account"  />
-                <ca:AppBarMenuItem Message="DoSearch" Text="Search"  />
-                <ca:AppBarMenuItem Message="GetRecommendations" Text="Recommendations"  />
-                <ca:AppBarMenuItem Message="GetWatchList" Text="Your Watch List"  />
+                <ca:AppBarMenuItem Message="Account" Text="Manage Account" Click="toAnotherPage"  />
+                <ca:AppBarMenuItem Message="DoSearch" Text="Search"  Click="toAnotherPage"  />
+                <ca:AppBarMenuItem Message="GetRecommendations" Text="Recommendations" Click="toAnotherPage"  />
+                <ca:AppBarMenuItem Message="GetWatchList" Text="Your Watch List" Click="toAnotherPage"  />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
