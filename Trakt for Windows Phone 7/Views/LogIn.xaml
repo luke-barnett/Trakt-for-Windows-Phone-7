@@ -19,21 +19,21 @@
             <RowDefinition Height="80" />
             <RowDefinition Height="272*" />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="1" Height="72" HorizontalAlignment="Left" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}" Name="Username" IsEnabledChanged="TextBox_IsEnabledChanged">
+        <TextBox Grid.Row="1" Height="72" HorizontalAlignment="Left" Text="{Binding Username, Mode=TwoWay}" VerticalAlignment="Top" Width="480" IsEnabled="{Binding Wait}" Name="Username" IsEnabledChanged="TextBox_IsEnabledChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotFocus">
                     <ca:ActionMessage MethodName="ClearUsername" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <PasswordBox Grid.Row="2" Height="72" HorizontalAlignment="Left" Password="{Binding Password, Mode=TwoWay}" VerticalAlignment="Top" Width="460" IsEnabled="{Binding Wait}">
+        <PasswordBox Grid.Row="2" Height="72" HorizontalAlignment="Left" Password="{Binding Password, Mode=TwoWay}" VerticalAlignment="Top" Width="480" IsEnabled="{Binding Wait}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotFocus">
                     <ca:ActionMessage MethodName="ClearPassword" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </PasswordBox>
-        <TextBox Grid.Row="3" Height="72" HorizontalAlignment="Left" Text="{Binding Email, Mode=TwoWay}" VerticalAlignment="Top" Width="460" Visibility="{Binding Registration}" IsEnabled="True" InputScope="EmailUserName" >
+        <TextBox Grid.Row="3" Height="72" HorizontalAlignment="Left" Text="{Binding Email, Mode=TwoWay}" VerticalAlignment="Top" Width="480" Visibility="{Binding Registration}" IsEnabled="True" InputScope="EmailUserName" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotFocus">
                     <ca:ActionMessage MethodName="ClearEmail" />

@@ -12,7 +12,7 @@
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480" HorizontalAlignment="Center">
 
     <Grid Background="Transparent">
-        <TextBox Height="252" HorizontalAlignment="Left" Margin="12,117,0,0" Name="shoutBox" Text="{Binding Shout, Mode=TwoWay, UpdateSourceTrigger=Explicit}" InputScope="Text" VerticalAlignment="Top" Width="460" KeyUp="shoutBox_KeyUp">
+        <TextBox Height="252" HorizontalAlignment="Left" Margin="12,117,0,0" Name="shoutBox" Text="{Binding Shout, Mode=TwoWay, UpdateSourceTrigger=Explicit}" InputScope="Text" VerticalAlignment="Top" Width="460" KeyUp="shoutBox_KeyUp" MaxLength="1000" TextWrapping="Wrap">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="KeyUp">
                     <ca:ActionMessage MethodName="KeyUpOccurred">
@@ -23,5 +23,6 @@
         </TextBox>
         <Button Content="Shout" Height="72" HorizontalAlignment="Left" Margin="308,363,0,0" Name="doShout" VerticalAlignment="Top" Width="160" IsEnabled="{Binding SendingShout}" Click="doShout_Click" />
         <ProgressBar Height="4" HorizontalAlignment="Left" Margin="12,74,0,0" Name="shoutProgressBar" VerticalAlignment="Top" Width="460" />
+        <TextBlock Height="30" HorizontalAlignment="Left" Margin="26,375,0,0" Name="charactersRemaining" Text="{Binding RemainingCharacters}" VerticalAlignment="Top" Width="276" />
     </Grid>
 </phone:PhoneApplicationPage>
