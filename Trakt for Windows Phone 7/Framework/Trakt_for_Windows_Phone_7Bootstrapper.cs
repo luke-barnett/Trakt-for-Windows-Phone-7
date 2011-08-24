@@ -2,9 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Phone.Tasks;
     using Caliburn.Micro;
-    using Trakt_for_Windows_Phone_7.ViewModels;
+    using ViewModels;
 
     public class Trakt_for_Windows_Phone_7Bootstrapper : PhoneBootstrapper
     {
@@ -15,15 +14,6 @@
             container = new PhoneContainer(this);
 
             container.RegisterSingleton(typeof(MainPageViewModel), "MainPageViewModel", typeof(MainPageViewModel));
-            container.RegisterPerRequest(typeof(LogInViewModel), "LogInViewModel", typeof(LogInViewModel));
-            container.RegisterPerRequest(typeof(MovieViewModel), "MovieViewModel", typeof(MovieViewModel));
-            container.RegisterPerRequest(typeof(ShowViewModel), "ShowViewModel", typeof(ShowViewModel));
-            container.RegisterPerRequest(typeof(SeasonViewModel), "SeasonViewModel", typeof(SeasonViewModel));
-            container.RegisterPerRequest(typeof(EpisodeViewModel), "EpisodeViewModel", typeof(EpisodeViewModel));
-            container.RegisterPerRequest(typeof(SearchViewModel), "SearchViewModel", typeof(SearchViewModel));
-            container.RegisterPerRequest(typeof(RecommendationsViewModel), "RecommendationsViewModel", typeof(RecommendationsViewModel));
-            container.RegisterPerRequest(typeof(WatchListViewModel), "WatchListViewModel", typeof(WatchListViewModel));
-            container.RegisterPerRequest(typeof(ShoutViewModel), "ShoutViewModel", typeof(ShoutViewModel));
 
             container.RegisterInstance(typeof(INavigationService), null, new FrameAdapter(RootFrame));
             container.RegisterInstance(typeof(IPhoneService), null, new PhoneApplicationServiceAdapter(PhoneService));

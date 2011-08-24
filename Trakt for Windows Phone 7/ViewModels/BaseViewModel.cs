@@ -1,11 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
-using TraktAPI;
-using TraktAPI.TraktModels;
-using Microsoft.Phone.Reactive;
-using System.Collections.Generic;
-using Microsoft.Phone.Net.NetworkInformation;
 using System.Windows;
+using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -18,7 +14,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public string ApplicationName { get { return "Trakt 7"; } }
 
-        public void handleError(Exception error)
+        public string FontFamily { get { return "/Trakt for Windows Phone 7;component/Fonts/Fonts.zip#Droid Sans"; } }
+
+        public void HandleError(Exception error)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("CAUGHT ERROR {0}", error.Message));
         }
