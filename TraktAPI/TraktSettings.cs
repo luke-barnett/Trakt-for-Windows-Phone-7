@@ -13,5 +13,7 @@ namespace TraktAPI
 
         [SurviveTombstone]
         public static bool LoggedIn { get; set; }
+
+        public new static string ToString { get { return string.Format("Username: {0} Password: {1} LoggedIn: {2}", Username, Password, LoggedIn);} }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO.IsolatedStorage;
+using System.Windows.Media;
 using Caliburn.Micro;
 using System.Windows;
 using TraktAPI;
@@ -68,6 +69,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// The visibility state for the progress bar
         /// </summary>
         public Visibility ProgressBarVisibility { get { return ProgressBarVisible ? Visibility.Visible : Visibility.Collapsed; } }
+
+        /// <summary>
+        /// The default poster
+        /// </summary>
+        public readonly ImageSource DefaultPoster = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\poster-small.jpg");
 
         #endregion
 
