@@ -39,8 +39,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The base view model that handles common tasks
         /// </summary>
-        public BaseViewModel()
+        public BaseViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
             _userSettings = IsolatedStorageSettings.ApplicationSettings;
             InternetConnectionAvailable();
             ProgressBarVisible = true;
@@ -75,6 +76,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public readonly ImageSource DefaultPoster = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\poster-small.jpg");
 
+        public readonly INavigationService NavigationService;
+
         #endregion
 
         #region Public Methods
@@ -99,6 +102,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             if (!available)
             {
                 MessageBox.Show("No internet connection is available.  Try again later.", "Internet Required", MessageBoxButton.OK);
+                NavigationService.GoBack();
                 return false;
             }
             return true;

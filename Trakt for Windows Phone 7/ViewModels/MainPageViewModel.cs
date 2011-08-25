@@ -16,15 +16,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
     {
         #region Private Parameters
 
-        private readonly INavigationService _navigationService;
         private List<PivotItem> _pivotItems;
         private String _trendingType;
 
         #endregion
         
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _navigationService = navigationService;
             _pivotItems = new List<PivotItem>();
             StartLoading();
         }
