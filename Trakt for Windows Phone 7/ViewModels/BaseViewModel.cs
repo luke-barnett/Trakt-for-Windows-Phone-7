@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Windows.Media;
 using Caliburn.Micro;
 using System.Windows;
+using Microsoft.Phone.Shell;
 using TraktAPI;
 using Microsoft.Phone.Reactive;
 using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
@@ -17,6 +18,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private readonly IsolatedStorageSettings _userSettings;
         private int _progressBarVisible;
         private bool _firedLoadingEvent;
+        private ApplicationBar _applicationBar;
         
         #endregion
 
@@ -108,6 +110,31 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public readonly ImageSource HateFadeImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\hate_f.png");
 
+        /// <summary>
+        /// Watchlist button uri
+        /// </summary>
+        public readonly Uri WatchListButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+
+        /// <summary>
+        /// Unwatchlist button uri
+        /// </summary>
+        public readonly Uri UnWatchListButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+
+        /// <summary>
+        /// Seen button uri
+        /// </summary>
+        public readonly Uri SeenButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+
+        /// <summary>
+        /// Unseen button uri
+        /// </summary>
+        public readonly Uri UnSeenButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+
+        /// <summary>
+        /// Shout button uri
+        /// </summary>
+        public readonly Uri ShoutButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+
         #endregion
 
         /// <summary>
@@ -124,6 +151,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// Lame string
         /// </summary>
         public string Lame { get { return "Lame sauce :("; } }
+
+        /// <summary>
+        /// The Application Bar
+        /// </summary>
+        public ApplicationBar ApplicationBar { get { return _applicationBar; } set { _applicationBar = value; NotifyOfPropertyChange(() => ApplicationBar); } }
 
         #endregion
 
@@ -247,6 +279,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         #endregion
     }
 
+    /// <summary>
+    /// Event Arguments for when loading finishes
+    /// </summary>
     public class FinishedLoadingEventArgs : EventArgs
     {
         public readonly bool StatusOfAccount;

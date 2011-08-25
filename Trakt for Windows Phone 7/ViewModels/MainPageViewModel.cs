@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using TraktAPI.TraktModels;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
@@ -52,6 +53,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Starting loading of trending items");
             GetTrendingMovies();
+            SetUpApplicationBar();
         }
 
         /// <summary>
@@ -94,6 +96,25 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             elements.Add(textGrid);
 
             return elements;
+        }
+
+        /// <summary>
+        /// Sets up the application bar
+        /// </summary>
+        private void SetUpApplicationBar()
+        {
+            var appBar = new ApplicationBar {IsVisible = true, Opacity = 1};
+
+            var getTrendingMovies = new ApplicationBarMenuItem {Text = "Get Trending Movies", IsEnabled = true};
+            getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
+
+            var getTrendingShows = new ApplicationBarMenuItem { Text = "Get Trending Shows", IsEnabled = true };
+            getTrendingShows.Click += (sender, args) => GetTrendingShows();
+
+            appBar.MenuItems.Add(getTrendingMovies);
+            appBar.MenuItems.Add(getTrendingShows);
+
+            ApplicationBar = appBar;
         }
 
         #region Trending Movies
@@ -211,23 +232,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Gets trending movies
-        /// </summary>
-        public void BtnGetTrendingMovies()
-        {
-            GetTrendingMovies();
-        }
-
-        /// <summary>
-        /// Gets trending shows
-        /// </summary>
-        public void BtnGetTrendingShows()
-        {
-            GetTrendingShows();
-        }
-
+        
         #endregion
     }
 }

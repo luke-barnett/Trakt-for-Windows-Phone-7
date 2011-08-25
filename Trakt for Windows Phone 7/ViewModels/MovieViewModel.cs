@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
+using Microsoft.Phone.Shell;
 using TraktAPI;
 using TraktAPI.TraktModels;
 
@@ -68,6 +69,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public double HateRateBoxOpacity { get { return (String.IsNullOrEmpty(Movie.Rating) || Movie.Rating == TraktRateTypes.hate.ToString() || Movie.Rating.CompareTo("False") == 0) ? 1d : 0.5d; } }
 
+        public bool ShowWatchListButton { get { return (TraktSettings.LoggedIn && !Movie.Watched && !Movie.InWatchList); } set { Movie.InWatchList = value; UpdateApplicationBar(); } }
+
+        public bool ShowUnWatchListButton { get { return !ShowWatchListButton && !Movie.Watched; } }
+
         #endregion
 
         #endregion
@@ -93,6 +98,58 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             ShowMainPivot = true;
         }
 
+        private void UpdateApplicationBar()
+        {
+            Debug.WriteLine("Building Application Bar");
+            var appBar = new ApplicationBar {IsVisible = TraktSettings.LoggedIn, Opacity = 1};
+
+            if(ShowWatchListButton)
+            {
+                Debug.WriteLine("Adding Watchlist button");
+                var watchListButton = new ApplicationBarIconButton(WatchListButtonUri)
+                                          {Text = "Watchlist", IsEnabled = ShowWatchListButton};
+                watchListButton.Click += (sender, args) => AddToWatchList();
+
+                appBar.Buttons.Add(watchListButton);
+            }
+
+            if(ShowUnWatchListButton)
+            {
+                Debug.WriteLine("Adding Unwatchlist button");
+                var unWatchListButton = new ApplicationBarIconButton(UnWatchListButtonUri)
+                                            {Text = "UnWatchlist", IsEnabled = ShowUnWatchListButton};
+                unWatchListButton.Click += (sender, args) => RemoveFromWatchList();
+
+                appBar.Buttons.Add(unWatchListButton);
+            }
+
+            if(Movie.Watched)
+            {
+                Debug.WriteLine("Adding unwatch button");
+                var unwatchButton = new ApplicationBarIconButton(SeenButtonUri) {Text = "Un-Watch", IsEnabled = Movie.Watched};
+                unwatchButton.Click += (sender, args) => MarkAsUnWatched();
+
+                appBar.Buttons.Add(unwatchButton);
+            }
+            else
+            {
+                Debug.WriteLine("Adding watch button");
+                var watchButton = new ApplicationBarIconButton(SeenButtonUri) { Text = "Watch", IsEnabled = !Movie.Watched };
+                watchButton.Click += (sender, args) => MarkAsWatched();
+
+                appBar.Buttons.Add(watchButton);
+            }
+
+            Debug.WriteLine("Adding shout button");
+            var shoutButton = new ApplicationBarIconButton(ShoutButtonUri)
+                                  {Text = "Shout", IsEnabled = TraktSettings.LoggedIn};
+            shoutButton.Click += (sender, args) => CreateShout();
+
+            appBar.Buttons.Add(shoutButton);
+
+            ApplicationBar = appBar;
+        }
+
         private void UpdateDetails()
         {
             NotifyOfPropertyChange(() => Title);
@@ -103,6 +160,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             NotifyOfPropertyChange(() => RatingImage);
             NotifyOfPropertyChange(() => RatingPercentage);
             NotifyOfPropertyChange(() => RatingCount);
+
+            UpdateApplicationBar();
         }
 
         private void UpdateRateBox()
@@ -154,6 +213,39 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
             UpdateRateBox();
         }
+
+        public void AddToWatchList()
+        {
+            TraktAPI.TraktAPI.WatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+            ShowWatchListButton = false;
+        }
+
+        public void RemoveFromWatchList()
+        {
+            TraktAPI.TraktAPI.UnwatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+            ShowWatchListButton = true;
+        }
+
+        public void MarkAsUnWatched()
+        {
+            TraktAPI.TraktAPI.UnwatchMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+            Movie.Watched = false;
+            UpdateApplicationBar();
+        }
+
+        public void MarkAsWatched()
+        {
+            TraktAPI.TraktAPI.WatchMovie(Movie.IMDBID, Movie.Title, Movie.Year);
+            Movie.Watched = true;
+            Movie.InWatchList = false;
+            UpdateApplicationBar();
+        }
+
+        public void CreateShout()
+        {
+            MessageBox.Show("Shout!");
+        }
+
         #endregion
     }
 }

@@ -3,11 +3,11 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-                            xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             FontFamily="{Binding FontFamily}"
+                            ApplicationBar="{Binding ApplicationBar}"
                             shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="696" d:DesignWidth="480" HorizontalAlignment="Center">
 
     <Grid Background="Transparent">
@@ -20,12 +20,4 @@
         </Grid>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True">
-            <shell:ApplicationBar.MenuItems>
-                <ca:AppBarMenuItem Message="BtnGetTrendingMovies" Text="Get Trending Movies" />
-                <ca:AppBarMenuItem Message="BtnGetTrendingShows" Text="Get Trending Shows" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

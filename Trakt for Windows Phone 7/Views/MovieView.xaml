@@ -13,10 +13,10 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    ApplicationBar="{Binding ApplicationBar}">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Image Source="{Binding MoviePoster}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding MainPivotVisibility}" Height="300" Margin="10" Opacity="0.5" />
         <controls:Pivot Visibility="{Binding MainPivotVisibility}">
@@ -41,8 +41,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{Binding RunTime}" />
-                            <TextBlock Grid.Row="1" Text="{Binding Certification}" />
+                            <TextBlock Grid.Row="0" Text="{Binding Certification}" />
+                            <TextBlock Grid.Row="1" Text="{Binding RunTime}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
