@@ -7,8 +7,10 @@ namespace TraktAPI
     {
         [SurviveTombstone]
         public static string Username { get; set; }
+
         [SurviveTombstone]
         public static string Password { get; set; }
+
         [SurviveTombstone]
         public static bool LoggedIn { get; set; }
     }
