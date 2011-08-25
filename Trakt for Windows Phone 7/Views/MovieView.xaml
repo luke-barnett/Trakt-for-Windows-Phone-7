@@ -87,8 +87,18 @@
                     </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
-            <controls:PivotItem Header="Shouts">
-
+            <controls:PivotItem Header="Shouts" Visibility="{Binding ShowShouts}">
+                <Grid>
+                    <ListBox ItemsSource="{Binding Shouts}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />

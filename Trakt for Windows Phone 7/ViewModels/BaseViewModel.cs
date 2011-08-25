@@ -133,7 +133,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Shout button uri
         /// </summary>
-        public readonly Uri ShoutButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+        public readonly Uri ShoutButtonUri = new Uri(@"/artwork/shout.png", UriKind.Relative);
 
         #endregion
 

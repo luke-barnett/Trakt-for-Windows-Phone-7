@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
@@ -19,11 +20,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private bool _showMainPivot;
         private ImageSource _moviePoster;
         private TraktMovie _movie;
+        private List<TraktShout> _shouts;
 
         #endregion
 
         public MovieViewModel(INavigationService navigationService) : base(navigationService)
         {
+            _shouts = new List<TraktShout>();
             MoviePoster = DefaultPoster;
         }
 
@@ -40,6 +43,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public TraktMovie Movie { get { return _movie; } set { _movie = value; UpdateDetails(); } }
 
         public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
+
+        public List<TraktShout> Shouts { get { return _shouts; } set { _shouts = value; NotifyOfPropertyChange(() => Shouts); } }
+
+        public Visibility ShowShouts { get { return (Shouts.Count > 0) ? Visibility.Visible : Visibility.Collapsed; } }
 
         #region Details
 
@@ -83,6 +90,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             ProgressBarVisible = true;
             TraktAPI.TraktAPI.GetMovie(IMDBID).Subscribe(HandleMovie, HandleError);
+            TraktAPI.TraktAPI.GetMovieShouts(IMDBID).Subscribe(HandleShouts, HandleError);
         }
 
         private void HandleMovie(TraktMovie movie)
@@ -96,6 +104,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             ProgressBarVisible = false;
             ShowMainPivot = true;
+        }
+
+        private void HandleShouts(TraktShout[] shouts)
+        {
+            Debug.WriteLine("Updating Shouts");
+            Shouts.AddRange(shouts);
+            Shouts = new List<TraktShout>(Shouts);
         }
 
         private void UpdateApplicationBar()
