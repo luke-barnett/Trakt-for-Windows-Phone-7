@@ -37,7 +37,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The type of trending currently being showen
         /// </summary>
-        public String TrendingType { get { return _trendingType; } set { _trendingType = value; NotifyOfPropertyChange(() => TrendingType); } }
+        public string TrendingType { get { return _trendingType; } set { _trendingType = value; NotifyOfPropertyChange(() => TrendingType); NotifyOfPropertyChange(() => ShowTrendingType); } }
+
+        public Visibility ShowTrendingType { get { return string.IsNullOrEmpty(TrendingType) ? Visibility.Collapsed : Visibility.Visible; } }
 
         #endregion
 
@@ -50,6 +52,48 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Starting loading of trending items");
             GetTrendingMovies();
+        }
+
+        /// <summary>
+        /// Generates the UI Elements to display
+        /// </summary>
+        /// <param name="poster">The poster to load</param>
+        /// <param name="title">The title to use</param>
+        /// <returns>The set of elements to use</returns>
+        private IEnumerable<UIElement> GenerateUiElements(Uri poster, string title)
+        {
+            var elements = new List<UIElement>();
+
+            var image = new Image { Source = DefaultPoster };
+
+            ProgressBarVisible = true;
+            var bitmap = new BitmapImage(poster) { CreateOptions = BitmapCreateOptions.None };
+            bitmap.ImageOpened += (sender, args) => { image.Source = bitmap; ProgressBarVisible = false; };
+            bitmap.ImageFailed += (sender, args) => { Debug.WriteLine("Failed to load poster for {0}", title); ProgressBarVisible = false; };
+
+            elements.Add(image);
+
+            var textBlock = new TextBlock
+            {
+                Text = title,
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                FontSize = 32,
+                Margin = new Thickness { Bottom = 5d, Top = 5d }
+            };
+
+            var textGrid = new Grid
+            {
+                Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.8d },
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+            textGrid.Children.Add(textBlock);
+            elements.Add(textGrid);
+
+            return elements;
         }
 
         #region Trending Movies
@@ -81,32 +125,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 var gestureListener = GestureService.GetGestureListener(movieGrid);
                 gestureListener.DoubleTap += (sender, args) => MovieSelected(trendingMovie);
 
-                var image = new Image { Source = DefaultPoster };
-
-                ProgressBarVisible = true;
-                var bitmap = new BitmapImage(new Uri(trendingMovie.Images.Poster)) { CreateOptions = BitmapCreateOptions.None };
-                bitmap.ImageOpened += (sender, args) => { image.Source = bitmap; ProgressBarVisible = false; };
-                
-                movieGrid.Children.Add(image);
-
-                var textBlock = new TextBlock
+                foreach (var uiElement in GenerateUiElements(new Uri(trendingMovie.Images.Poster), trendingMovie.TitleAndYear))
                 {
-                    Text = trendingMovie.TitleAndYear,
-                    TextAlignment = TextAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    FontSize = 32
-                };
-
-                var textGrid = new Grid
-                                   {
-                                       Background = new SolidColorBrush(Colors.DarkGray){Opacity = 0.8d},
-                                       VerticalAlignment = VerticalAlignment.Bottom,
-                                       HorizontalAlignment = HorizontalAlignment.Stretch
-                                   };
-                textGrid.Children.Add(textBlock);
-                movieGrid.Children.Add(textGrid);
+                    movieGrid.Children.Add(uiElement);
+                }
 
                 pivotMovie.Content = movieGrid;
                 PivotItems.Add(pivotMovie);
@@ -125,6 +147,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void MovieSelected(TraktMovie selectedMovie)
         {
             Debug.WriteLine("Captured a double tap event on {0}", selectedMovie.TitleAndYear);
+            NavigationService.Navigate(new Uri("/Views/MovieView.xaml?IMDBID=" + selectedMovie.IMDBID, UriKind.Relative));
         }
 
         #endregion
@@ -158,33 +181,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 var gestureListener = GestureService.GetGestureListener(showGrid);
                 gestureListener.DoubleTap += (sender, args) => ShowSelected(trendingShow);
 
-                var image = new Image { Source = DefaultPoster };
-
-                ProgressBarVisible = true;
-                var bitmap = new BitmapImage(new Uri(trendingShow.Images.Poster)) { CreateOptions = BitmapCreateOptions.None};
-                bitmap.ImageOpened += (sender, args) => { image.Source = bitmap; ProgressBarVisible = false; };
-                
-
-                showGrid.Children.Add(image);
-
-                var textBlock = new TextBlock
+                foreach (var uiElement in GenerateUiElements(new Uri(trendingShow.Images.Poster), trendingShow.TitleAndYear))
                 {
-                    Text = trendingShow.TitleAndYear,
-                    TextAlignment = TextAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    FontSize = 32
-                };
-
-                var textGrid = new Grid
-                {
-                    Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.8d },
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    HorizontalAlignment = HorizontalAlignment.Stretch
-                };
-                textGrid.Children.Add(textBlock);
-                showGrid.Children.Add(textGrid);
+                    showGrid.Children.Add(uiElement);
+                }
 
                 pivotShow.Content = showGrid;
                 PivotItems.Add(pivotShow);
@@ -203,6 +203,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void ShowSelected(TraktShow selectedShow)
         {
             Debug.WriteLine("Captured a double tap event on {0}", selectedShow.TitleAndYear);
+            NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + selectedShow.IMDBID, UriKind.Relative));
         }
 
         #endregion

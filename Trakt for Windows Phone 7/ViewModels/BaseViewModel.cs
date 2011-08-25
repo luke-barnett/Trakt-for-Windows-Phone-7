@@ -71,12 +71,59 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public Visibility ProgressBarVisibility { get { return ProgressBarVisible ? Visibility.Visible : Visibility.Collapsed; } }
 
+        #region Images
+
         /// <summary>
         /// The default poster
         /// </summary>
         public readonly ImageSource DefaultPoster = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\poster-small.jpg");
 
+        /// <summary>
+        /// The love image
+        /// </summary>
+        public readonly ImageSource LoveImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\iconLove.png");
+
+        /// <summary>
+        /// The hate image
+        /// </summary>
+        public readonly ImageSource HateImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\iconHate.png");
+
+        /// <summary>
+        /// Non faded love image
+        /// </summary>
+        public readonly ImageSource LoveFullImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\love.png");
+
+        /// <summary>
+        /// Faded love image
+        /// </summary>
+        public readonly ImageSource LoveFadeImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\love_f.png");
+
+        /// <summary>
+        /// Non faded hate image
+        /// </summary>
+        public readonly ImageSource HateFullImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\hate.png");
+
+        /// <summary>
+        /// Faded hate image
+        /// </summary>
+        public readonly ImageSource HateFadeImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\hate_f.png");
+
+        #endregion
+
+        /// <summary>
+        /// The navigation service
+        /// </summary>
         public readonly INavigationService NavigationService;
+
+        /// <summary>
+        /// Awesome string
+        /// </summary>
+        public string Awesome { get { return "Awesome!"; } }
+
+        /// <summary>
+        /// Lame string
+        /// </summary>
+        public string Lame { get { return "Lame sauce :("; } }
 
         #endregion
 
@@ -120,9 +167,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 TraktSettings.Username = String.Empty;
 
             if (_userSettings.Contains("TraktPassword"))
-                TraktSettings.Username = _userSettings["TraktPassword"] as string;
+                TraktSettings.Password = _userSettings["TraktPassword"] as string;
             else
-                TraktSettings.Username = String.Empty;
+                TraktSettings.Password = String.Empty;
             Debug.WriteLine("Loaded Values {0}", TraktSettings.ToString);
         }
 
@@ -143,12 +190,14 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public void TryLogIn()
         {
             Debug.WriteLine("Try to log in");
-            if(!String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
+            if(!TraktSettings.LoggedIn && !String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
             {
                 TraktAPI.TraktAPI.TestAccount(TraktSettings.Username, TraktSettings.Password).Subscribe(response => UpdateLogInSettings(true), error => UpdateLogInSettings(false));
             }
-            else
+            else if(!TraktSettings.LoggedIn)
                 UpdateLogInSettings(false);
+            else
+                UpdateLogInSettings(true);
         }
 
         #endregion
