@@ -29,6 +29,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public MovieViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, ShoutViewModel shoutViewModel) : base(navigationService, windowManager, container)
         {
             _shoutViewModel = shoutViewModel;
+            _shoutViewModel.IMDBID = IMDBID;
+            _shoutViewModel.LibraryType = TraktLibraryTypes.movies;
             _shouts = new List<TraktShout>();
             MoviePoster = DefaultPoster;
         }
@@ -167,6 +169,14 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             ProgressBarVisible = true;
             TraktAPI.TraktAPI.GetMovie(IMDBID).Subscribe(HandleMovie, HandleError);
 
+            GetMovieShouts();
+        }
+
+        /// <summary>
+        /// Gets the movies shouts
+        /// </summary>
+        private void GetMovieShouts()
+        {
             Debug.WriteLine("Getting movie shouts");
             ProgressBarVisible = true;
             TraktAPI.TraktAPI.GetMovieShouts(IMDBID).Subscribe(HandleShouts, HandleError);
@@ -198,6 +208,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void HandleShouts(TraktShout[] shouts)
         {
             Debug.WriteLine("Updating Shouts");
+            Shouts.Clear();
             Shouts.AddRange(shouts);
             Shouts = new List<TraktShout>(Shouts);
             ProgressBarVisible = false;
@@ -209,51 +220,62 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void UpdateApplicationBar()
         {
             Debug.WriteLine("Building Application Bar");
-            var appBar = new ApplicationBar {IsVisible = TraktSettings.LoggedIn, Opacity = 1};
+            var appBar = new ApplicationBar {IsVisible = true, Opacity = 1};
 
-            if(ShowWatchListButton)
+            if (TraktSettings.LoggedIn)
             {
-                Debug.WriteLine("Adding Watchlist button");
-                var watchListButton = new ApplicationBarIconButton(WatchListButtonUri)
-                                          {Text = "Watchlist", IsEnabled = ShowWatchListButton};
-                watchListButton.Click += (sender, args) => AddToWatchList();
+                if (ShowWatchListButton)
+                {
+                    Debug.WriteLine("Adding Watchlist button");
+                    var watchListButton = new ApplicationBarIconButton(WatchListButtonUri)
+                                              {Text = "Watchlist", IsEnabled = ShowWatchListButton};
+                    watchListButton.Click += (sender, args) => AddToWatchList();
 
-                appBar.Buttons.Add(watchListButton);
+                    appBar.Buttons.Add(watchListButton);
+                }
+
+                if (ShowUnWatchListButton)
+                {
+                    Debug.WriteLine("Adding Unwatchlist button");
+                    var unWatchListButton = new ApplicationBarIconButton(UnWatchListButtonUri)
+                                                {Text = "UnWatchlist", IsEnabled = ShowUnWatchListButton};
+                    unWatchListButton.Click += (sender, args) => RemoveFromWatchList();
+
+                    appBar.Buttons.Add(unWatchListButton);
+                }
+
+                if (Movie.Watched)
+                {
+                    Debug.WriteLine("Adding unwatch button");
+                    var unwatchButton = new ApplicationBarIconButton(SeenButtonUri)
+                                            {Text = "Un-Watch", IsEnabled = Movie.Watched};
+                    unwatchButton.Click += (sender, args) => MarkAsUnWatched();
+
+                    appBar.Buttons.Add(unwatchButton);
+                }
+                else
+                {
+                    Debug.WriteLine("Adding watch button");
+                    var watchButton = new ApplicationBarIconButton(SeenButtonUri)
+                                          {Text = "Watch", IsEnabled = !Movie.Watched};
+                    watchButton.Click += (sender, args) => MarkAsWatched();
+
+                    appBar.Buttons.Add(watchButton);
+                }
+
+                Debug.WriteLine("Adding shout button");
+                var shoutButton = new ApplicationBarIconButton(ShoutButtonUri)
+                                      {Text = "Shout", IsEnabled = TraktSettings.LoggedIn};
+                shoutButton.Click += (sender, args) => CreateShout();
+
+                appBar.Buttons.Add(shoutButton);
             }
 
-            if(ShowUnWatchListButton)
-            {
-                Debug.WriteLine("Adding Unwatchlist button");
-                var unWatchListButton = new ApplicationBarIconButton(UnWatchListButtonUri)
-                                            {Text = "UnWatchlist", IsEnabled = ShowUnWatchListButton};
-                unWatchListButton.Click += (sender, args) => RemoveFromWatchList();
+            Debug.WriteLine("Adding shout refresh button");
+            var shoutRefeshButton = new ApplicationBarMenuItem("Refresh Shouts") {IsEnabled = true};
+            shoutRefeshButton.Click += (sender, args) => GetMovieShouts();
 
-                appBar.Buttons.Add(unWatchListButton);
-            }
-
-            if(Movie.Watched)
-            {
-                Debug.WriteLine("Adding unwatch button");
-                var unwatchButton = new ApplicationBarIconButton(SeenButtonUri) {Text = "Un-Watch", IsEnabled = Movie.Watched};
-                unwatchButton.Click += (sender, args) => MarkAsUnWatched();
-
-                appBar.Buttons.Add(unwatchButton);
-            }
-            else
-            {
-                Debug.WriteLine("Adding watch button");
-                var watchButton = new ApplicationBarIconButton(SeenButtonUri) { Text = "Watch", IsEnabled = !Movie.Watched };
-                watchButton.Click += (sender, args) => MarkAsWatched();
-
-                appBar.Buttons.Add(watchButton);
-            }
-
-            Debug.WriteLine("Adding shout button");
-            var shoutButton = new ApplicationBarIconButton(ShoutButtonUri)
-                                  {Text = "Shout", IsEnabled = TraktSettings.LoggedIn};
-            shoutButton.Click += (sender, args) => CreateShout();
-
-            appBar.Buttons.Add(shoutButton);
+            appBar.MenuItems.Add(shoutRefeshButton);
 
             ApplicationBar = appBar;
         }
@@ -394,6 +416,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public void CreateShout()
         {
+            _shoutViewModel.IMDBID = IMDBID;
             WindowManager.ShowDialog(_shoutViewModel);
         }
 

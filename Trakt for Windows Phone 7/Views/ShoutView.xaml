@@ -19,8 +19,9 @@
                 <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <ProgressBar IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
             <TextBlock Grid.Row="1" Text="{Binding ShoutLanguageText}" />
-            <TextBox x:Name="ShoutText" Grid.Row="2" Text="{Binding ShoutText, Mode=TwoWay, UpdateSourceTrigger=Explicit}" TextWrapping="Wrap" MaxLength="{Binding MaxShoutLength}" TextChanged="ShoutTextChanged">
+            <TextBox x:Name="ShoutText" Grid.Row="2" Text="{Binding ShoutText, Mode=TwoWay, UpdateSourceTrigger=Explicit}" TextWrapping="Wrap" MaxLength="{Binding MaxShoutLength}" TextChanged="ShoutTextChanged" DataContext="{Binding}" InputScope="Text">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="KeyUp">
                         <cal:ActionMessage MethodName="KeyEntered">
@@ -35,7 +36,7 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding RemaingCharacters}" Margin="10" VerticalAlignment="Top" />
-                <Button Grid.Column="1" Content="Submit" Name="SubmitShout" />
+                <Button Grid.Column="1" Content="Submit" Name="SubmitShout" IsEnabled="{Binding SubmitEnabled}" />
             </Grid>
         </Grid>
     </Grid>

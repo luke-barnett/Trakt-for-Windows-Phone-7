@@ -9,6 +9,7 @@ using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using TraktAPI;
 using TraktAPI.TraktModels;
 using Trakt_for_Windows_Phone_7.Framework;
 
@@ -20,11 +21,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         private List<PivotItem> _pivotItems;
         private String _trendingType;
+        private LogInViewModel _logInViewModel;
 
         #endregion
         
-        public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
+        public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, LogInViewModel logInViewModel) : base(navigationService, windowManager, container)
         {
+            _logInViewModel = logInViewModel;
             _pivotItems = new List<PivotItem>();
             StartLoading();
         }
@@ -99,25 +102,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             return elements;
         }
 
-        /// <summary>
-        /// Sets up the application bar
-        /// </summary>
-        private void SetUpApplicationBar()
-        {
-            var appBar = new ApplicationBar {IsVisible = true, Opacity = 1};
-
-            var getTrendingMovies = new ApplicationBarMenuItem {Text = "Get Trending Movies", IsEnabled = true};
-            getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
-
-            var getTrendingShows = new ApplicationBarMenuItem { Text = "Get Trending Shows", IsEnabled = true };
-            getTrendingShows.Click += (sender, args) => GetTrendingShows();
-
-            appBar.MenuItems.Add(getTrendingMovies);
-            appBar.MenuItems.Add(getTrendingShows);
-
-            ApplicationBar = appBar;
-        }
-
+        
         #region Trending Movies
 
         /// <summary>
@@ -230,10 +215,56 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #endregion
 
+        private void ShowLogIn()
+        {
+            WindowManager.ShowDialog(_logInViewModel);
+        }
+
         #endregion
 
         #region Public Methods
-        
+
+        /// <summary>
+        /// Sets up the application bar
+        /// </summary>
+        public void SetUpApplicationBar()
+        {
+            var appBar = new ApplicationBar { IsVisible = true, Opacity = 1 };
+
+            var getTrendingMovies = new ApplicationBarMenuItem { Text = "Get Trending Movies", IsEnabled = true };
+            getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
+
+            appBar.MenuItems.Add(getTrendingMovies);
+
+            var getTrendingShows = new ApplicationBarMenuItem { Text = "Get Trending Shows", IsEnabled = true };
+            getTrendingShows.Click += (sender, args) => GetTrendingShows();
+
+            appBar.MenuItems.Add(getTrendingShows);
+
+            if (!TraktSettings.LoggedIn)
+            {
+                var logIn = new ApplicationBarMenuItem { Text = "Log in", IsEnabled = true };
+                logIn.Click += (sender, args) => ShowLogIn();
+                appBar.MenuItems.Add(logIn);
+            }
+            else
+            {
+                var logOut = new ApplicationBarMenuItem { Text = "Log out", IsEnabled = true };
+                logOut.Click += delegate
+                {
+                    TraktSettings.LoggedIn = false;
+                    TraktSettings.Password = String.Empty;
+                };
+
+                appBar.MenuItems.Add(logOut);
+            }
+
+
+
+            ApplicationBar = appBar;
+        }
+
+
         #endregion
     }
 }

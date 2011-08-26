@@ -19,6 +19,7 @@
 
 
             container.RegisterPerRequest(typeof(ShoutViewModel), null, typeof(ShoutViewModel));
+            container.RegisterPerRequest(typeof(LogInViewModel), null, typeof(LogInViewModel));
             container.RegisterInstance(typeof(INavigationService), null, new FrameAdapter(RootFrame));
             container.RegisterInstance(typeof(IWindowManager), null, new WindowManager());
 
