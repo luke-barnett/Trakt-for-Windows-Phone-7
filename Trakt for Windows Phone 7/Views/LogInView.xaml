@@ -13,7 +13,7 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
         <Grid Margin="10,0,10,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="15" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
