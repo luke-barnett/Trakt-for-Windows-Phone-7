@@ -22,11 +22,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private List<PivotItem> _pivotItems;
         private String _trendingType;
         private LogInViewModel _logInViewModel;
+        private bool _interactionEnabled;
 
         #endregion
         
         public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, LogInViewModel logInViewModel) : base(navigationService, windowManager, container)
         {
+            _interactionEnabled = true;
             _logInViewModel = logInViewModel;
             _pivotItems = new List<PivotItem>();
             StartLoading();
@@ -48,6 +50,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// Visibility for trending type
         /// </summary>
         public Visibility ShowTrendingType { get { return string.IsNullOrEmpty(TrendingType) ? Visibility.Collapsed : Visibility.Visible; } }
+
+        /// <summary>
+        /// Determines whether or not the interaction is enabled
+        /// </summary>
+        public bool InteractionEnabled { get { return _interactionEnabled; } set { _interactionEnabled = value; NotifyOfPropertyChange(() => InteractionEnabled); } }
 
         #endregion
 
@@ -156,8 +163,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <param name="selectedMovie">The movie that was selected</param>
         private void MovieSelected(TraktMovie selectedMovie)
         {
-            Debug.WriteLine("Captured a double tap event on {0}", selectedMovie.TitleAndYear);
-            NavigationService.Navigate(new Uri("/Views/MovieView.xaml?IMDBID=" + selectedMovie.IMDBID, UriKind.Relative));
+            if (InteractionEnabled)
+            {
+                Debug.WriteLine("Captured a double tap event on {0}", selectedMovie.TitleAndYear);
+                NavigationService.Navigate(new Uri("/Views/MovieView.xaml?IMDBID=" + selectedMovie.IMDBID, UriKind.Relative));
+            }
         }
 
         #endregion
@@ -212,8 +222,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <param name="selectedShow">The show selected</param>
         private void ShowSelected(TraktShow selectedShow)
         {
-            Debug.WriteLine("Captured a double tap event on {0}", selectedShow.TitleAndYear);
-            NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + selectedShow.IMDBID, UriKind.Relative));
+            if (InteractionEnabled)
+            {
+                Debug.WriteLine("Captured a double tap event on {0}", selectedShow.TitleAndYear);
+                NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + selectedShow.IMDBID, UriKind.Relative));
+            }
         }
 
         #endregion
@@ -223,6 +236,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         private void ShowLogIn()
         {
+            InteractionEnabled = false;
             WindowManager.ShowDialog(_logInViewModel);
         }
 
@@ -235,7 +249,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public void SetUpApplicationBar()
         {
-            var appBar = new ApplicationBar { IsVisible = true, Opacity = 1 };
+            var appBar = new ApplicationBar { IsVisible = true, Opacity = 1, IsMenuEnabled = InteractionEnabled };
 
             var getTrendingMovies = new ApplicationBarMenuItem { Text = "Get Trending Movies", IsEnabled = true };
             getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
@@ -260,6 +274,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 {
                     TraktSettings.LoggedIn = false;
                     TraktSettings.Password = String.Empty;
+                    SaveSettings();
+                    SetUpApplicationBar();
                 };
 
                 appBar.MenuItems.Add(logOut);

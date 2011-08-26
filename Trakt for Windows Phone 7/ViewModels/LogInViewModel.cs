@@ -123,6 +123,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             SaveSettings();
             ProgressBarVisible = false;
             (Container.GetInstance(typeof (MainPageViewModel), "MainPageViewModel") as MainPageViewModel).SetUpApplicationBar();
+            (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).InteractionEnabled = true;
             TryClose();
         }
 
@@ -135,6 +136,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             TraktSettings.LoggedIn = false;
             TraktSettings.Password = String.Empty;
             ProgressBarVisible = false;
+            (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).InteractionEnabled = true;
+            MessageBox.Show("Failed to log in");
             TryClose();
         }
 
