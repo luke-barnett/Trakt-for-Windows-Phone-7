@@ -71,19 +71,23 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Framework\PhoneContainer.cs" />
+    <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Framework\Trakt_for_Windows_Phone_7Bootstrapper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MovieViewModel.cs" />
+    <Compile Include="ViewModels\ShoutViewModel.cs" />
     <Compile Include="ViewModels\ShowViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="Framework\PhoneContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Views\MovieView.xaml.cs">
       <DependentUpon>MovieView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShoutView.xaml.cs">
+      <DependentUpon>ShoutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowView.xaml.cs">
       <DependentUpon>ShowView.xaml</DependentUpon>
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MovieView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShoutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

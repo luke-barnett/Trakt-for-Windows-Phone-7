@@ -10,6 +10,7 @@ using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using TraktAPI.TraktModels;
+using Trakt_for_Windows_Phone_7.Framework;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -22,7 +23,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #endregion
         
-        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
+        public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
         {
             _pivotItems = new List<PivotItem>();
             StartLoading();

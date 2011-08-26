@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Caliburn.Micro;
+using Trakt_for_Windows_Phone_7.Framework;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -12,7 +13,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #endregion
 
-        public ShowViewModel(INavigationService navigationService) : base(navigationService)
+        public ShowViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
         {
             ShowMainPivot = true;
         }

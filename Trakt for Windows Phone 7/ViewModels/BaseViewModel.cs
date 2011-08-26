@@ -8,6 +8,7 @@ using Microsoft.Phone.Shell;
 using TraktAPI;
 using Microsoft.Phone.Reactive;
 using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
+using Trakt_for_Windows_Phone_7.Framework;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -41,9 +42,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The base view model that handles common tasks
         /// </summary>
-        public BaseViewModel(INavigationService navigationService)
+        public BaseViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container)
         {
+            Container = container;
             NavigationService = navigationService;
+            WindowManager = windowManager;
             _userSettings = IsolatedStorageSettings.ApplicationSettings;
             InternetConnectionAvailable();
             ProgressBarVisible = true;
@@ -141,6 +144,16 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// The navigation service
         /// </summary>
         public readonly INavigationService NavigationService;
+
+        /// <summary>
+        /// The window manager
+        /// </summary>
+        public readonly IWindowManager WindowManager;
+
+        /// <summary>
+        /// The phone container
+        /// </summary>
+        public readonly PhoneContainer Container;
 
         /// <summary>
         /// Awesome string

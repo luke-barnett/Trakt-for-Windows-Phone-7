@@ -17,8 +17,12 @@
             container.RegisterPerRequest(typeof(MovieViewModel), "MovieViewModel", typeof(MovieViewModel));
             container.RegisterPerRequest(typeof(ShowViewModel), "ShowViewModel", typeof(ShowViewModel));
 
+
+            container.RegisterPerRequest(typeof(ShoutViewModel), null, typeof(ShoutViewModel));
             container.RegisterInstance(typeof(INavigationService), null, new FrameAdapter(RootFrame));
-            container.RegisterInstance(typeof(IPhoneService), null, new PhoneApplicationServiceAdapter(PhoneService));
+            container.RegisterInstance(typeof(IWindowManager), null, new WindowManager());
+
+            container.RegisterInstance(typeof(PhoneContainer), null, container);
         }
 
         protected override object GetInstance(Type service, string key)

@@ -9,6 +9,7 @@ using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Shell;
 using TraktAPI;
 using TraktAPI.TraktModels;
+using Trakt_for_Windows_Phone_7.Framework;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -21,11 +22,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private ImageSource _moviePoster;
         private TraktMovie _movie;
         private List<TraktShout> _shouts;
+        private readonly ShoutViewModel _shoutViewModel;
 
         #endregion
 
-        public MovieViewModel(INavigationService navigationService) : base(navigationService)
+        public MovieViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, ShoutViewModel shoutViewModel) : base(navigationService, windowManager, container)
         {
+            _shoutViewModel = shoutViewModel;
             _shouts = new List<TraktShout>();
             MoviePoster = DefaultPoster;
         }
@@ -391,7 +394,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public void CreateShout()
         {
-            MessageBox.Show("Shout!");
+            WindowManager.ShowDialog(_shoutViewModel);
         }
 
         #endregion
