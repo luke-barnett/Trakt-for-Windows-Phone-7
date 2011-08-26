@@ -44,6 +44,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public string TrendingType { get { return _trendingType; } set { _trendingType = value; NotifyOfPropertyChange(() => TrendingType); NotifyOfPropertyChange(() => ShowTrendingType); } }
 
+        /// <summary>
+        /// Visibility for trending type
+        /// </summary>
         public Visibility ShowTrendingType { get { return string.IsNullOrEmpty(TrendingType) ? Visibility.Collapsed : Visibility.Visible; } }
 
         #endregion
@@ -215,6 +218,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// Shows a log in dialog
+        /// </summary>
         private void ShowLogIn()
         {
             WindowManager.ShowDialog(_logInViewModel);
@@ -263,8 +269,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             ApplicationBar = appBar;
         }
-
-
+        
         #endregion
     }
 }

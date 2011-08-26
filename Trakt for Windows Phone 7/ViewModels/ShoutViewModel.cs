@@ -17,27 +17,61 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
         }
 
+        /// <summary>
+        /// The inputted text for the shout
+        /// </summary>
         public string ShoutText { get { return _shoutText; } set { _shoutText = value; NotifyOfPropertyChange(() => ShoutText); NotifyOfPropertyChange(() => RemaingCharacters); } }
 
+        /// <summary>
+        /// The maximum length of the shout
+        /// </summary>
         public int MaxShoutLength { get { return 1000; } }
 
-        public string RemaingCharacters { get { return string.Format("{0} characters remaining", MaxShoutLength - ShoutText.Length); } }
+        /// <summary>
+        /// The amount of characters remaining
+        /// </summary>
+        public string RemaingCharacters { get { return string.Format("[{0}/{1}]", ShoutText.Length, MaxShoutLength); } }
 
+        /// <summary>
+        /// The language text to show
+        /// </summary>
         public string ShoutLanguageText { get { return string.Format("Please write your shout in {0}", Language); } }
 
+        /// <summary>
+        /// If the submit button is enabled
+        /// </summary>
         public bool SubmitEnabled { get { return !ProgressBarVisible; } }
 
+        /// <summary>
+        /// The library type for the shout
+        /// </summary>
         public TraktLibraryTypes LibraryType { get; set; }
 
+        /// <summary>
+        /// The IMDBID value to reference for movies
+        /// </summary>
         public string IMDBID { get; set; }
 
+        /// <summary>
+        /// The TVDBID value to reference for shows
+        /// </summary>
         public string TVDBID { get; set; }
 
+        /// <summary>
+        /// The season value to reference for episodes
+        /// </summary>
         public int Season { get; set; }
 
+        /// <summary>
+        /// The episode value to reference for episodes
+        /// </summary>
         public int Episode { get; set; }
 
 
+        /// <summary>
+        /// Fired when a key is entered on the shout dialog
+        /// </summary>
+        /// <param name="args">The key event arguments</param>
         public void KeyEntered(KeyEventArgs args)
         {
             NotifyOfPropertyChange(() => RemaingCharacters);
@@ -45,6 +79,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 SubmitShout();
         }
 
+        /// <summary>
+        /// Submits a shout to trakt is enough data is available
+        /// </summary>
         public void SubmitShout()
         {
             NotifyOfPropertyChange(() => SubmitEnabled);
@@ -101,6 +138,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }  
         }
 
+        /// <summary>
+        /// Closes the view
+        /// </summary>
+        /// <param name="response">The response recieved</param>
         private void CloseView(TraktResponse response)
         {
             ProgressBarVisible = false;

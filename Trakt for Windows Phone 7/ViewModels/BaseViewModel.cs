@@ -121,17 +121,17 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Unwatchlist button uri
         /// </summary>
-        public readonly Uri UnWatchListButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+        public readonly Uri UnWatchListButtonUri = new Uri(@"/artwork/unwatchlist.png", UriKind.Relative);
 
         /// <summary>
         /// Seen button uri
         /// </summary>
-        public readonly Uri SeenButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+        public readonly Uri SeenButtonUri = new Uri(@"/artwork/seen.png", UriKind.Relative);
 
         /// <summary>
         /// Unseen button uri
         /// </summary>
-        public readonly Uri UnSeenButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
+        public readonly Uri UnSeenButtonUri = new Uri(@"/artwork/unseen.png", UriKind.Relative);
 
         /// <summary>
         /// Shout button uri
@@ -256,7 +256,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void UpdateLogInSettings(bool successfulLogIn)
         {
             if (successfulLogIn)
+            {
                 TraktSettings.LoggedIn = true;
+                (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).SetUpApplicationBar();
+            }
             else
             {
                 TraktSettings.LoggedIn = false;
