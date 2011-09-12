@@ -13,12 +13,12 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Image Source="{Binding MoviePoster}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding MainPivotVisibility}" Height="300" Margin="10" Opacity="0.5" />
+        <Image Source="{Binding MoviePoster}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding MainPivotVisibility}" Margin="10" Opacity="0.2" />
         <controls:Pivot Visibility="{Binding MainPivotVisibility}">
             <controls:PivotItem Header="Details">
                 <Grid Margin="10">

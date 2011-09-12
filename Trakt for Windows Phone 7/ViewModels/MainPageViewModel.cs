@@ -21,7 +21,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         private List<PivotItem> _pivotItems;
         private String _trendingType;
-        private LogInViewModel _logInViewModel;
+        private readonly LogInViewModel _logInViewModel;
         private bool _interactionEnabled;
 
         #endregion
@@ -80,7 +80,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var elements = new List<UIElement>();
 
-            var image = new Image { Source = DefaultPoster };
+            var image = new Image { Source = DefaultPoster, HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.Uniform};
 
             ProgressBarVisible = true;
             var bitmap = new BitmapImage(poster) { CreateOptions = BitmapCreateOptions.None };
@@ -102,7 +102,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             var textGrid = new Grid
             {
-                Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.8d },
+                Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.9d },
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
@@ -136,7 +136,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             for (var i = 0; i < 10; i++)
             {
                 var trendingMovie = trendingMovies[i];
-                var pivotMovie = new PivotItem();
+                var pivotMovie = new PivotItem {Margin = new Thickness(-10,0,-10,0)};
 
                 var movieGrid = new Grid();
                 var gestureListener = GestureService.GetGestureListener(movieGrid);
@@ -195,13 +195,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             for(var i = 0; i < 10; i++)
             {
                 var trendingShow = trendingShows[i];
-                var pivotShow = new PivotItem();
+                var pivotShow = new PivotItem { Margin = new Thickness(-10, 0, -10, 0) };
 
                 var showGrid = new Grid();
                 var gestureListener = GestureService.GetGestureListener(showGrid);
                 gestureListener.DoubleTap += (sender, args) => ShowSelected(trendingShow);
 
-                foreach (var uiElement in GenerateUiElements(new Uri(trendingShow.Images.Poster), trendingShow.TitleAndYear))
+                foreach (var uiElement in GenerateUiElements(new Uri(trendingShow.Images.Poster), trendingShow.Title))
                 {
                     showGrid.Children.Add(uiElement);
                 }

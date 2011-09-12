@@ -15,7 +15,7 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <controls:Pivot Grid.Column="0" Width="480" Height="696" ItemsSource="{Binding PivotItems}" IsEnabled="{Binding PivotEnabled}" />
-        <Grid Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding ShowTrendingType}">
+        <Grid Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding ShowTrendingType}" Width="480">
             <TextBlock Text="{Binding TrendingType}" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="40" Margin="10" />
         </Grid>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
