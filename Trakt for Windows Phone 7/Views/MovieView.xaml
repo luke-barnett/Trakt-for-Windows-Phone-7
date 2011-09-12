@@ -18,7 +18,7 @@
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Image Source="{Binding MoviePoster}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding MainPivotVisibility}" Margin="10" Opacity="0.2" />
+        <Image Source="{Binding MoviePoster}" Height="768" HorizontalAlignment="Center" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding MainPivotVisibility}" Opacity="0.2" />
         <controls:Pivot Visibility="{Binding MainPivotVisibility}">
             <controls:PivotItem Header="Details">
                 <Grid Margin="10">

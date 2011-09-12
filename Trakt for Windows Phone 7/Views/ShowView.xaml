@@ -16,6 +16,7 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Image Source="{Binding ShowPoster}" Height="768" HorizontalAlignment="Center" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding MainPivotVisibility}" Opacity="0.2" />
         <controls:Pivot Visibility="{Binding MainPivotVisibility}">
             <controls:PivotItem Header="Details">
                 <TextBlock Text="{Binding TVDBID}" />
@@ -24,5 +25,6 @@
 
             </controls:PivotItem>
         </controls:Pivot>
+        <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
 </phone:PhoneApplicationPage>

@@ -33,6 +33,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             _shoutViewModel.LibraryType = TraktLibraryTypes.movies;
             _shouts = new List<TraktShout>();
             MoviePoster = DefaultPoster;
+            ShowMainPivot = false;
         }
 
         #region Public Parameters
