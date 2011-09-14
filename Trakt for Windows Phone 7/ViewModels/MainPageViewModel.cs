@@ -225,7 +225,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             if (InteractionEnabled)
             {
                 Debug.WriteLine("Captured a double tap event on {0}", selectedShow.TitleAndYear);
-                NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + selectedShow.IMDBID, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + selectedShow.TVDBID, UriKind.Relative));
             }
         }
 

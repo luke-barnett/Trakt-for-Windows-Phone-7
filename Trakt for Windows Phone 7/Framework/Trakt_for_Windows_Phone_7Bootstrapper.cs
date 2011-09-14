@@ -17,6 +17,7 @@
             container.RegisterPerRequest(typeof(MovieViewModel), "MovieViewModel", typeof(MovieViewModel));
             container.RegisterPerRequest(typeof(ShowViewModel), "ShowViewModel", typeof(ShowViewModel));
             container.RegisterPerRequest(typeof(SeasonViewModel), "SeasonViewModel", typeof(SeasonViewModel));
+            container.RegisterPerRequest(typeof(EpisodeViewModel), "EpisodeViewModel", typeof(EpisodeViewModel));
 
 
             container.RegisterPerRequest(typeof(ShoutViewModel), null, typeof(ShoutViewModel));

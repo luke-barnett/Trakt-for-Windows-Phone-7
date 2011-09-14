@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -47,7 +48,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         private UIElement GenerateUIElement(TraktEpisode episode)
         {
-            return new TextBlock{Text = episode.Title};
+            var textBlock = new TextBlock {Text = episode.Title};
+            textBlock.MouseLeftButtonDown += (sender, args) =>
+                                                 {
+                                                     Debug.WriteLine("Selected {0}", episode.Title);
+                                                     NavigationService.Navigate(new Uri("/Views/EpisodeView.xaml?TVDBID=" + TVDBID + "&Season=" + episode.Season + "&Episode=" + episode.Episode, UriKind.Relative));
+                                                 };
+            return textBlock;
         }
     }
 }
