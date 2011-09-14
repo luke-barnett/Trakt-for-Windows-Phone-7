@@ -42,14 +42,29 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #region Public Parameters
 
+        /// <summary>
+        /// The TVDBID of the season shown
+        /// </summary>
         public string TVDBID { get { return _tvdbid; } set { _tvdbid = value; NotifyOfPropertyChange(() => TVDBID); GetShowDetails(); } }
 
+        /// <summary>
+        /// Whether or not to show the main pivot
+        /// </summary>
         public bool ShowMainPivot { get { return _showMainPivot; } set { _showMainPivot = value; NotifyOfPropertyChange(() => MainPivotVisibility); } }
 
+        /// <summary>
+        /// The visibility of the main pivot
+        /// </summary>
         public Visibility MainPivotVisibility { get { return (ShowMainPivot) ? Visibility.Visible : Visibility.Collapsed; } }
 
+        /// <summary>
+        /// The poster of the show
+        /// </summary>
         public ImageSource ShowPoster { get { return _showPoster; } set { _showPoster = value; NotifyOfPropertyChange(() => ShowPoster); } }
 
+        /// <summary>
+        /// The show object to use
+        /// </summary>
         public TraktShow Show { get { return _show; } set { _show = value; NotifyOfPropertyChange(() => Show); UpdateDetails(); } }
 
         /// <summary>
@@ -62,30 +77,66 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public Visibility ShowShouts { get { return (Shouts.Count > 0) ? Visibility.Visible : Visibility.Collapsed; } }
 
+        /// <summary>
+        /// The list of seasons
+        /// </summary>
         public List<UIElement> Seasons { get { return _seasons; } set { _seasons = value; NotifyOfPropertyChange(() => Seasons); NotifyOfPropertyChange(() => ShowSeasons); } }
 
+        /// <summary>
+        /// The visibility of the seasons pivot
+        /// </summary>
         public Visibility ShowSeasons { get { return (Seasons.Count > 0) ? Visibility.Visible : Visibility.Collapsed; } }
 
+        /// <summary>
+        /// The visibility of the rate box
+        /// </summary>
         public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
 
         #region Details
 
+        /// <summary>
+        /// The title of the show
+        /// </summary>
         public string Title { get { return (Show == null) ? string.Empty : Show.Title; } }
 
+        /// <summary>
+        /// The network of the show
+        /// </summary>
         public string Network { get { return (Show == null) ? string.Empty : Show.Network; } }
 
+        /// <summary>
+        /// The certification of the show
+        /// </summary>
         public string Certification { get { return (Show == null) ? string.Empty : Show.Certification; } }
 
+        /// <summary>
+        /// The run time of the show
+        /// </summary>
         public string RunTime { get { return (Show == null) ? string.Empty : Show.RunTime + " mins"; } }
 
+        /// <summary>
+        /// The overview of the show
+        /// </summary>
         public string Overview { get { return (Show == null) ? string.Empty : Show.Overview; } }
 
+        /// <summary>
+        /// The image to describe the rating
+        /// </summary>
         public ImageSource RatingImage { get { return (Show != null) ? (Show.Ratings.Percentage > 50) ? LoveImage : HateImage : null; } }
 
+        /// <summary>
+        /// The percentage of the ratings that are positive
+        /// </summary>
         public string RatingPercentage { get { return (Show != null) ? Show.Ratings.Percentage + "%" : String.Empty; } }
 
+        /// <summary>
+        /// The count of ratings for the show
+        /// </summary>
         public string RatingCount { get { return (Show != null) ? Show.Ratings.Votes + " votes" : String.Empty; } }
 
+        /// <summary>
+        /// The image to use for the love button
+        /// </summary>
         public ImageSource LoveRateBoxImage { get { return (String.IsNullOrEmpty(Show.Rating) || Show.Rating == TraktRateTypes.love.ToString() || Show.Rating.CompareTo("False") == 0) ? LoveFullImage : LoveFadeImage; } }
 
         /// <summary>
@@ -124,6 +175,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         #region Private Methods
 
+        /// <summary>
+        /// Gets the details of the show from trakt
+        /// </summary>
         private void GetShowDetails()
         {
             Debug.WriteLine("Getting show details");
@@ -135,6 +189,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             GetShowShouts();
         }
 
+        /// <summary>
+        /// Handles the displaying of the show data recieved
+        /// </summary>
+        /// <param name="show">The recieved show</param>
         private void HandleShow(TraktShow show)
         {
             Debug.WriteLine("Getting the poster");
@@ -173,6 +231,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             ProgressBarVisible = false;
         }
 
+        /// <summary>
+        /// Gets the seasons for the show
+        /// </summary>
         private void GetShowSeasons()
         {
             Debug.WriteLine("Getting show seasons");
@@ -180,6 +241,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             TraktAPI.TraktAPI.GetSeasonInfo(TVDBID).Subscribe(HandleSeasons, HandleError);
         }
 
+        /// <summary>
+        /// Handles the seasons received
+        /// </summary>
+        /// <param name="seasons">The seasons to process</param>
         private void HandleSeasons(TraktSeasonInfo[] seasons)
         {
             Debug.WriteLine("Updating Seasons");
@@ -189,6 +254,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             ProgressBarVisible = false;
         }
 
+        /// <summary>
+        /// Generates a UIElement for a season
+        /// </summary>
+        /// <param name="season">The season to base it on</param>
+        /// <returns>The resulting UI Element for it</returns>
         private UIElement GenerateSeasonUIElement(TraktSeasonInfo season)
         {
             var textBlock = new TextBlock {Text = season.AsString, FontSize = 30};
@@ -200,6 +270,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             return textBlock;
         }
 
+        /// <summary>
+        /// Updates the details for the UI
+        /// </summary>
         private void UpdateDetails()
         {
             Debug.WriteLine("Updating show details");
