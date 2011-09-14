@@ -267,7 +267,52 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <returns>The created UIElement</returns>
         public UIElement GenerateGeneralShowElement(TraktShow show)
         {
-            return new TextBlock { Text = show.TitleAndYear };
+            var showGrid = new Grid { Margin = new Thickness(5, 10, 5, 10) };
+            showGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            showGrid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            var showPoster = new Image { Source = DefaultPoster, MaxWidth = 200 };
+
+            var imageSource = new BitmapImage(new Uri(show.Images.Poster)) { CreateOptions = BitmapCreateOptions.None };
+            imageSource.ImageOpened += (o, e) =>
+            {
+                showPoster.Source = imageSource;
+                Debug.WriteLine("Successfully got poster for show {0}", show.TitleAndYear);
+            };
+            imageSource.ImageFailed += (o, e) => Debug.WriteLine("Failed to get poster for show {0}", show.TitleAndYear);
+
+            Grid.SetColumn(showPoster, 0);
+            showGrid.Children.Add(showPoster);
+
+            var showDetails = new Grid { Margin = new Thickness(5, 0, 0, 0) };
+            showDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
+            showDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
+            showDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
+
+            var showTitle = new TextBlock { Text = show.Title, FontSize = 34, TextWrapping = TextWrapping.Wrap };
+            Grid.SetRow(showTitle, 0);
+            showDetails.Children.Add(showTitle);
+
+            var showCeritification = new TextBlock { Text = show.Certification };
+            Grid.SetRow(showCeritification, 1);
+            showDetails.Children.Add(showCeritification);
+
+            var showRunTime = new TextBlock { Text = show.RunTime + " mins" };
+            Grid.SetRow(showRunTime, 2);
+            showDetails.Children.Add(showRunTime);
+
+            Grid.SetColumn(showDetails, 1);
+
+            showGrid.Children.Add(showDetails);
+
+            var gestureListener = GestureService.GetGestureListener(showGrid);
+            gestureListener.DoubleTap += (o, e) =>
+            {
+                Debug.WriteLine("Navigating to show {0}", show.TitleAndYear);
+                NavigationService.Navigate(new Uri("/Views/ShowView.xaml?TVDBID=" + show.TVDBID, UriKind.Relative));
+            };
+
+            return showGrid;
         }
 
         /// <summary>
