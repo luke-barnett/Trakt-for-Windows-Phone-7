@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Caliburn.Micro;
 using TraktAPI;
 using TraktAPI.TraktModels;
@@ -20,10 +21,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private List<UIElement> _movies;
         private List<UIElement> _episodes;
 
+        private string _searchString;
+
         public SearchViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
         {
             _shows = new List<UIElement>();
             _movies = new List<UIElement>();
+            _episodes = new List<UIElement>();
         }
 
         public bool EnableShows { get { return _showShows; } set { _showShows = value; NotifyOfPropertyChange(() => EnableShows); NotifyOfPropertyChange(() => ShowsVisibility); NotifyOfPropertyChange(() => MainPivotVisibility); } }
@@ -45,6 +49,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public List<UIElement> Movies { get { return _movies; } set { _movies = value; NotifyOfPropertyChange(() => Movies); } }
 
         public List<UIElement> Episodes { get { return _episodes; } set { _episodes = value; NotifyOfPropertyChange(() => Episodes); } }
+
+        public string SearchString { get { return _searchString; } set { _searchString = value; NotifyOfPropertyChange(() => SearchString); } }
+
+        public string SearchTerm { get { return (string.IsNullOrEmpty(SearchString)) ? string.Empty : string.Format("Search results for \"{0}\"", SearchString); } }
 
         #region Shows
 
@@ -114,5 +122,21 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         }
 
         #endregion
+
+        public void KeyUpOccured(KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                BeginSearch();
+            }
+        }
+
+        private void BeginSearch()
+        {
+            GetMovies(SearchString);
+            GetEpisodes(SearchString);
+            GetShows(SearchString);
+            NotifyOfPropertyChange(() => SearchTerm);
+        }
     }
 }

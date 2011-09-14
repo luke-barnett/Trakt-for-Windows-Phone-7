@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Controls;
+﻿using System.Windows.Controls;
+using Microsoft.Phone.Controls;
 
 namespace Trakt_for_Windows_Phone_7.Views
 {
@@ -7,6 +8,11 @@ namespace Trakt_for_Windows_Phone_7.Views
         public SearchView()
         {
             InitializeComponent();
+        }
+
+        private void SearchBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            SearchBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
     }
 }

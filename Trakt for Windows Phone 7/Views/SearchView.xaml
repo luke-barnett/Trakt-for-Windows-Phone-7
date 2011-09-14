@@ -18,6 +18,42 @@
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
+            <TextBlock Text="Search" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Margin="10" />
+        </Grid>
+        <TextBox Grid.Row="1" Name="SearchBox" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="SearchBox_KeyUp">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyUp">
+                    <cal:ActionMessage MethodName="KeyUpOccured">
+                        <cal:Parameter Value="$eventArgs" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Row="2" Text="{Binding SearchTerm}" TextWrapping="Wrap" FontStyle="Italic" />
+        <controls:Pivot Visibility="{Binding MainPivotVisibility}" Grid.Row="3">
+            <controls:PivotItem Header="Shows" IsEnabled="{Binding EnableShows}" Visibility="{Binding ShowsVisibility}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Shows}" />
+                </ScrollViewer>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Movies" IsEnabled="{Binding EnableMovies}" Visibility="{Binding MoviesVisibility}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Movies}" />
+                </ScrollViewer>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Episodes" IsEnabled="{Binding EnableEpisodes}" Visibility="{Binding EpisodesVisibility}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Episodes}" />
+                </ScrollViewer>
+            </controls:PivotItem>
+        </controls:Pivot>
+        <ProgressBar Grid.Row="3" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
  </phone:PhoneApplicationPage>
