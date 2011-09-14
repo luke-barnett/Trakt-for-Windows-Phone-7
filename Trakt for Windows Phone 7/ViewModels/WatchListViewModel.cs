@@ -116,7 +116,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void HandleEpisodes(TraktEpisode[] episodes)
         {
             Episodes.Clear();
-            Episodes.AddRange((from episode in episodes select GenerateGeneralEpisodeElement(episode)));
+            Episodes.AddRange((from episode in episodes select GenerateGeneralEpisodeElement(episode, episode.ShowTVDBID)));
             Episodes = new List<UIElement>(Episodes);
             ProgressBarVisible = false;
             EnableEpisodes = true;

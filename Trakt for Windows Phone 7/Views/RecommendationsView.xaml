@@ -18,7 +18,14 @@
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Visibility="{Binding MainPivotVisibility}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
+            <TextBlock Text="Recommendations" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Margin="10" />
+        </Grid>
+        <controls:Pivot Visibility="{Binding MainPivotVisibility}" Grid.Row="1">
             <controls:PivotItem Header="Shows" IsEnabled="{Binding EnableShows}" Visibility="{Binding ShowsVisibility}">
                 <ItemsControl ItemsSource="{Binding Shows}" />
             </controls:PivotItem>
@@ -26,6 +33,6 @@
                 <ItemsControl ItemsSource="{Binding Movies}" />
             </controls:PivotItem>
         </controls:Pivot>
-        <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        <ProgressBar Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
  </phone:PhoneApplicationPage>
