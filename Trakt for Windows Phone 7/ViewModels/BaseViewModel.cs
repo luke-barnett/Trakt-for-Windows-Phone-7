@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.IsolatedStorage;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Caliburn.Micro;
 using System.Windows;
 using Microsoft.Phone.Shell;
 using TraktAPI;
 using Microsoft.Phone.Reactive;
+using TraktAPI.TraktModels;
 using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
 using Trakt_for_Windows_Phone_7.Framework;
 
@@ -254,6 +256,36 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 UpdateLogInSettings(false);
             else
                 UpdateLogInSettings(true);
+        }
+
+        /// <summary>
+        /// Creates a UI Element for a Show
+        /// </summary>
+        /// <param name="show">The show to create it for</param>
+        /// <returns>The created UIElement</returns>
+        public UIElement GenerateGeneralShowElement(TraktShow show)
+        {
+            return new TextBlock { Text = show.TitleAndYear };
+        }
+
+        /// <summary>
+        /// Creates a UI Element for a movie
+        /// </summary>
+        /// <param name="movie">The movie to create it for</param>
+        /// <returns>The created UIElement</returns>
+        public UIElement GenerateGeneralMovieElement(TraktMovie movie)
+        {
+            return new TextBlock { Text = movie.TitleAndYear };
+        }
+
+        /// <summary>
+        /// Creates a UI Element for a episode
+        /// </summary>
+        /// <param name="episode">The episode to create it for</param>
+        /// <returns>The created UIElement</returns>
+        public UIElement GenerateGeneralEpisodeElement(TraktEpisode episode)
+        {
+            return new TextBlock { Text = episode.Title };
         }
 
         #endregion

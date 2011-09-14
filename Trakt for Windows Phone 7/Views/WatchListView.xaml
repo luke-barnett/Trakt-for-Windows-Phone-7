@@ -18,6 +18,17 @@
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Pivot Visibility="{Binding MainPivotVisibility}">
+            <controls:PivotItem Header="Shows" IsEnabled="{Binding EnableShows}" Visibility="{Binding ShowsVisibility}">
+                <ItemsControl ItemsSource="{Binding Shows}" />
+            </controls:PivotItem>
+            <controls:PivotItem Header="Movies" IsEnabled="{Binding EnableMovies}" Visibility="{Binding MoviesVisibility}">
+                <ItemsControl ItemsSource="{Binding Movies}" />
+            </controls:PivotItem>
+            <controls:PivotItem Header="Episodes" IsEnabled="{Binding EnableEpisodes}" Visibility="{Binding EpisodesVisibility}">
+                <ItemsControl ItemsSource="{Binding Episodes}" />
+            </controls:PivotItem>
+        </controls:Pivot>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
  </phone:PhoneApplicationPage>
