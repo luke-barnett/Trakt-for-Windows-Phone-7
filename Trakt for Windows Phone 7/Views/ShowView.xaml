@@ -91,22 +91,24 @@
             </controls:PivotItem>
             <controls:PivotItem Header="Seasons" Visibility="{Binding ShowSeasons}">
                 <Grid>
-                    <ItemsControl ItemsSource="{Binding Seasons}" >
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <toolkit:WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <Grid>
-                                    <ScrollViewer>
-                                        <ItemsPresenter />
-                                    </ScrollViewer>
-                                </Grid>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                    </ItemsControl>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Seasons}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <toolkit:WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <ScrollViewer>
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
             <controls:PivotItem Header="Shouts" Visibility="{Binding ShowShouts}">

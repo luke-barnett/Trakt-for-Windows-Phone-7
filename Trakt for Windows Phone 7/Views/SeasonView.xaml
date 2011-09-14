@@ -18,7 +18,9 @@
     ApplicationBar="{Binding ApplicationBar}">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <ListBox ItemsSource="{Binding Episodes}" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Episodes}" />
+        </ScrollViewer>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
  </phone:PhoneApplicationPage>

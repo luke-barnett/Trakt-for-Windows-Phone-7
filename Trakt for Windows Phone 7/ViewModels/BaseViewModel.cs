@@ -277,7 +277,52 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <returns>The created UIElement</returns>
         public UIElement GenerateGeneralMovieElement(TraktMovie movie)
         {
-            return new TextBlock { Text = movie.TitleAndYear };
+            var movieGrid = new Grid {Margin = new Thickness(5, 10, 5, 10)};
+            movieGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            movieGrid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            var moviePoster = new Image {Source = DefaultPoster, MaxWidth = 200};
+
+            var imageSource = new BitmapImage(new Uri(movie.Images.Poster)) {CreateOptions = BitmapCreateOptions.None};
+            imageSource.ImageOpened += (o, e) =>
+                                           {
+                                               moviePoster.Source = imageSource;
+                                               Debug.WriteLine("Successfully got poster for movie {0}", movie.TitleAndYear);
+                                           };
+            imageSource.ImageFailed += (o, e) => Debug.WriteLine("Failed to get poster for movie {0}", movie.TitleAndYear);
+
+            Grid.SetColumn(moviePoster, 0);
+            movieGrid.Children.Add(moviePoster);
+
+            var movieDetails = new Grid { Margin = new Thickness(5, 0, 0, 0) };
+            movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
+            movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto)});
+            movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
+
+            var movieTitle = new TextBlock { Text = movie.TitleAndYear, FontSize = 34, TextWrapping = TextWrapping.Wrap };
+            Grid.SetRow(movieTitle, 0);
+            movieDetails.Children.Add(movieTitle);
+
+            var movieCertification = new TextBlock {Text = movie.Certification};
+            Grid.SetRow(movieCertification, 1);
+            movieDetails.Children.Add(movieCertification);
+
+            var movieRunTime = new TextBlock { Text = movie.RunTime + " mins" };
+            Grid.SetRow(movieRunTime, 2);
+            movieDetails.Children.Add(movieRunTime);
+
+            Grid.SetColumn(movieDetails, 1);
+
+            movieGrid.Children.Add(movieDetails);
+
+            var gestureListener = GestureService.GetGestureListener(movieGrid);
+            gestureListener.DoubleTap += (o, e) =>
+            {
+                Debug.WriteLine("Navigating to movie {0}", movie.TitleAndYear);
+                NavigationService.Navigate(new Uri("/Views/MovieView.xaml?IMDBID=" + movie.IMDBID, UriKind.Relative));
+            };
+
+            return movieGrid;
         }
 
         /// <summary>

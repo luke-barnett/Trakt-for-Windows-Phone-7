@@ -89,15 +89,17 @@
             </controls:PivotItem>
             <controls:PivotItem Header="Shouts" Visibility="{Binding ShowShouts}">
                 <Grid>
-                    <ItemsControl ItemsSource="{Binding Shouts}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,5">
-                                    <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Shouts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5">
+                                        <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
