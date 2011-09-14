@@ -84,6 +84,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public readonly ImageSource DefaultPoster = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\poster-small.jpg");
 
         /// <summary>
+        /// The default screen
+        /// </summary>
+        public readonly ImageSource DefaultScreen = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\episode-screen.jpg");
+
+        /// <summary>
         /// The love image
         /// </summary>
         public readonly ImageSource LoveImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\iconLove.png");
