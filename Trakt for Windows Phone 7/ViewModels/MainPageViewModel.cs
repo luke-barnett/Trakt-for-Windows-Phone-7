@@ -251,15 +251,28 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var appBar = new ApplicationBar { IsVisible = true, Opacity = 1, IsMenuEnabled = InteractionEnabled };
 
-            var getTrendingMovies = new ApplicationBarMenuItem { Text = "Get Trending Movies", IsEnabled = true };
-            getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
+            var refresh = new ApplicationBarIconButton(RefreshButtonUri){ IsEnabled = true, Text = "Refresh"};
 
-            appBar.MenuItems.Add(getTrendingMovies);
+            if (TrendingType != "Trending Movies")
+            {
+                var getTrendingMovies = new ApplicationBarMenuItem {Text = "Get Trending Movies", IsEnabled = true};
+                getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
 
-            var getTrendingShows = new ApplicationBarMenuItem { Text = "Get Trending Shows", IsEnabled = true };
-            getTrendingShows.Click += (sender, args) => GetTrendingShows();
+                appBar.MenuItems.Add(getTrendingMovies);
 
-            appBar.MenuItems.Add(getTrendingShows);
+                refresh.Click += (sender, args) => GetTrendingShows();
+            }
+            else
+            {
+                var getTrendingShows = new ApplicationBarMenuItem { Text = "Get Trending Shows", IsEnabled = true };
+                getTrendingShows.Click += (sender, args) => GetTrendingShows();
+
+                appBar.MenuItems.Add(getTrendingShows);
+
+                refresh.Click += (sender, args) => GetTrendingMovies();
+            }
+
+            appBar.Buttons.Add(refresh);
 
             if (!TraktSettings.LoggedIn)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.IsolatedStorage;
 using System.Windows.Media;
@@ -119,6 +120,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public readonly ImageSource HateFadeImage = (ImageSource)new ImageSourceConverter().ConvertFromString(@"..\artwork\hate_f.png");
 
         /// <summary>
+        /// Refresh button Uri
+        /// </summary>
+        public readonly Uri RefreshButtonUri = new Uri(@"/artwork/refresh.png", UriKind.Relative);
+
+        /// <summary>
         /// Watchlist button uri
         /// </summary>
         public readonly Uri WatchListButtonUri = new Uri(@"/artwork/watchlist.png", UriKind.Relative);
@@ -173,7 +179,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The Application Bar
         /// </summary>
-        public ApplicationBar ApplicationBar { get { return _applicationBar; } set { _applicationBar = value; NotifyOfPropertyChange(() => ApplicationBar); } }
+        public ApplicationBar ApplicationBar { get { return _applicationBar; } set { _applicationBar = value; foreach (var button in ApplicationWideApplicationBarMenuItems()) _applicationBar.MenuItems.Insert(0, button); NotifyOfPropertyChange(() => ApplicationBar); } }
 
         #endregion
 
@@ -289,12 +295,46 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Event trigger for when loading has finished
         /// </summary>
-        protected void OnFinishedLoading(FinishedLoadingEventArgs args)
+        private void OnFinishedLoading(FinishedLoadingEventArgs args)
         {
             if (FinishedLoading == null || _firedLoadingEvent) return;
             Debug.WriteLine("Finished Loading, firing event");
             _firedLoadingEvent = true;
             FinishedLoading(this, args);
+        }
+
+        private IEnumerable<ApplicationBarMenuItem> ApplicationWideApplicationBarMenuItems()
+        {
+            var buttons = new List<ApplicationBarMenuItem>();
+
+            if(TraktSettings.LoggedIn)
+            {
+                var recommendations = new ApplicationBarMenuItem {IsEnabled = true, Text = "Recommendations"};
+                recommendations.Click += (o, e) =>
+                                             {
+                                                 Debug.WriteLine("Navigating to recommendations view");
+                                                 NavigationService.Navigate(new Uri("/Views/RecommendationsView.xaml", UriKind.Relative));
+                                             };
+                buttons.Add(recommendations);
+
+                var watchlist = new ApplicationBarMenuItem { IsEnabled = true, Text = "WatchList" };
+                watchlist.Click += (o, e) =>
+                                        {
+                                            Debug.WriteLine("Navigating to watchlist view");
+                                            NavigationService.Navigate(new Uri("/Views/WatchListView.xaml", UriKind.Relative));
+                                        };
+                buttons.Add(watchlist);
+            }
+
+            var search = new ApplicationBarMenuItem { IsEnabled = true, Text = "Search" };
+            search.Click += (o, e) =>
+                                {
+                                    Debug.WriteLine("Navigating to search view");
+                                    NavigationService.Navigate(new Uri("/Views/SearchView.xaml", UriKind.Relative));
+                                };
+            buttons.Add(search);
+
+            return buttons;
         }
 
         #endregion
