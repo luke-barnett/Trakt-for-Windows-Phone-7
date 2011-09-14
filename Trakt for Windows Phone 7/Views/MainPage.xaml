@@ -21,10 +21,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <controls:Pivot Grid.Column="0" Width="480" Height="696" ItemsSource="{Binding PivotItems}" />
-        <Grid Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding ShowTrendingType}" Width="480">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding ShowTrendingType}" Width="480">
             <TextBlock Text="{Binding TrendingType}" VerticalAlignment="Top" HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="40" Margin="10" />
         </Grid>
-        <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        <controls:Pivot Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PivotItems}" Margin="0,-10,0,0" />
+        <ProgressBar Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
     </Grid>
 </phone:PhoneApplicationPage>

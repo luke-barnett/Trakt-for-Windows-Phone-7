@@ -196,6 +196,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public void HandleError(Exception error)
         {
             Debug.WriteLine(string.Format("CAUGHT ERROR {0}", error.Message));
+            MessageBox.Show("Oh dear! There seems to be an error :(");
+            ProgressBarVisible = false;
         }
 
         /// <summary>

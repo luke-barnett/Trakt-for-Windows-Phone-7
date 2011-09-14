@@ -166,17 +166,17 @@ namespace TraktAPI
 
         public static IObservable<TraktMovie[]> SearchMovies(string searchQuery)
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.movies, searchQuery)), ParseMovieArray);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.movies, URLEncoded(searchQuery))), ParseMovieArray);
         }
 
         public static IObservable<TraktShow[]> SearchShows(string searchQuery)
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.shows, searchQuery)), ParseShowArray);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.shows, URLEncoded(searchQuery))), ParseShowArray);
         }
 
         public static IObservable<TraktEpisodeSummary[]> SearchEpisodes(string searchQuery)
         {
-            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.episodes, searchQuery)), ParseEpisodeSummaryArray);
+            return WebRequestFactory.GetData(new Uri(string.Format(TraktURIs.Search, TraktLibraryTypes.episodes, URLEncoded(searchQuery))), ParseEpisodeSummaryArray);
         }
 
         public static IObservable<TraktMovie[]> GetMovieRecommendations()
@@ -250,6 +250,13 @@ namespace TraktAPI
         }
 
         #endregion
+
+        private static string URLEncoded(string stringToEncode)
+        {
+            while (stringToEncode.Contains(" "))
+                stringToEncode = stringToEncode.Replace(' ', '+');
+            return stringToEncode;
+        }
 
         #region Parsers
         private static TraktMovie[] ParseMovieArray(string json)

@@ -80,7 +80,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var elements = new List<UIElement>();
 
-            var image = new Image { Source = DefaultPoster, HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.Uniform};
+            var image = new Image { Source = DefaultPoster, HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.UniformToFill};
 
             ProgressBarVisible = true;
             var bitmap = new BitmapImage(poster) { CreateOptions = BitmapCreateOptions.None };

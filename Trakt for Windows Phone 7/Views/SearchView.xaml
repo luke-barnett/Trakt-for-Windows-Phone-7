@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}">
+        <Grid Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Visibility="Collapsed">
             <TextBlock Text="Search" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Margin="10" />
         </Grid>
         <TextBox Grid.Row="1" Name="SearchBox" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="SearchBox_KeyUp">

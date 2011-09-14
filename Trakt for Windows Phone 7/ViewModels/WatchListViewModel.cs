@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
+using Microsoft.Phone.Shell;
 using TraktAPI;
 using TraktAPI.TraktModels;
 using Trakt_for_Windows_Phone_7.Framework;
@@ -35,6 +36,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             GetShows();
             GetMovies();
             GetEpisodes();
+
+            ApplicationBar = new ApplicationBar();
         }
 
         public bool EnableShows { get { return _showShows; } set { _showShows = value; NotifyOfPropertyChange(() => EnableShows); NotifyOfPropertyChange(() => ShowsVisibility); NotifyOfPropertyChange(() => MainPivotVisibility); } }
