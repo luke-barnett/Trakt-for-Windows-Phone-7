@@ -7,22 +7,111 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"  FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    ApplicationBar="{Binding ApplicationBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Image Source="{Binding ShowPoster}" Height="768" HorizontalAlignment="Center" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding MainPivotVisibility}" Opacity="0.2" />
         <controls:Pivot Visibility="{Binding MainPivotVisibility}">
             <controls:PivotItem Header="Details">
-                <TextBlock Text="{Binding TVDBID}" />
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="32" TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="1" Text="{Binding Network}" FontSize="22" />
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Certification}" />
+                            <TextBlock Grid.Row="1" Text="{Binding RunTime}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding RatingImage}" />
+                            <Grid Grid.Column="1" Margin="5,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="3*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Text="{Binding RatingPercentage}" FontSize="36" />
+                                <TextBlock Grid.Row="1" VerticalAlignment="Top" Text="{Binding RatingCount}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="3" Visibility="{Binding RateBoxVisibility}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding LoveRateBoxImage}" Margin="5,0,0,0" Opacity="{Binding LoveRateBoxOpacity}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <cal:ActionMessage MethodName="Love" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+                        <Image Grid.Column="1" Source="{Binding HateRateBoxImage}" Margin="5,0,0,0" Opacity="{Binding HateRateBoxOpacity}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <cal:ActionMessage MethodName="Hate" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+                        <TextBlock Grid.Column="3" Text="{Binding UserRating}" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="24" />
+                    </Grid>
+                    <ScrollViewer Grid.Row="4" Margin="0,10,0,0">
+                        <TextBlock  Text="{Binding Overview}" TextWrapping="Wrap" />
+                    </ScrollViewer>
+                </Grid>
             </controls:PivotItem>
-            <controls:PivotItem Header="Shouts">
-
+            <controls:PivotItem Header="Seasons" Visibility="{Binding ShowSeasons}">
+                <Grid>
+                    <ListBox ItemsSource="{Binding Seasons}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="{Binding AsString}" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Shouts" Visibility="{Binding ShowShouts}">
+                <Grid>
+                    <ListBox ItemsSource="{Binding Shouts}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="{Binding QuoteSurrounded}" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
         <ProgressBar Grid.Column="0" VerticalAlignment="Center" Width="480"  IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />

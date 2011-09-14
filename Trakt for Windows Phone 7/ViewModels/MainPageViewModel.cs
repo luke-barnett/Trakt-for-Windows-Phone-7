@@ -285,6 +285,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             ApplicationBar = appBar;
         }
+
+        /// <summary>
+        /// Fired if the back button is pressed
+        /// </summary>
+        public void BackKeyPressed()
+        {
+            Debug.WriteLine("Caught the user going backwards enabling interaction of the main view");
+            InteractionEnabled = true;
+        }
         
         #endregion
     }
