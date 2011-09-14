@@ -8,7 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"  FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -89,20 +91,27 @@
             </controls:PivotItem>
             <controls:PivotItem Header="Seasons" Visibility="{Binding ShowSeasons}">
                 <Grid>
-                    <ListBox ItemsSource="{Binding Seasons}" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,5">
-                                    <TextBlock Text="{Binding AsString}" TextWrapping="Wrap" />
+                    <ItemsControl ItemsSource="{Binding Seasons}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
                                 </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                    </ItemsControl>
                 </Grid>
             </controls:PivotItem>
             <controls:PivotItem Header="Shouts" Visibility="{Binding ShowShouts}">
                 <Grid>
-                    <ListBox ItemsSource="{Binding Shouts}">
+                    <ListBox ItemsSource="{Binding Shouts}" HorizontalAlignment="Center">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,5">

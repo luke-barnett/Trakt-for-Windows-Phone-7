@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Reactive;
 using Caliburn.Micro;
 using Microsoft.Phone.Shell;
@@ -261,13 +262,18 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <returns>The resulting UI Element for it</returns>
         private UIElement GenerateSeasonUIElement(TraktSeasonInfo season)
         {
-            var textBlock = new TextBlock {Text = season.AsString, FontSize = 30};
-            textBlock.MouseLeftButtonDown += (sender, args) =>
-                                                 {
-                                                     Debug.WriteLine("User selected season {0}", season.Season.ToString());
-                                                     NavigationService.Navigate(new Uri("/Views/SeasonView.xaml?TVDBID=" + TVDBID + "&Season=" + season.Season, UriKind.Relative));
-                                                 };
-            return textBlock;
+            var seasonGrid = new Grid { Background = (Brush)Application.Current.Resources["PhoneAccentBrush"], Width = 100, Height = 100, Margin = new Thickness(10)};
+
+            var textBlock = new TextBlock {Text = season.Season.ToString(), FontSize = 64, Margin = new Thickness(10), VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center};
+            seasonGrid.Children.Add(textBlock);
+
+            var gestureListener = GestureService.GetGestureListener(seasonGrid);
+            gestureListener.DoubleTap += (sender, args) =>
+                                        {
+                                            Debug.WriteLine("User selected season {0}", season.Season.ToString());
+                                            NavigationService.Navigate(new Uri("/Views/SeasonView.xaml?TVDBID=" + TVDBID + "&Season=" + season.Season, UriKind.Relative));
+                                        };
+            return seasonGrid;
         }
 
         /// <summary>
