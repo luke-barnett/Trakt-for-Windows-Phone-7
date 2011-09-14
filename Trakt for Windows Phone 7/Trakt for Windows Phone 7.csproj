@@ -177,6 +177,10 @@
     <Resource Include="Artwork\iconLove.png" />
     <Resource Include="Artwork\episode-screen.jpg" />
     <Resource Include="Artwork\poster-small.jpg" />
+    <Content Include="Artwork\watchlist.png" />
+    <Content Include="Artwork\unseen.png" />
+    <Content Include="Artwork\unwatchlist.png" />
+    <Content Include="Artwork\seen.png" />
     <Content Include="Artwork\refresh.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

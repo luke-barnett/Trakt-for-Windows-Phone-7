@@ -234,8 +234,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
                     appBar.Buttons.Add(watchListButton);
                 }
-
-                if (ShowUnWatchListButton)
+                
+                if(ShowUnWatchListButton)
                 {
                     Debug.WriteLine("Adding Unwatchlist button");
                     var unWatchListButton = new ApplicationBarIconButton(UnWatchListButtonUri)
@@ -248,7 +248,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 if (Movie.Watched)
                 {
                     Debug.WriteLine("Adding unwatch button");
-                    var unwatchButton = new ApplicationBarIconButton(SeenButtonUri)
+                    var unwatchButton = new ApplicationBarIconButton(UnSeenButtonUri)
                                             {Text = "Un-Watch", IsEnabled = Movie.Watched};
                     unwatchButton.Click += (sender, args) => MarkAsUnWatched();
 
@@ -376,7 +376,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Adding to watchlist");
             TraktAPI.TraktAPI.WatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
-            ShowWatchListButton = false;
+            ShowWatchListButton = true;
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Removing from watchlist");
             TraktAPI.TraktAPI.UnwatchListMovie(Movie.IMDBID, Movie.Title, Movie.Year);
-            ShowWatchListButton = true;
+            ShowWatchListButton = false;
         }
 
         /// <summary>
