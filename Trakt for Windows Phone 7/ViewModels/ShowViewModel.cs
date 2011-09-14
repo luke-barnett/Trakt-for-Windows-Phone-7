@@ -189,13 +189,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             ProgressBarVisible = false;
         }
 
-        private static UIElement GenerateSeasonUIElement(TraktSeasonInfo season)
+        private UIElement GenerateSeasonUIElement(TraktSeasonInfo season)
         {
             var textBlock = new TextBlock {Text = season.AsString, FontSize = 30};
             textBlock.MouseLeftButtonDown += (sender, args) =>
                                                  {
                                                      Debug.WriteLine("User selected season {0}", season.Season.ToString());
-                                                     //Go to season view
+                                                     NavigationService.Navigate(new Uri("/Views/SeasonView.xaml?TVDBID=" + TVDBID + "&Season=" + season.Season, UriKind.Relative));
                                                  };
             return textBlock;
         }
