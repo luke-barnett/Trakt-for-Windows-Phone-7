@@ -42,13 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro">
-      <HintPath>..\..\..\..\..\Dropbox\Visual Studio 2010\Projects\Trakt for Windows Phone 7\Caliburn Micro\Caliburn.Micro.dll</HintPath>
+      <HintPath>..\Caliburn Micro\Caliburn.Micro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Phone.Reactive" />
     <Reference Include="Newtonsoft.Json.WindowsPhone">
-      <HintPath>..\..\..\..\..\Dropbox\Visual Studio 2010\Projects\Trakt for Windows Phone 7\JSON.Net\Newtonsoft.Json.WindowsPhone.dll</HintPath>
+      <HintPath>..\JSON.Net\Newtonsoft.Json.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="System.Observable" />
     <Reference Include="System.Runtime.Serialization" />

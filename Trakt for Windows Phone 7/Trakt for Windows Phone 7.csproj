@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro">
-      <HintPath>..\..\..\..\..\Dropbox\Visual Studio 2010\Projects\Trakt for Windows Phone 7\Caliburn Micro\Caliburn.Micro.dll</HintPath>
+      <HintPath>..\Caliburn Micro\Caliburn.Micro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />

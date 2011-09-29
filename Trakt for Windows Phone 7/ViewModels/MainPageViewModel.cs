@@ -31,7 +31,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             _interactionEnabled = true;
             _logInViewModel = logInViewModel;
             _pivotItems = new List<PivotItem>();
-            FinishedLoading += (o, e) => StartLoading();
+            /*FinishedLoading += (o, e) =>*/ StartLoading();
         }
 
         #region Public Parameters
