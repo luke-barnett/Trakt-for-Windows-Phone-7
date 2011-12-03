@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Controls;
@@ -33,13 +32,20 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private TrendingType _trendingType;
 
         #endregion
-        
-        public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, LogInViewModel logInViewModel) : base(navigationService, windowManager, container)
+
+        public MainPageViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, LogInViewModel logInViewModel)
+            : base(navigationService, windowManager, container)
         {
+            TraktSettings.LoginStatus.PropertyChanged += (o, e) =>
+                                                             {
+                                                                 if(TraktSettings.LoginStatus.IsLoggedIn)
+                                                                     CheckCurrentlyWatching();
+                                                             };
             _interactionEnabled = true;
             _logInViewModel = logInViewModel;
             _pivotItems = new List<PivotItem>();
-            /*FinishedLoading += (o, e) =>*/ StartLoading();
+            /*FinishedLoading += (o, e) =>*/
+            StartLoading();
         }
 
         #region Public Parameters
@@ -47,7 +53,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The List of items for the pivot control
         /// </summary>
-        public List<PivotItem> PivotItems { get { return _pivotItems; } set { _pivotItems = value; NotifyOfPropertyChange(()=> PivotItems); }}
+        public List<PivotItem> PivotItems { get { return _pivotItems; } set { _pivotItems = value; NotifyOfPropertyChange(() => PivotItems); } }
 
         /// <summary>
         /// The type of trending currently being showen
@@ -88,11 +94,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var elements = new List<UIElement>();
 
-            var image = new Image { Source = Statics.PosterImageStore[poster], HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.UniformToFill};
+            var image = new Image { Source = Statics.PosterImageStore[poster], HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.UniformToFill };
 
             Statics.PosterImageStore.PropertyChanged += (sender, args) =>
                                                             {
-                                                                if(args.PropertyName != poster)
+                                                                if (args.PropertyName != poster)
                                                                     return;
                                                                 Debug.WriteLine("Updating {0} from image store", poster);
                                                                 image.Source = Statics.PosterImageStore[poster];
@@ -123,7 +129,6 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             return elements;
         }
 
-        
         #region Trending Movies
 
         /// <summary>
@@ -147,7 +152,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             for (var i = 0; i < 10; i++)
             {
                 var trendingMovie = trendingMovies[i];
-                var pivotMovie = new PivotItem {Margin = new Thickness(-10,0,-10,0)};
+                var pivotMovie = new PivotItem { Margin = new Thickness(-10, 0, -10, 0) };
 
                 var movieGrid = new Grid();
                 var gestureListener = GestureService.GetGestureListener(movieGrid);
@@ -205,7 +210,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Received trending shows, processing");
             PivotItems.Clear();
-            for(var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var trendingShow = trendingShows[i];
                 var pivotShow = new PivotItem { Margin = new Thickness(-10, 0, -10, 0) };
@@ -255,6 +260,26 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             WindowManager.ShowDialog(_logInViewModel);
         }
 
+        private void ShowCurrentlyWatching(TraktUserWatching watchingResponse)
+        {
+            Debug.WriteLine("Got response");
+            if (watchingResponse == null)
+                return;
+
+            var result = MessageBox.Show(string.Format("Do you want to jump to the {0} that you are currently watching?", watchingResponse.Type), "", MessageBoxButton.OKCancel);
+
+            if (result != MessageBoxResult.OK) return;
+
+            if (watchingResponse.Type.CompareTo("movie") == 0)
+            {
+                NavigationService.Navigate(new Uri("/Views/MovieView.xaml?IMDBID=" + watchingResponse.Movie.IMDBID, UriKind.Relative));
+            }
+            else if (watchingResponse.Type.CompareTo("episode") == 0)
+            {
+                NavigationService.Navigate(new Uri("/Views/EpisodeView.xaml?TVDBID=" + watchingResponse.Show.TVDBID + "&Season=" + watchingResponse.Episode.Season + "&Episode=" + watchingResponse.Episode.Number, UriKind.Relative));
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -266,11 +291,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var appBar = new ApplicationBar { IsVisible = true, Opacity = 1, IsMenuEnabled = InteractionEnabled };
 
-            var refresh = new ApplicationBarIconButton(RefreshButtonUri){ IsEnabled = true, Text = "Refresh"};
+            var refresh = new ApplicationBarIconButton(RefreshButtonUri) { IsEnabled = true, Text = "Refresh" };
 
             if (_trendingType == ViewModels.TrendingType.Shows)
             {
-                var getTrendingMovies = new ApplicationBarMenuItem {Text = "Get Trending Movies", IsEnabled = true};
+                var getTrendingMovies = new ApplicationBarMenuItem { Text = "Get Trending Movies", IsEnabled = true };
                 getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
 
                 appBar.MenuItems.Add(getTrendingMovies);
@@ -289,7 +314,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             appBar.Buttons.Add(refresh);
 
-            if (!TraktSettings.LoggedIn)
+            if (!TraktSettings.LoginStatus.IsLoggedIn)
             {
                 var logIn = new ApplicationBarMenuItem { Text = "Log in", IsEnabled = true };
                 logIn.Click += (sender, args) => ShowLogIn();
@@ -300,7 +325,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 var logOut = new ApplicationBarMenuItem { Text = "Log out", IsEnabled = true };
                 logOut.Click += delegate
                 {
-                    TraktSettings.LoggedIn = false;
+                    TraktSettings.LoginStatus.IsLoggedIn = false;
                     TraktSettings.Password = String.Empty;
                     SaveSettings();
                     SetUpApplicationBar();
@@ -322,7 +347,13 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             Debug.WriteLine("Caught the user going backwards enabling interaction of the main view");
             InteractionEnabled = true;
         }
-        
+
+        public void CheckCurrentlyWatching()
+        {
+            Debug.WriteLine("Checking if user is currently watching anything");
+            TraktAPI.TraktAPI.GetUserWatching(TraktSettings.Username).Subscribe(ShowCurrentlyWatching, HandleError);
+        }
+
         #endregion
     }
 }

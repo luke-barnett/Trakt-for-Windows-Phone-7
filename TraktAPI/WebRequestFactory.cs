@@ -21,10 +21,26 @@ namespace TraktAPI
         public static IObservable<T> PostData<T>(Uri uri, Func<string, T> generator, String postData)
         {
             System.Diagnostics.Debug.WriteLine(uri);
-            WebClient wc = CreatePostWebClient(uri);
-            var result = Observable.FromEvent<UploadStringCompletedEventHandler, UploadStringCompletedEventArgs>(ev => new UploadStringCompletedEventHandler(ev), ev => wc.UploadStringCompleted += ev, ev => wc.UploadStringCompleted -= ev).ThrowIfError().Select(o => generator(o.EventArgs.Result));
-            wc.UploadStringAsync(uri, postData);
-            return result;
+            var request = WebRequest.CreateHttp(uri);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            var fetchRequestStream = Observable.FromAsyncPattern<Stream>(request.BeginGetRequestStream, request.EndGetRequestStream);
+            var fetchResponse = Observable.FromAsyncPattern<WebResponse>(request.BeginGetResponse, request.EndGetResponse);
+
+            return fetchRequestStream().SelectMany(stream =>
+                                                       {
+                                                           using (var writer = new StreamWriter(stream))
+                                                               writer.Write(postData);
+                                                           return fetchResponse();
+                                                       }).Select(result =>
+                                                                     {
+                                                                         var response = (HttpWebResponse) result;
+                                                                         return generator(
+                                                                             new StreamReader(
+                                                                                 response.GetResponseStream()).ReadToEnd
+                                                                                 ());
+                                                                     }).ObserveOnDispatcher();
         }
 
         private static WebRequest CreateWebRequest(Uri uri)
@@ -52,7 +68,7 @@ namespace TraktAPI
                         throw o.EventArgs.Error;
                     }
 
-                    return Observable.Return(o);
+                    return Observable.Return(o).ThrowIfError();
                 });
         }
     }

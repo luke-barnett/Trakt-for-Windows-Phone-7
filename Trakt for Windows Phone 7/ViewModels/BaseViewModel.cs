@@ -253,11 +253,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public void TryLogIn()
         {
             Debug.WriteLine("Try to log in");
-            if (!TraktSettings.LoggedIn && !String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
+            if (!TraktSettings.LoginStatus.IsLoggedIn && !String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
             {
                 TraktAPI.TraktAPI.TestAccount(TraktSettings.Username, TraktSettings.Password).Subscribe(response => UpdateLogInSettings(true), error => UpdateLogInSettings(false));
             }
-            else if (!TraktSettings.LoggedIn)
+            else if (!TraktSettings.LoginStatus.IsLoggedIn)
                 UpdateLogInSettings(false);
             else
                 UpdateLogInSettings(true);
@@ -439,12 +439,12 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             if (successfulLogIn)
             {
-                TraktSettings.LoggedIn = true;
+                TraktSettings.LoginStatus.IsLoggedIn = true;
                 (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).SetUpApplicationBar();
             }
             else
             {
-                TraktSettings.LoggedIn = false;
+                TraktSettings.LoginStatus.IsLoggedIn = false;
                 TraktSettings.Password = String.Empty;
             }
             ProgressBarVisible = false;
@@ -478,7 +478,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var buttons = new List<ApplicationBarMenuItem>();
 
-            if (TraktSettings.LoggedIn)
+            if (TraktSettings.LoginStatus.IsLoggedIn)
             {
                 var recommendations = new ApplicationBarMenuItem { IsEnabled = true, Text = "Recommendations" };
                 recommendations.Click += (o, e) =>

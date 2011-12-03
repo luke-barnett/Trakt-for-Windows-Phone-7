@@ -18,7 +18,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private string _password;
         private string _email;
 
-        public LogInViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
+        public LogInViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container)
+            : base(navigationService, windowManager, container)
         {
             Username = TraktSettings.Username;
         }
@@ -71,6 +72,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public void LogIn()
         {
+            if (Password == null)
+                return;
             ProgressBarVisible = true;
             NotifyOfPropertyChange(() => Ready);
             TraktAPI.TraktAPI.TestAccount(Username, CalculateSHA1(Password, Encoding.UTF8)).Subscribe(AccountSuccess, AccountFailed);
@@ -89,7 +92,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// </summary>
         public void Register()
         {
-            if(String.IsNullOrEmpty(Username))
+            if (String.IsNullOrEmpty(Username))
             {
                 MessageBox.Show("Username cannot be empty");
                 return;
@@ -120,10 +123,10 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             TraktSettings.Username = Username;
             TraktSettings.Password = CalculateSHA1(Password, Encoding.UTF8);
-            TraktSettings.LoggedIn = true;
+            TraktSettings.LoginStatus.IsLoggedIn = true;
             SaveSettings();
             ProgressBarVisible = false;
-            (Container.GetInstance(typeof (MainPageViewModel), "MainPageViewModel") as MainPageViewModel).SetUpApplicationBar();
+            (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).SetUpApplicationBar();
             (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).InteractionEnabled = true;
             TryClose();
         }
@@ -134,7 +137,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <param name="exception">The exception thrown</param>
         public void AccountFailed(Exception exception)
         {
-            TraktSettings.LoggedIn = false;
+            TraktSettings.LoginStatus.IsLoggedIn = false;
             TraktSettings.Password = String.Empty;
             ProgressBarVisible = false;
             (Container.GetInstance(typeof(MainPageViewModel), "MainPageViewModel") as MainPageViewModel).InteractionEnabled = true;

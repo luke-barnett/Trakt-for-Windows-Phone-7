@@ -249,6 +249,11 @@ namespace TraktAPI
             return SyncShow(tvdbid, TraktSyncModes.unwatchlist.ToString());
         }
 
+        public static IObservable<TraktUserWatching> GetUserWatching(string username)
+        {
+            return WebRequestFactory.PostData(new Uri(string.Format(TraktURIs.UserWatching, username)), ParseTraktUserWatching, GetUserAuthentication());
+        }
+
         #endregion
 
         private static string URLEncoded(string stringToEncode)
@@ -329,6 +334,19 @@ namespace TraktAPI
         private static TraktShout[] ParseTraktShoutArray(string json)
         {
             return JsonConvert.DeserializeObject<TraktShout[]>(json);
+        }
+
+        private static TraktUserWatching ParseTraktUserWatching(string json)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<TraktUserWatching>(json);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         #endregion

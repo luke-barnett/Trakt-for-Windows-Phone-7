@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Microsoft.Phone.Reactive;
 using Microsoft.Phone.Shell;
@@ -67,7 +66,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The visibility of the rate box
         /// </summary>
-        public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoginStatus.IsLoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
 
         /// <summary>
         /// The list of shouts for the movie
@@ -149,7 +148,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Whether or not to show the watchlist button
         /// </summary>
-        public bool ShowWatchListButton { get { return (TraktSettings.LoggedIn && !Movie.Watched && !Movie.InWatchList); } set { Movie.InWatchList = value; UpdateApplicationBar(); } }
+        public bool ShowWatchListButton { get { return (TraktSettings.LoginStatus.IsLoggedIn && !Movie.Watched && !Movie.InWatchList); } set { Movie.InWatchList = value; UpdateApplicationBar(); } }
 
         /// <summary>
         /// Whether or not to show the un watchlist button
@@ -230,7 +229,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             Debug.WriteLine("Building Application Bar");
             var appBar = new ApplicationBar {IsVisible = true, Opacity = 1};
 
-            if (TraktSettings.LoggedIn)
+            if (TraktSettings.LoginStatus.IsLoggedIn)
             {
                 if (ShowWatchListButton)
                 {
@@ -273,7 +272,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
                 Debug.WriteLine("Adding shout button");
                 var shoutButton = new ApplicationBarIconButton(ShoutButtonUri)
-                                      {Text = "Shout", IsEnabled = TraktSettings.LoggedIn};
+                                      {Text = "Shout", IsEnabled = TraktSettings.LoginStatus.IsLoggedIn};
                 shoutButton.Click += (sender, args) => CreateShout();
 
                 appBar.Buttons.Add(shoutButton);

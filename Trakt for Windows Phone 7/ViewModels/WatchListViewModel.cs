@@ -23,7 +23,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public WatchListViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container) : base(navigationService, windowManager, container)
         {
-            if (!TraktSettings.LoggedIn)
+            if (!TraktSettings.LoginStatus.IsLoggedIn)
             {
                 MessageBox.Show("Need to be logged in for this feature");
                 NavigationService.GoBack();

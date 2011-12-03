@@ -37,6 +37,7 @@
         public const string UserLibrary = @"http://api.trakt.tv/user/library/{0}/all.json/" + ApiKey + @"/{1}";
         public const string UserProfile = @"http://api.trakt.tv/user/profile.json/" + ApiKey + @"/{0}/{1}";
         public const string UserWatchList = @"http://api.trakt.tv/user/watchlist/{0}.json/" + ApiKey + "/{1}";
+        public const string UserWatching = @"http://api.trakt.tv/user/watching.json/" + ApiKey + "/{0}";
 
     }
 }

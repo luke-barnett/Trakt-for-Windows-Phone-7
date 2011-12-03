@@ -94,7 +94,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 CloseView(null);
             }
 
-            if(!TraktSettings.LoggedIn)
+            if(!TraktSettings.LoginStatus.IsLoggedIn)
             {
                 Debug.WriteLine("Not logged in");
                 CloseView(null);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using Microsoft.Phone.Shell;
 using TraktAPI;
@@ -23,7 +22,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private TraktEpisodeSummary _episodeSummary;
         private ImageSource _episodeImage;
         private List<TraktShout> _shouts;
-        private ShoutViewModel _shoutViewModel;
+        private readonly ShoutViewModel _shoutViewModel;
 
         public EpisodeViewModel(INavigationService navigationService, IWindowManager windowManager, PhoneContainer container, ShoutViewModel shoutViewModel) : base(navigationService, windowManager, container)
         {
@@ -58,7 +57,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Whether or not to show the watchlist button
         /// </summary>
-        public bool ShowWatchListButton { get { return (TraktSettings.LoggedIn && !EpisodeSummary.Episode.Watched && !EpisodeSummary.Episode.InWatchList); } set { EpisodeSummary.Episode.InWatchList = value; UpdateApplicationBar(); } }
+        public bool ShowWatchListButton { get { return (TraktSettings.LoginStatus.IsLoggedIn && !EpisodeSummary.Episode.Watched && !EpisodeSummary.Episode.InWatchList); } set { EpisodeSummary.Episode.InWatchList = value; UpdateApplicationBar(); } }
 
         /// <summary>
         /// Whether or not to show the un watchlist button
@@ -83,7 +82,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
         public string RatingCount { get { return (EpisodeSummary == null || EpisodeSummary.Episode == null) ? String.Empty : EpisodeSummary.Episode.Ratings.Votes + " votes"; } }
 
-        public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility RateBoxVisibility { get { return (ShowMainPivot && TraktSettings.LoginStatus.IsLoggedIn) ? Visibility.Visible : Visibility.Collapsed; } }
 
         /// <summary>
         /// The love image for the rate box
@@ -183,7 +182,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             Debug.WriteLine("Building Application Bar");
             var appBar = new ApplicationBar { IsVisible = true, Opacity = 1 };
 
-            if (TraktSettings.LoggedIn)
+            if (TraktSettings.LoginStatus.IsLoggedIn)
             {
                 if (ShowWatchListButton)
                 {
@@ -221,7 +220,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 }
 
                 Debug.WriteLine("Adding shout button");
-                var shoutButton = new ApplicationBarIconButton(ShoutButtonUri) { Text = "Shout", IsEnabled = TraktSettings.LoggedIn };
+                var shoutButton = new ApplicationBarIconButton(ShoutButtonUri) { Text = "Shout", IsEnabled = TraktSettings.LoginStatus.IsLoggedIn };
                 shoutButton.Click += (sender, args) => CreateShout();
 
                 appBar.Buttons.Add(shoutButton);
