@@ -74,6 +74,8 @@
     <Compile Include="Framework\PhoneContainer.cs" />
     <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Framework\Trakt_for_Windows_Phone_7Bootstrapper.cs" />
+    <Compile Include="Models\ImageStore.cs" />
+    <Compile Include="Models\Statics.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\EpisodeViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />

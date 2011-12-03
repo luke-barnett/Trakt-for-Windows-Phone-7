@@ -12,6 +12,7 @@ using Microsoft.Phone.Shell;
 using TraktAPI;
 using Microsoft.Phone.Reactive;
 using TraktAPI.TraktModels;
+using Trakt_for_Windows_Phone_7.Models;
 using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
 using Trakt_for_Windows_Phone_7.Framework;
 
@@ -25,7 +26,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private int _progressBarVisible;
         private bool _firedLoadingEvent;
         private ApplicationBar _applicationBar;
-        
+
         #endregion
 
         #region Events
@@ -40,7 +41,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// Event fired only once initial loading has been completed
         /// </summary>
-        public event FinishedLoadingHandler FinishedLoading = delegate {};
+        public event FinishedLoadingHandler FinishedLoading = delegate { };
 
         #endregion
 
@@ -207,7 +208,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public bool InternetConnectionAvailable()
         {
             var available = NetworkInterface.GetIsNetworkAvailable();
-            Debug.WriteLine("Internet connection {0} available",(available)?"is":"is not");
+            Debug.WriteLine("Internet connection {0} available", (available) ? "is" : "is not");
             if (!available)
             {
                 MessageBox.Show("No internet connection is available.  Try again later.", "Internet Required", MessageBoxButton.OK);
@@ -252,11 +253,11 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         public void TryLogIn()
         {
             Debug.WriteLine("Try to log in");
-            if(!TraktSettings.LoggedIn && !String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
+            if (!TraktSettings.LoggedIn && !String.IsNullOrEmpty(TraktSettings.Password) && !String.IsNullOrEmpty(TraktSettings.Username))
             {
                 TraktAPI.TraktAPI.TestAccount(TraktSettings.Username, TraktSettings.Password).Subscribe(response => UpdateLogInSettings(true), error => UpdateLogInSettings(false));
             }
-            else if(!TraktSettings.LoggedIn)
+            else if (!TraktSettings.LoggedIn)
                 UpdateLogInSettings(false);
             else
                 UpdateLogInSettings(true);
@@ -273,15 +274,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             showGrid.ColumnDefinitions.Add(new ColumnDefinition());
             showGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            var showPoster = new Image { Source = DefaultPoster, MaxWidth = 200 };
+            var showPoster = new Image { Source = Statics.PosterImageStore[show.Images.Poster], MaxWidth = 200 };
 
-            var imageSource = new BitmapImage(new Uri(show.Images.Poster)) { CreateOptions = BitmapCreateOptions.None };
-            imageSource.ImageOpened += (o, e) =>
-            {
-                showPoster.Source = imageSource;
-                Debug.WriteLine("Successfully got poster for show {0}", show.TitleAndYear);
-            };
-            imageSource.ImageFailed += (o, e) => Debug.WriteLine("Failed to get poster for show {0}", show.TitleAndYear);
+            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if (args.PropertyName != show.Images.Poster)
+                                                                    return;
+                                                                Debug.WriteLine("Updating {0} from image store", show.Images.Poster);
+                                                                showPoster.Source = Statics.PosterImageStore[show.Images.Poster];
+                                                            };
 
             Grid.SetColumn(showPoster, 0);
             showGrid.Children.Add(showPoster);
@@ -324,33 +325,33 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <returns>The created UIElement</returns>
         public UIElement GenerateGeneralMovieElement(TraktMovie movie)
         {
-            var movieGrid = new Grid {Margin = new Thickness(5, 10, 5, 10)};
+            var movieGrid = new Grid { Margin = new Thickness(5, 10, 5, 10) };
             movieGrid.ColumnDefinitions.Add(new ColumnDefinition());
             movieGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            var moviePoster = new Image {Source = DefaultPoster, MaxWidth = 200};
+            var moviePoster = new Image { Source = Statics.PosterImageStore[movie.Images.Poster], MaxWidth = 200 };
 
-            var imageSource = new BitmapImage(new Uri(movie.Images.Poster)) {CreateOptions = BitmapCreateOptions.None};
-            imageSource.ImageOpened += (o, e) =>
-                                           {
-                                               moviePoster.Source = imageSource;
-                                               Debug.WriteLine("Successfully got poster for movie {0}", movie.TitleAndYear);
-                                           };
-            imageSource.ImageFailed += (o, e) => Debug.WriteLine("Failed to get poster for movie {0}", movie.TitleAndYear);
+            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if (args.PropertyName != movie.Images.Poster)
+                                                                    return;
+                                                                Debug.WriteLine("Updating {0} from image store", movie.Images.Poster);
+                                                                moviePoster.Source = Statics.PosterImageStore[movie.Images.Poster];
+                                                            };
 
             Grid.SetColumn(moviePoster, 0);
             movieGrid.Children.Add(moviePoster);
 
             var movieDetails = new Grid { Margin = new Thickness(5, 0, 0, 0) };
             movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
-            movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto)});
+            movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
             movieDetails.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
 
             var movieTitle = new TextBlock { Text = movie.TitleAndYear, FontSize = 34, TextWrapping = TextWrapping.Wrap };
             Grid.SetRow(movieTitle, 0);
             movieDetails.Children.Add(movieTitle);
 
-            var movieCertification = new TextBlock {Text = movie.Certification};
+            var movieCertification = new TextBlock { Text = movie.Certification };
             Grid.SetRow(movieCertification, 1);
             movieDetails.Children.Add(movieCertification);
 
@@ -384,15 +385,16 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             episodeGrid.ColumnDefinitions.Add(new ColumnDefinition());
             episodeGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            var episodeImage = new Image { Source = DefaultScreen, MaxWidth = 200 };
+            var episodeImage = new Image { Source = Statics.ScreenImageStore[episode.Images.Screen], MaxWidth = 200 };
 
-            var imageSource = new BitmapImage(new Uri(episode.Images.Screen)) { CreateOptions = BitmapCreateOptions.None };
-            imageSource.ImageOpened += (o, e) =>
-            {
-                episodeImage.Source = imageSource;
-                Debug.WriteLine("Successfully got image for episode {0}", episode.Episode);
-            };
-            imageSource.ImageFailed += (o, e) => Debug.WriteLine("Failed to get image for episode {0}", episode.Episode);
+            Statics.ScreenImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if (args.PropertyName != episode.Images.Screen)
+                                                                    return;
+
+                                                                Debug.WriteLine("Updating {0} from image store", episode.Images.Screen);
+                                                                episodeImage.Source = Statics.PosterImageStore[episode.Images.Screen];
+                                                            };
 
             Grid.SetColumn(episodeImage, 0);
             episodeGrid.Children.Add(episodeImage);
@@ -446,7 +448,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 TraktSettings.Password = String.Empty;
             }
             ProgressBarVisible = false;
-            Debug.WriteLine("{0} to log in",(successfulLogIn)?"Managed":"Failed");
+            Debug.WriteLine("{0} to log in", (successfulLogIn) ? "Managed" : "Failed");
             OnFinishedLoading(new FinishedLoadingEventArgs(successfulLogIn));
         }
 
@@ -476,9 +478,9 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             var buttons = new List<ApplicationBarMenuItem>();
 
-            if(TraktSettings.LoggedIn)
+            if (TraktSettings.LoggedIn)
             {
-                var recommendations = new ApplicationBarMenuItem {IsEnabled = true, Text = "Recommendations"};
+                var recommendations = new ApplicationBarMenuItem { IsEnabled = true, Text = "Recommendations" };
                 recommendations.Click += (o, e) =>
                                              {
                                                  Debug.WriteLine("Navigating to recommendations view");
@@ -520,6 +522,6 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             StatusOfAccount = statusOfAccount;
         }
-    
+
     }
 }
