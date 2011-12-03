@@ -16,14 +16,21 @@ using Trakt_for_Windows_Phone_7.Models;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
+    public enum TrendingType
+    {
+        Movies,
+        Shows
+    }
+
     public class MainPageViewModel : BaseViewModel
     {
         #region Private Parameters
 
         private List<PivotItem> _pivotItems;
-        private String _trendingType;
+        private String _trendingTypeString;
         private readonly LogInViewModel _logInViewModel;
         private bool _interactionEnabled;
+        private TrendingType _trendingType;
 
         #endregion
         
@@ -45,7 +52,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <summary>
         /// The type of trending currently being showen
         /// </summary>
-        public string TrendingType { get { return _trendingType; } set { _trendingType = value; NotifyOfPropertyChange(() => TrendingType); NotifyOfPropertyChange(() => ShowTrendingType); } }
+        public string TrendingType { get { return _trendingTypeString; } set { _trendingTypeString = value; NotifyOfPropertyChange(() => TrendingType); NotifyOfPropertyChange(() => ShowTrendingType); } }
 
         /// <summary>
         /// Visibility for trending type
@@ -106,7 +113,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             var textGrid = new Grid
             {
-                Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.9d },
+                Background = new SolidColorBrush(Colors.DarkGray) { Opacity = 0.85d },
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
@@ -157,6 +164,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
             PivotItems = new List<PivotItem>(PivotItems);
             TrendingType = "Trending Movies";
+            _trendingType = ViewModels.TrendingType.Movies;
+            SetUpApplicationBar();
             ProgressBarVisible = false;
             Debug.WriteLine("Finished processing");
         }
@@ -216,6 +225,8 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
             }
             PivotItems = new List<PivotItem>(PivotItems);
             TrendingType = "Trending Shows";
+            _trendingType = ViewModels.TrendingType.Shows;
+            SetUpApplicationBar();
             ProgressBarVisible = false;
             Debug.WriteLine("Finished processing");
         }
@@ -257,7 +268,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             var refresh = new ApplicationBarIconButton(RefreshButtonUri){ IsEnabled = true, Text = "Refresh"};
 
-            if (TrendingType != "Trending Movies")
+            if (_trendingType == ViewModels.TrendingType.Shows)
             {
                 var getTrendingMovies = new ApplicationBarMenuItem {Text = "Get Trending Movies", IsEnabled = true};
                 getTrendingMovies.Click += (sender, args) => GetTrendingMovies();
