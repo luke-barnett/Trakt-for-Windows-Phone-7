@@ -12,6 +12,7 @@ using Microsoft.Phone.Shell;
 using TraktAPI;
 using TraktAPI.TraktModels;
 using Trakt_for_Windows_Phone_7.Framework;
+using Trakt_for_Windows_Phone_7.Models;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -76,16 +77,19 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         /// <param name="poster">The poster to load</param>
         /// <param name="title">The title to use</param>
         /// <returns>The set of elements to use</returns>
-        private IEnumerable<UIElement> GenerateUiElements(Uri poster, string title)
+        private IEnumerable<UIElement> GenerateUiElements(string poster, string title)
         {
             var elements = new List<UIElement>();
 
-            var image = new Image { Source = DefaultPoster, HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.UniformToFill};
+            var image = new Image { Source = Statics.PosterImageStore[poster], HorizontalAlignment = HorizontalAlignment.Stretch, Stretch = Stretch.UniformToFill};
 
-            ProgressBarVisible = true;
-            var bitmap = new BitmapImage(poster) { CreateOptions = BitmapCreateOptions.None };
-            bitmap.ImageOpened += (sender, args) => { image.Source = bitmap; ProgressBarVisible = false; };
-            bitmap.ImageFailed += (sender, args) => { Debug.WriteLine("Failed to load poster for {0}", title); ProgressBarVisible = false; };
+            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if(args.PropertyName != poster)
+                                                                    return;
+                                                                Debug.WriteLine("Updating {0} from image store", poster);
+                                                                image.Source = Statics.PosterImageStore[poster];
+                                                            };
 
             elements.Add(image);
 
@@ -142,7 +146,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 var gestureListener = GestureService.GetGestureListener(movieGrid);
                 gestureListener.DoubleTap += (sender, args) => MovieSelected(trendingMovie);
 
-                foreach (var uiElement in GenerateUiElements(new Uri(trendingMovie.Images.Poster), trendingMovie.TitleAndYear))
+                foreach (var uiElement in GenerateUiElements(trendingMovie.Images.Poster, trendingMovie.TitleAndYear))
                 {
                     movieGrid.Children.Add(uiElement);
                 }
@@ -201,7 +205,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                 var gestureListener = GestureService.GetGestureListener(showGrid);
                 gestureListener.DoubleTap += (sender, args) => ShowSelected(trendingShow);
 
-                foreach (var uiElement in GenerateUiElements(new Uri(trendingShow.Images.Poster), trendingShow.Title))
+                foreach (var uiElement in GenerateUiElements(trendingShow.Images.Poster, trendingShow.Title))
                 {
                     showGrid.Children.Add(uiElement);
                 }

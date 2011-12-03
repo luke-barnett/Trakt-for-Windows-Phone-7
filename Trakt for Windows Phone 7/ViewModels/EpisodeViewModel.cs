@@ -10,6 +10,7 @@ using TraktAPI;
 using TraktAPI.TraktModels;
 using Trakt_for_Windows_Phone_7.Framework;
 using Microsoft.Phone.Reactive;
+using Trakt_for_Windows_Phone_7.Models;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -127,11 +128,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         {
             Debug.WriteLine("Getting the episode image");
 
-            var screen = new BitmapImage(new Uri(episode.Episode.Images.Screen)) { CreateOptions = BitmapCreateOptions.None };
+            EpisodeImage = Statics.ScreenImageStore[episode.Episode.Images.Screen];
 
-            ProgressBarVisible = true;
-            screen.ImageOpened += (sender, args) => { EpisodeImage = screen; ProgressBarVisible = false; Debug.WriteLine("Got poster successfully"); };
-            screen.ImageFailed += (sender, args) => { ProgressBarVisible = false; Debug.WriteLine("Failed to get poster"); };
+            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if (args.PropertyName != episode.Episode.Images.Screen)
+                                                                    return;
+                                                                Debug.WriteLine("Updating {0} from image store", episode.Episode.Images.Screen);
+                                                                EpisodeImage = Statics.ScreenImageStore[episode.Episode.Images.Screen];
+                                                            };
 
             EpisodeSummary = episode;
 

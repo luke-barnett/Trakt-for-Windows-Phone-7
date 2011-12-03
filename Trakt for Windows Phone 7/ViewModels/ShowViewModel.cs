@@ -13,6 +13,7 @@ using Microsoft.Phone.Shell;
 using TraktAPI;
 using TraktAPI.TraktModels;
 using Trakt_for_Windows_Phone_7.Framework;
+using Trakt_for_Windows_Phone_7.Models;
 
 namespace Trakt_for_Windows_Phone_7.ViewModels
 {
@@ -197,11 +198,15 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
         private void HandleShow(TraktShow show)
         {
             Debug.WriteLine("Getting the poster");
-            var poster = new BitmapImage(new Uri(show.Images.Poster)) {CreateOptions = BitmapCreateOptions.None};
+            ShowPoster = Statics.PosterImageStore[show.Images.Poster];
 
-            ProgressBarVisible = true;
-            poster.ImageOpened += (sender, args) => { ShowPoster = poster; ProgressBarVisible = false; Debug.WriteLine("Got poster successfully"); };
-            poster.ImageFailed += (sender, args) => { ProgressBarVisible = false; Debug.WriteLine("Failed to get poster"); };
+            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+                                                            {
+                                                                if (args.PropertyName != show.Images.Poster)
+                                                                    return;
+                                                                Debug.WriteLine("Updating {0} from image store", show.Images.Poster);
+                                                                ShowPoster = Statics.PosterImageStore[show.Images.Poster];
+                                                            };
 
             Show = show;
 
