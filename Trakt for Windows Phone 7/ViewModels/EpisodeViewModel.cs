@@ -129,7 +129,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
 
             EpisodeImage = Statics.ScreenImageStore[episode.Episode.Images.Screen];
 
-            Statics.PosterImageStore.PropertyChanged += (sender, args) =>
+            Statics.ScreenImageStore.PropertyChanged += (sender, args) =>
                                                             {
                                                                 if (args.PropertyName != episode.Episode.Images.Screen)
                                                                     return;
