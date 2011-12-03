@@ -393,7 +393,7 @@ namespace Trakt_for_Windows_Phone_7.ViewModels
                                                                     return;
 
                                                                 Debug.WriteLine("Updating {0} from image store", episode.Images.Screen);
-                                                                episodeImage.Source = Statics.PosterImageStore[episode.Images.Screen];
+                                                                episodeImage.Source = Statics.ScreenImageStore[episode.Images.Screen];
                                                             };
 
             Grid.SetColumn(episodeImage, 0);

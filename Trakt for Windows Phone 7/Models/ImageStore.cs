@@ -38,8 +38,8 @@ namespace Trakt_for_Windows_Phone_7.Models
 
                     if (Type == ImageStoreType.Poster)
                         return (BitmapImage)new ImageSourceConverter().ConvertFromString(@"..\artwork\poster-small.jpg");
-                    else
-                        return (BitmapImage)new ImageSourceConverter().ConvertFromString(@"..\artwork\episode-screen.jpg");
+
+                    return (BitmapImage)new ImageSourceConverter().ConvertFromString(@"..\artwork\episode-screen.jpg");
                 }
 
                 return _internalStore[key];
@@ -71,26 +71,28 @@ namespace Trakt_for_Windows_Phone_7.Models
             if (_downloadsRunning)
                 return;
             _downloadsRunning = true;
-            var worker = new BackgroundWorker();
+            var wc = new WebClient();
+            var currentDownload = _downloadQueue.Dequeue();
 
-            worker.DoWork += (o, e) =>
-                                 {
-                                     var wc = new WebClient();
-                                     //TODO: ONLY DOES THE ONE IMAGE
-                                     var currentDownload = _downloadQueue.Dequeue();
-                                     wc.OpenReadCompleted += (sender, args) =>
-                                     {
-                                         if (args.Error == null && !args.Cancelled)
-                                         {
-                                             var image = new BitmapImage();
-                                             image.SetSource(args.Result);
-                                             _internalStore[currentDownload] = image;
-                                             FirePropertyChanged(currentDownload);
-                                         }
-                                     };
-                                     wc.OpenReadAsync(new Uri(currentDownload), wc);
-                                 };
-            worker.RunWorkerAsync();
+            wc.OpenReadCompleted += (sender, args) =>
+            {
+                if (args.Error == null && !args.Cancelled)
+                {
+                    var image = new BitmapImage();
+                    image.SetSource(args.Result);
+                    _internalStore[currentDownload] = image;
+                    FirePropertyChanged(currentDownload);
+                }
+                if (_downloadQueue.Count > 0)
+                {
+                    currentDownload = _downloadQueue.Dequeue();
+                    wc.OpenReadAsync(new Uri(currentDownload), wc);
+                }
+                else
+                    _downloadsRunning = false;
+            };
+
+            wc.OpenReadAsync(new Uri(currentDownload), wc);
 
 
         }
